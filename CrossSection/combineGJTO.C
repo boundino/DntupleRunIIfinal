@@ -1,8 +1,7 @@
+using namespace std;
 #include "uti.h"
 #include "parameters.h"
 #include "TLegendEntry.h"
-#include "bFeedDown/bFeedDownCorrection.C"
-#include "../Systematics/systematics.C"
 
 void combineGJTO(TString inputGJ, TString inputTO, TString outputplot, double lumiGJ, double lumiTO)
 {
@@ -17,10 +16,25 @@ void combineGJTO(TString inputGJ, TString inputTO, TString outputplot, double lu
   TH1F* hPtSigma = (TH1F*)hPtSigmaGJ->Clone("hPtSigma");
   hPtSigma->Add(hPtSigmaTO);
   hPtSigma->Scale(1./(lumiGJ+lumiTO));
+  
+  TGraphAsymmErrors* gaeRatioCrossFONLLstat = (TGraphAsymmErrors*)fGJ->Get("gaeRatioCrossFONLLstat");
+  TGraphAsymmErrors* gaeRatioCrossFONLLsyst = (TGraphAsymmErrors*)fGJ->Get("gaeRatioCrossFONLLsyst");
+  TGraphAsymmErrors* gaeCrossSyst = (TGraphAsymmErrors*)fGJ->Get("gaeCrossSyst");
+  TGraphAsymmErrors* gaeBplusReference = (TGraphAsymmErrors*)fGJ->Get("gaeSigmaDzero");
+  TGraphAsymmErrors* gaeRatioCrossFONLLunity = (TGraphAsymmErrors*)fGJ->Get("gaeRatioCrossFONLLunity");
+  TH1D* hfPrompt = (TH1D*)fGJ->Get("hfprompt");
+
 
   TFile* outputfile = new TFile(outputplot.Data(),"recreate");
   outputfile->cd();
   hPtSigma->Write();
+  gaeRatioCrossFONLLstat->Write();
+  gaeRatioCrossFONLLsyst->Write();
+  gaeCrossSyst->Write();
+  gaeBplusReference->Write();
+  gaeRatioCrossFONLLunity->Write();
+  hfPrompt->Write();
+  outputfile->Close();
 }
 
 

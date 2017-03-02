@@ -24,13 +24,14 @@ double DKpiBRUncertainty	= 1.29;			// from PDG
 double ppLumiUncertainty 	= 2.3;			// 5% for the moment, to be updated (4/7/2016)
 
 // Point-to-point
-double ppTrackingEfficiency 	= 4;   			// single track systematics from D* studies
-double PbPbTrackingEfficiency 	= 5;   			// single track systematics from D* studies
+double ppTrackingEfficiency 	= 4;   			// single track systematics from D* studies //4
+double PbPbTrackingEfficiency0100 	= 6;   		// single track systematics from D* studies //5
+double PbPbTrackingEfficiency010 	= 6.5;   	// single track systematics from D* studies //5
 TH1D*  ppSignalExtraction;				// (4/7/2016)
 TH1D*  ppMesonSelection;				// (4/7/2016)
 TH1D*  ppBFeedDownCorrection; 				// (4/7/2016)
 
-TF1 *fPPPtShape = new TF1("fPPPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
+TF1* fPPPtShape = new TF1("fPPPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
 
 
 // =============================================================================================================
@@ -49,181 +50,223 @@ double PbPbLumiUncertainty	= 10;			// 10% for the moment, to be updated (from Da
 
 TH1D*  PbPbSignalExtraction;				// (4/7/2016)
 TH1D*  PbPbMesonSelection;				// (4/7/2016)
-TH1D*  PbPbBFeedDownCorrection;				// (4/7/2016)
+TH1D*  PbPbBFeedDownCorrection;
 
-TF1 *fPbPbPtShape= new TF1("fPbPbPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
+TF1 *fPbPbPtShape = new TF1("fPbPbPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
+
+TH1D*  RAABFeedDownCorrection;				// (4/7/2016)
 
 
 bool initialized = 0;
 
 void initializationPP()
 {
-   ppBFeedDownCorrection = new TH1D("ppBFeedDownCorrection","",nPtBins,PtBins);
-   ppBFeedDownCorrection->SetBinContent(1,	10);
-   ppBFeedDownCorrection->SetBinContent(2,	5);
-   ppBFeedDownCorrection->SetBinContent(3,	5);
-   ppBFeedDownCorrection->SetBinContent(4,	5);
-   ppBFeedDownCorrection->SetBinContent(5,	5);
-   ppBFeedDownCorrection->SetBinContent(6,	5);
-   ppBFeedDownCorrection->SetBinContent(7,	5);
-   ppBFeedDownCorrection->SetBinContent(8,	5);
-   ppBFeedDownCorrection->SetBinContent(9,	5);
-   ppBFeedDownCorrection->SetBinContent(10,	5);
-   ppBFeedDownCorrection->SetBinContent(11,	5);
-   ppBFeedDownCorrection->SetBinContent(12,	5);
-   ppBFeedDownCorrection->SetBinContent(13,	5);
-   ppBFeedDownCorrection->SetBinContent(14,	5);
-
-   ppMesonSelection = new TH1D("ppMesonSelection","",nPtBins,PtBins);
-   ppMesonSelection->SetBinContent(1,		3.6);
-   ppMesonSelection->SetBinContent(2,		3.6);
-   ppMesonSelection->SetBinContent(3,		3.6);
-   ppMesonSelection->SetBinContent(4,		3.6);
-   ppMesonSelection->SetBinContent(5,		3.6);
-   ppMesonSelection->SetBinContent(6,		3.6);
-   ppMesonSelection->SetBinContent(7,		3.6);
-   ppMesonSelection->SetBinContent(8,		3.6);
-   ppMesonSelection->SetBinContent(9,		3.6);
-   ppMesonSelection->SetBinContent(10,		0.5);
-   ppMesonSelection->SetBinContent(11,		0.5);
-   ppMesonSelection->SetBinContent(12,		0.5);
-   ppMesonSelection->SetBinContent(13,		0.5);
-   ppMesonSelection->SetBinContent(14,		0.5);
-
-   ppSignalExtraction = new TH1D("ppSignalExtraction","",nPtBins,PtBins);
-   ppSignalExtraction->SetBinContent(1,		8.2);
-   ppSignalExtraction->SetBinContent(2,		7.6);
-   ppSignalExtraction->SetBinContent(3,		3.5);
-   ppSignalExtraction->SetBinContent(4,		3.0);
-   ppSignalExtraction->SetBinContent(5,		3.0);
-   ppSignalExtraction->SetBinContent(6,		1.7);
-   ppSignalExtraction->SetBinContent(7,		2.1);
-   ppSignalExtraction->SetBinContent(8,		2.1);
-   ppSignalExtraction->SetBinContent(9,		4.0);
-   ppSignalExtraction->SetBinContent(10,		2.0);
-   ppSignalExtraction->SetBinContent(11,	1.6);
-   ppSignalExtraction->SetBinContent(12,	2.3);
-   ppSignalExtraction->SetBinContent(13,	2.8);
-   ppSignalExtraction->SetBinContent(14,	5.2); 
-    
-   fPPPtShape->SetParameters(0.999265,-0.0458006,-0.181359,0);
-   }
+  ppBFeedDownCorrection->SetBinContent(1,	10);
+  ppBFeedDownCorrection->SetBinContent(2,	10);
+  ppBFeedDownCorrection->SetBinContent(3,	10);
+  ppBFeedDownCorrection->SetBinContent(4,	10);
+  ppBFeedDownCorrection->SetBinContent(5,	10);
+  ppBFeedDownCorrection->SetBinContent(6,	10);
+  ppBFeedDownCorrection->SetBinContent(7,	10);
+  ppBFeedDownCorrection->SetBinContent(8,	10);
+  ppBFeedDownCorrection->SetBinContent(9,	10);
+  ppBFeedDownCorrection->SetBinContent(10,	10);
+  ppBFeedDownCorrection->SetBinContent(11,	10);
+  ppBFeedDownCorrection->SetBinContent(12,	10);
+  ppBFeedDownCorrection->SetBinContent(13,	10);
+  ppBFeedDownCorrection->SetBinContent(14,	10);
+  
+  ppMesonSelection->SetBinContent(1,		3.6);
+  ppMesonSelection->SetBinContent(2,		3.6);
+  ppMesonSelection->SetBinContent(3,		3.6);
+  ppMesonSelection->SetBinContent(4,		3.6);
+  ppMesonSelection->SetBinContent(5,		3.6);
+  ppMesonSelection->SetBinContent(6,		3.6);
+  ppMesonSelection->SetBinContent(7,		3.6);
+  ppMesonSelection->SetBinContent(8,		3.6);
+  ppMesonSelection->SetBinContent(9,		3.6);
+  ppMesonSelection->SetBinContent(10,		0.5);
+  ppMesonSelection->SetBinContent(11,		0.5);
+  ppMesonSelection->SetBinContent(12,		0.5);
+  ppMesonSelection->SetBinContent(13,		0.5);
+  ppMesonSelection->SetBinContent(14,		0.5);
+  
+  ppSignalExtraction->SetBinContent(1,		8.2);
+  ppSignalExtraction->SetBinContent(2,		7.6);
+  ppSignalExtraction->SetBinContent(3,		3.5);
+  ppSignalExtraction->SetBinContent(4,		3.0);
+  ppSignalExtraction->SetBinContent(5,		3.0);
+  ppSignalExtraction->SetBinContent(6,		1.7);
+  ppSignalExtraction->SetBinContent(7,		2.1);
+  ppSignalExtraction->SetBinContent(8,		2.1);
+  ppSignalExtraction->SetBinContent(9,		4.0);
+  ppSignalExtraction->SetBinContent(10,		2.0);
+  ppSignalExtraction->SetBinContent(11,	        1.6);
+  ppSignalExtraction->SetBinContent(12,	        2.3);
+  ppSignalExtraction->SetBinContent(13,	        2.8);
+  ppSignalExtraction->SetBinContent(14,	        5.2); 
+  
+  fPPPtShape->SetParameters(0.999265,-0.0458006,-0.181359,0);
+}
 
 void initializationPbPbCent0100()
 {
-   PbPbBFeedDownCorrection = new TH1D("PbPbBFeedDownCorrection","",nPtBins,PtBins);
-   PbPbBFeedDownCorrection->SetBinContent(1,	10);
-   PbPbBFeedDownCorrection->SetBinContent(2,	10);
-   PbPbBFeedDownCorrection->SetBinContent(3,	10);
-   PbPbBFeedDownCorrection->SetBinContent(4,	10);
-   PbPbBFeedDownCorrection->SetBinContent(5,	10);
-   PbPbBFeedDownCorrection->SetBinContent(6,	10);
-   PbPbBFeedDownCorrection->SetBinContent(7,	10);
-   PbPbBFeedDownCorrection->SetBinContent(8,	10);
-   PbPbBFeedDownCorrection->SetBinContent(9,	10);
-   PbPbBFeedDownCorrection->SetBinContent(10,	10);
-   PbPbBFeedDownCorrection->SetBinContent(11,	10);
-   PbPbBFeedDownCorrection->SetBinContent(12,	10);
-   PbPbBFeedDownCorrection->SetBinContent(13,	10);
-   PbPbBFeedDownCorrection->SetBinContent(14,	10);
-
-   PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
-   PbPbMesonSelection->SetBinContent(1,		3.5);
-   PbPbMesonSelection->SetBinContent(2,		3.5);
-   PbPbMesonSelection->SetBinContent(3,		3.5);
-   PbPbMesonSelection->SetBinContent(4,		3.5);
-   PbPbMesonSelection->SetBinContent(5,		3.5);
-   PbPbMesonSelection->SetBinContent(6,		3.5);
-   PbPbMesonSelection->SetBinContent(7,		3.5);
-   PbPbMesonSelection->SetBinContent(8,		3.5);
-   PbPbMesonSelection->SetBinContent(9,		3.5);
-   PbPbMesonSelection->SetBinContent(10,		2.7);
-   PbPbMesonSelection->SetBinContent(11,		2.7);
-   PbPbMesonSelection->SetBinContent(12,		2.7);
-   PbPbMesonSelection->SetBinContent(13,		2.7);
-   PbPbMesonSelection->SetBinContent(14,		2.7);
-
-
-   PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
-   PbPbSignalExtraction->SetBinContent(1,	4.8);
-   PbPbSignalExtraction->SetBinContent(2,	2.0);
-   PbPbSignalExtraction->SetBinContent(3,	3.0);
-   PbPbSignalExtraction->SetBinContent(4,	2.3);
-   PbPbSignalExtraction->SetBinContent(5,	1.7);
-   PbPbSignalExtraction->SetBinContent(6,	1.7);
-   PbPbSignalExtraction->SetBinContent(7,	1.3);
-   PbPbSignalExtraction->SetBinContent(8,	1.3);
-   PbPbSignalExtraction->SetBinContent(9,	6.5);
-   PbPbSignalExtraction->SetBinContent(10,	7.1);
-   PbPbSignalExtraction->SetBinContent(11,	9.4);
-   PbPbSignalExtraction->SetBinContent(12,	7.5);
-   PbPbSignalExtraction->SetBinContent(13,	6.0); //was 3.3% before smoothing
-   PbPbSignalExtraction->SetBinContent(14,	7.0);
-    
-   fPbPbPtShape->SetParameters(0.984161,0.0593406,-0.3992,0.000271564);
-   }
+  PbPbBFeedDownCorrection->SetBinContent(1,	10);
+  PbPbBFeedDownCorrection->SetBinContent(2,	10);
+  PbPbBFeedDownCorrection->SetBinContent(3,	10);
+  PbPbBFeedDownCorrection->SetBinContent(4,	10);
+  PbPbBFeedDownCorrection->SetBinContent(5,	10);
+  PbPbBFeedDownCorrection->SetBinContent(6,	10);
+  PbPbBFeedDownCorrection->SetBinContent(7,	10);
+  PbPbBFeedDownCorrection->SetBinContent(8,	10);
+  PbPbBFeedDownCorrection->SetBinContent(9,	10);
+  PbPbBFeedDownCorrection->SetBinContent(10,	10);
+  PbPbBFeedDownCorrection->SetBinContent(11,	10);
+  PbPbBFeedDownCorrection->SetBinContent(12,	10);
+  PbPbBFeedDownCorrection->SetBinContent(13,	10);
+  PbPbBFeedDownCorrection->SetBinContent(14,	10);
+  
+  RAABFeedDownCorrection->SetBinContent(1,	10);
+  RAABFeedDownCorrection->SetBinContent(2,	10);
+  RAABFeedDownCorrection->SetBinContent(3,	10);
+  RAABFeedDownCorrection->SetBinContent(4,	10);
+  RAABFeedDownCorrection->SetBinContent(5,	10);
+  RAABFeedDownCorrection->SetBinContent(6,	10);
+  RAABFeedDownCorrection->SetBinContent(7,	10);
+  RAABFeedDownCorrection->SetBinContent(8,	10);
+  RAABFeedDownCorrection->SetBinContent(9,	10);
+  RAABFeedDownCorrection->SetBinContent(10,	10);
+  RAABFeedDownCorrection->SetBinContent(11,	10);
+  RAABFeedDownCorrection->SetBinContent(12,	10);
+  RAABFeedDownCorrection->SetBinContent(13,	10);
+  RAABFeedDownCorrection->SetBinContent(14,	10);
+  
+  PbPbMesonSelection->SetBinContent(1,		3.5);
+  PbPbMesonSelection->SetBinContent(2,		3.5);
+  PbPbMesonSelection->SetBinContent(3,		3.5);
+  PbPbMesonSelection->SetBinContent(4,		3.5);
+  PbPbMesonSelection->SetBinContent(5,		3.5);
+  PbPbMesonSelection->SetBinContent(6,		3.5);
+  PbPbMesonSelection->SetBinContent(7,		3.5);
+  PbPbMesonSelection->SetBinContent(8,		3.5);
+  PbPbMesonSelection->SetBinContent(9,		3.5);
+  PbPbMesonSelection->SetBinContent(10,		2.7);
+  PbPbMesonSelection->SetBinContent(11,		2.7);
+  PbPbMesonSelection->SetBinContent(12,		2.7);
+  PbPbMesonSelection->SetBinContent(13,		2.7);
+  PbPbMesonSelection->SetBinContent(14,		2.7);
+  
+  
+  PbPbSignalExtraction->SetBinContent(1,	4.8);
+  PbPbSignalExtraction->SetBinContent(2,	2.0);
+  PbPbSignalExtraction->SetBinContent(3,	3.0);
+  PbPbSignalExtraction->SetBinContent(4,	2.3);
+  PbPbSignalExtraction->SetBinContent(5,	1.7);
+  PbPbSignalExtraction->SetBinContent(6,	1.7);
+  PbPbSignalExtraction->SetBinContent(7,	1.3);
+  PbPbSignalExtraction->SetBinContent(8,	1.3);
+  PbPbSignalExtraction->SetBinContent(9,	6.5);
+  PbPbSignalExtraction->SetBinContent(10,	7.1);
+  PbPbSignalExtraction->SetBinContent(11,	9.4);
+  PbPbSignalExtraction->SetBinContent(12,	7.5);
+  PbPbSignalExtraction->SetBinContent(13,	6.0); //was 3.3% before smoothing
+  PbPbSignalExtraction->SetBinContent(14,	7.0);
+  
+  fPbPbPtShape->SetParameters(0.984161,0.0593406,-0.3992,0.000271564);
+}
 
 void initializationPbPbCent010()
 {
-   PbPbBFeedDownCorrection = new TH1D("PbPbBFeedDownCorrection","",nPtBins,PtBins);
-   PbPbBFeedDownCorrection->SetBinContent(1,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(2,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(3,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(4,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(5,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(6,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(7,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(8,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(9,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(10,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(11,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(12,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(13,	10.);
-   PbPbBFeedDownCorrection->SetBinContent(14,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(1,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(2,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(3,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(4,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(5,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(6,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(7,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(8,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(9,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(10,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(11,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(12,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(13,	10.);
+  PbPbBFeedDownCorrection->SetBinContent(14,	10.);
 
-   PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
-   PbPbMesonSelection->SetBinContent(1,		8.1);
-   PbPbMesonSelection->SetBinContent(2,		8.1);
-   PbPbMesonSelection->SetBinContent(3,		8.1);
-   PbPbMesonSelection->SetBinContent(4,		8.1);
-   PbPbMesonSelection->SetBinContent(5,		8.1);
-   PbPbMesonSelection->SetBinContent(6,		8.1);
-   PbPbMesonSelection->SetBinContent(7,		8.1);
-   PbPbMesonSelection->SetBinContent(8,		8.1);
-   PbPbMesonSelection->SetBinContent(9,		8.1);
-   PbPbMesonSelection->SetBinContent(10,		1.7);
-   PbPbMesonSelection->SetBinContent(11,		1.7);
-   PbPbMesonSelection->SetBinContent(12,		1.7);
-   PbPbMesonSelection->SetBinContent(13,		1.7);
-   PbPbMesonSelection->SetBinContent(14,		1.7);
-
-
-   PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
-   PbPbSignalExtraction->SetBinContent(1,	12.8);
-   PbPbSignalExtraction->SetBinContent(2,	4.3);
-   PbPbSignalExtraction->SetBinContent(3,	5.8);
-   PbPbSignalExtraction->SetBinContent(4,	5.4);
-   PbPbSignalExtraction->SetBinContent(5,	3.7);
-   PbPbSignalExtraction->SetBinContent(6,	3,7);
-   PbPbSignalExtraction->SetBinContent(7,	3.4);
-   PbPbSignalExtraction->SetBinContent(8,	3.4);
-   PbPbSignalExtraction->SetBinContent(9,	12.0); // TO BE FIXED, TEMPORARY SET TO THE RESULT IN THE BIN 9
-   PbPbSignalExtraction->SetBinContent(10,	12.0);
-   PbPbSignalExtraction->SetBinContent(11,	12.0);      //was 8.6
-   PbPbSignalExtraction->SetBinContent(12,	12.7);
-   PbPbSignalExtraction->SetBinContent(13,	10.1);    //was 6.5
-   PbPbSignalExtraction->SetBinContent(14,	17.5); 
-    
-   fPbPbPtShape->SetParameters(1.00862,-0.277991,0.325087,0.);
+  RAABFeedDownCorrection->SetBinContent(1,	10.);
+  RAABFeedDownCorrection->SetBinContent(2,	10.);
+  RAABFeedDownCorrection->SetBinContent(3,	10.);
+  RAABFeedDownCorrection->SetBinContent(4,	10.);
+  RAABFeedDownCorrection->SetBinContent(5,	10.);
+  RAABFeedDownCorrection->SetBinContent(6,	10.);
+  RAABFeedDownCorrection->SetBinContent(7,	10.);
+  RAABFeedDownCorrection->SetBinContent(8,	10.);
+  RAABFeedDownCorrection->SetBinContent(9,	10.);
+  RAABFeedDownCorrection->SetBinContent(10,	10.);
+  RAABFeedDownCorrection->SetBinContent(11,	10.);
+  RAABFeedDownCorrection->SetBinContent(12,	10.);
+  RAABFeedDownCorrection->SetBinContent(13,	10.);
+  RAABFeedDownCorrection->SetBinContent(14,	10.);
+  
+  PbPbMesonSelection->SetBinContent(1,		8.1);
+  PbPbMesonSelection->SetBinContent(2,		8.1);
+  PbPbMesonSelection->SetBinContent(3,		8.1);
+  PbPbMesonSelection->SetBinContent(4,		8.1);
+  PbPbMesonSelection->SetBinContent(5,		8.1);
+  PbPbMesonSelection->SetBinContent(6,		8.1);
+  PbPbMesonSelection->SetBinContent(7,		8.1);
+  PbPbMesonSelection->SetBinContent(8,		8.1);
+  PbPbMesonSelection->SetBinContent(9,		8.1);
+  PbPbMesonSelection->SetBinContent(10,		1.7);
+  PbPbMesonSelection->SetBinContent(11,		1.7);
+  PbPbMesonSelection->SetBinContent(12,		1.7);
+  PbPbMesonSelection->SetBinContent(13,		1.7);
+  PbPbMesonSelection->SetBinContent(14,		1.7);
+  
+  PbPbSignalExtraction->SetBinContent(1,	12.8);
+  PbPbSignalExtraction->SetBinContent(2,	4.3);
+  PbPbSignalExtraction->SetBinContent(3,	5.8);
+  PbPbSignalExtraction->SetBinContent(4,	5.4);
+  PbPbSignalExtraction->SetBinContent(5,	3.7);
+  PbPbSignalExtraction->SetBinContent(6,	3,7);
+  PbPbSignalExtraction->SetBinContent(7,	3.4);
+  PbPbSignalExtraction->SetBinContent(8,	3.4);
+  PbPbSignalExtraction->SetBinContent(9,	12.0); // TO BE FIXED, TEMPORARY SET TO THE RESULT IN THE BIN 9
+  PbPbSignalExtraction->SetBinContent(10,	12.0);
+  PbPbSignalExtraction->SetBinContent(11,	12.0);      //was 8.6
+  PbPbSignalExtraction->SetBinContent(12,	12.7);
+  PbPbSignalExtraction->SetBinContent(13,	10.1);    //was 6.5
+  PbPbSignalExtraction->SetBinContent(14,	17.5); 
+  
+  fPbPbPtShape->SetParameters(1.00862,-0.277991,0.325087,0.);
 }
 
-void initialization(double centL=0,double centH=100){
+void initialization(double centL=0,double centH=0)
+{  
+  ppBFeedDownCorrection = new TH1D("ppBFeedDownCorrection","",nPtBins,PtBins);
+  ppMesonSelection = new TH1D("ppMesonSelection","",nPtBins,PtBins);
+  ppSignalExtraction = new TH1D("ppSignalExtraction","",nPtBins,PtBins);
 
-initializationPP();
-if (centL==0&&centH==100) initializationPbPbCent0100();
-if (centL==0&&centH==10) initializationPbPbCent010();
-initialized=1;
+  PbPbBFeedDownCorrection = new TH1D("PbPbBFeedDownCorrection","",nPtBins,PtBins);
+  PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
+  PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
+  RAABFeedDownCorrection = new TH1D("RAABFeedDownCorrection","",nPtBins,PtBins);
 
+  initializationPP();
+  if (centL==0&&centH==100) initializationPbPbCent0100();
+  if (centL==0&&centH==10) initializationPbPbCent010();
+  initialized=1;  
+}
+
+void deleteinitial()
+{  
+  delete ppBFeedDownCorrection;
+  delete ppMesonSelection;
+  delete ppSignalExtraction;
+
+  delete PbPbBFeedDownCorrection;
+  delete PbPbMesonSelection;
+  delete PbPbSignalExtraction;
+  delete RAABFeedDownCorrection;
 }
 
 // =============================================================================================================
@@ -231,63 +274,68 @@ initialized=1;
 // =============================================================================================================
 float normalizationUncertaintyForRAA(double centL=0,double centH=100)
 {
-   double sys = 0;
-   sys+=ppLumiUncertainty*ppLumiUncertainty;
+  double sys = 0;
+  sys+=ppLumiUncertainty*ppLumiUncertainty;
    sys+=PbPbNMBUncertainty*PbPbNMBUncertainty;
-   if (centL==0&&centH==10) {
-      // 0-10%
-      sys+=TAAUncertainty0to10*TAAUncertainty0to10;
-   } else {
-      // 0-100%
-      sys+=TAAUncertainty0to100*TAAUncertainty0to100;
+   if(centL==0&&centH==10) 
+     {
+       // 0-10%
+       sys+=TAAUncertainty0to10*TAAUncertainty0to10;
+     } else {
+     // 0-100%
+     sys+=TAAUncertainty0to100*TAAUncertainty0to100;
    }
    return sqrt(sys);
 }
 
 float systematicsForRAA(double pt,double centL=0,double centH=100, double HLT=0, int stage=0)
 {
-   if (!initialized && centL==0&&centH==100) initialization(centL,centH);
-   if (!initialized && centL==0&&centH==10) initialization(centL,centH);
-
-   double sys=0;
-
-   if (pt<2) return 0;
+  initialization(centL,centH);
   
-   if (stage==1) return sqrt(sys);
-   
-   sys+= PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt))*
-         PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt));
-   sys+= ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt))*
-         ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt));
+  double sys=0;
+  
+  if(pt<2) return 0;
+  
+  if(stage==1) return sqrt(sys);
+  
+  sys+= PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt))*
+    PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt));
+  sys+= ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt))*
+    ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt));
+  
+  if(stage==2) return sqrt(sys);
+  
+  sys+=ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt))*
+    ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt));
+  sys+=PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))*
+    PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
+  
+  sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
+  sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
+  
+  //sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
+  //sys+=(PbPbTrackingEfficiency*2)*(PbPbTrackingEfficiency*2);
+  
+  if(centL==0&&centH==10)  
+    {
+      sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
+      sys+=(PbPbTrackingEfficiency010*2)*(PbPbTrackingEfficiency010*2);      
+    }	    
+  if(centL==0&&centH==100) 
+    {
+      sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
+      sys+=(PbPbTrackingEfficiency0100*2)*(PbPbTrackingEfficiency0100*2);      
+    }
+  if (stage==3) return sqrt(sys);
+  
+  //   sys+= ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt))*
+  //         ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt));
+  
+  sys+=(RAABFeedDownCorrection->GetBinContent(RAABFeedDownCorrection->FindBin(pt)))*(RAABFeedDownCorrection->GetBinContent(RAABFeedDownCorrection->FindBin(pt)));
+  //sys+=(PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))/2)*(PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))/2);
+  deleteinitial();
 
-   if (stage==2) return sqrt(sys);
-
-   sys+= ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt))*
-         ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt));
-   sys+= PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))*
-         PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
-
-   sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
-   sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
-
-   //sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
-   //sys+=(PbPbTrackingEfficiency*2)*(PbPbTrackingEfficiency*2);
-
-   if (centL==0&&centH==10)  sys+= 12*12;	    
-   if (centL==0&&centH==100) {
-     sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
-     sys+=(PbPbTrackingEfficiency*2)*(PbPbTrackingEfficiency*2);
-
-   }	    
-   if (stage==3) return sqrt(sys);
-
-//   sys+= ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt))*
-//         ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt));
-
-   sys+= (PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))/2)*(PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))/2);
-
-   return sqrt(sys);
-
+  return sqrt(sys);
 }
 
 // =============================================================================================================
@@ -300,8 +348,8 @@ float normalizationUncertaintyForRCP(double centL=0,double centH=100)
 
 float systematicsForRCP(double pt, double HLT=0,double centL=0,double centH=100)
 {
-   if (!initialized && centL==0&&centH==100) initializationPbPbCent0100();
-   if (!initialized && centL==0&&centH==10) initializationPbPbCent010();
+  //if (!initialized && centL==0&&centH==100) initializationPbPbCent0100();
+  // if (!initialized && centL==0&&centH==10) initializationPbPbCent010();
    return 0.2;
 
 }
@@ -317,28 +365,30 @@ float normalizationUncertaintyForPP()
 
 float systematicsPP(double pt, double HLT=0,int stage=0)
 {
-   if (!initialized) initialization();
-   double sys=0;
-   
-   if (stage==1) return sqrt(sys);
-   
-   sys+= ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt))* 
-         ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt));
+  initialization();
+  double sys=0;
+  
+  if(stage==1) return sqrt(sys);
+  
+  sys+=ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt))* 
+    ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt));
+  
+  if(stage==2) return sqrt(sys);
+  
+  sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
+  sys+=ppLumiUncertainty*ppLumiUncertainty;
+  sys+=ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt))* 
+    ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt));
+  sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
+  
+  if(stage==3) return sqrt(sys);
+  
+  sys+=ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt))* 
+    ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt));
 
-   if (stage==2) return sqrt(sys);
-
-   sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
-   sys+=ppLumiUncertainty*ppLumiUncertainty;
-   sys+= ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt))* 
-         ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt));
-
-   if (stage==3) return sqrt(sys);
-   
-   sys+= ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt))* 
-         ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt));
-   sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
-   
-   return sqrt(sys);
+  deleteinitial();
+  
+  return sqrt(sys);
 }
 
 // =============================================================================================================
@@ -346,42 +396,53 @@ float systematicsPP(double pt, double HLT=0,int stage=0)
 // =============================================================================================================
 float normalizationUncertaintyForPbPb(double centL=0,double centH=100)
 {
-   double sys = ((DKpiBRUncertainty*DKpiBRUncertainty)+(PbPbNMBUncertainty*PbPbNMBUncertainty));
-   if (centL==0&&centH==10) {
+  double sys = ((DKpiBRUncertainty*DKpiBRUncertainty)+(PbPbNMBUncertainty*PbPbNMBUncertainty));
+  if(centL==0&&centH==10)
+    {
       // 0-10%
       sys+=TAAUncertainty0to10*TAAUncertainty0to10;
-   } else {
+    }
+  else
+    {
       // 0-100%
       sys+=TAAUncertainty0to100*TAAUncertainty0to100;
-   }   
-   return sqrt(sys);
+    }   
+  return sqrt(sys);
 }
 
 
-float systematicsPbPb(double pt, double centL=0,double centH=100, double HLT=0)
+float systematicsPbPb(double pt, double centL=0,double centH=100, double HLT=0, int stage=0)
 {
-   if (!initialized && centL==0&&centH==100) initializationPbPbCent0100();
-   if (!initialized && centL==0&&centH==10) initializationPbPbCent010();
-   
-   double sys=0;
-   
-   // pp tracking eff uncertainty used for the moment
-   sys+=(PbPbTrackingEfficiency*2)*(PbPbTrackingEfficiency*2);
-   if (pt<20) sys+=PbPbNMBUncertainty*PbPbNMBUncertainty;
-   	else  sys+=PbPbLumiUncertainty*PbPbLumiUncertainty;
-   
-   sys+=TAAUncertainty0to100*TAAUncertainty0to100;
-   sys+= PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))* 
-         PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
+  initialization(centL,centH);
+  
+  double sys=0;
+  
+  if(stage==1) return sqrt(sys);
+  
+  sys+= PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt))* 
+    PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt));
 
-   sys+= PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))* 
-         PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt));
-   sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
-   sys+= PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt))* 
-         PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt));
-    
-   return sqrt(sys);
+  if(stage==2) return sqrt(sys);
+  if(pt<20) sys+=PbPbNMBUncertainty*PbPbNMBUncertainty;
+  else sys+=PbPbLumiUncertainty*PbPbLumiUncertainty;
+  
+  if(centL==0&&centH==100) sys+=(PbPbTrackingEfficiency0100*2)*(PbPbTrackingEfficiency0100*2);
+  if(centL==0&&centH==10) sys+=(PbPbTrackingEfficiency010*2)*(PbPbTrackingEfficiency010*2);
 
+  sys+=PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))* 
+    PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
+
+  sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
+
+  sys+=TAAUncertainty0to100*TAAUncertainty0to100;
+  
+  if(stage==2) return sqrt(sys);
+  sys+=PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))* 
+    PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt));
+  
+  deleteinitial();
+
+  return sqrt(sys);
 }
 
 
@@ -390,15 +451,15 @@ float systematicsPbPb(double pt, double centL=0,double centH=100, double HLT=0)
 // =============================================================================================================
 void drawSys(double x1,double y1, double x2,double y2, int color = 1)
 {
-   TLine *l1 = new TLine(x1,y1/100.,x2,y2/100.);
-   TLine *l2 = new TLine(x1,-y1/100.,x2,-y2/100.);
-   l1->SetLineWidth(2);
-   l2->SetLineWidth(2);
-   l1->SetLineColor(color);
-   l2->SetLineColor(color);
-   l1->Draw();
-   l2->Draw();
- 
+  TLine *l1 = new TLine(x1,y1/100.,x2,y2/100.);
+  TLine *l2 = new TLine(x1,-y1/100.,x2,-y2/100.);
+  l1->SetLineWidth(2);
+  l2->SetLineWidth(2);
+  l1->SetLineColor(color);
+  l2->SetLineColor(color);
+  l1->Draw();
+  l2->Draw();
+  
 }
 
 // =============================================================================================================
@@ -406,7 +467,7 @@ void drawSys(double x1,double y1, double x2,double y2, int color = 1)
 // =============================================================================================================
 void plotSystematicsRAA(double centL=0,double centH=10)
 {
-
+  
   TCanvas*canvas=new TCanvas("canvas","canvas",600,600);//550,500
   canvas->cd();
   canvas->SetFillColor(0);

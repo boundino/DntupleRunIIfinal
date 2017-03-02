@@ -1,3 +1,4 @@
+using namespace std;
 #include "uti.h"
 #include "parameters.h"
 #include "TLegendEntry.h"
@@ -41,7 +42,6 @@ void NuclearModificationFactor(TString inputPP="CrossSectionFONLLPPMB.root", TSt
     yrlow[i] = hNuclearModification->GetBinContent(i+1)*systematic;
     yrhigh[i] =hNuclearModification->GetBinContent(i+1)*systematic;
   }
-
 
   TGraphAsymmErrors* gNuclearModification = new TGraphAsymmErrors(nBins,apt,yr,aptl,aptl,yrlow,yrhigh);
   gNuclearModification->SetName("gNuclearModification");
