@@ -1,7 +1,7 @@
 #!/bin/bash
 #source clean.sh
-CENTPbPbMIN=0
-CENTPbPbMAX=100
+CENTPbPbMIN=$1
+CENTPbPbMAX=$2
 #
 
 LUMIPP=27.4
@@ -19,37 +19,37 @@ fi
 
 #Central point of the analysis
 
-DOANALYSISPP_FONLL=1
-DOANALYSISPP_TRGCOMBINATION=1
-DOANALYSISPP_FIT=1
-DOANALYSISPP_CROSS=1
-DOANALYSISPP_MCSTUDY=1
+DOANALYSISPP_FONLL=0
+DOANALYSISPP_TRGCOMBINATION=0
+DOANALYSISPP_FIT=0
+DOANALYSISPP_CROSS=0
+DOANALYSISPP_MCSTUDY=0
 
-DOANALYSISPbPb_FONLL=1
-DOANALYSISPbPb_TRGCOMBINATION=1
-DOANALYSISPbPb_FIT=1
-DOANALYSISPbPb_CROSS=1
-DOANALYSISPbPb_MCSTUDY=1
-DOANALYSISPbPb_COMBGJTO=1
+DOANALYSISPbPb_FONLL=0
+DOANALYSISPbPb_TRGCOMBINATION=0
+DOANALYSISPbPb_FIT=0
+DOANALYSISPbPb_CROSS=0
+DOANALYSISPbPb_MCSTUDY=0
+DOANALYSISPbPb_COMBGJTO=0
 
-DOANALYSISPPMB_FONLL=1
-DOANALYSISPPMB_FIT=1
-DOANALYSISPPMB_CROSS=1
-DOANALYSISPPMB_MCSTUDY=1
+DOANALYSISPPMB_FONLL=0
+DOANALYSISPPMB_FIT=0
+DOANALYSISPPMB_CROSS=0
+DOANALYSISPPMB_MCSTUDY=0
 
-DOANALYSISPbPbMB_FONLL=1
-DOANALYSISPbPbMB_FIT=1
-DOANALYSISPbPbMB_CROSS=1
-DOANALYSISPbPbMB_MCSTUDY=1
+DOANALYSISPbPbMB_FONLL=0
+DOANALYSISPbPbMB_FIT=0
+DOANALYSISPbPbMB_CROSS=0
+DOANALYSISPbPbMB_MCSTUDY=0
 
-DOANALYSISPP_MCSTUDYCombine=1
-DOANALYSISPbPb_MCSTUDYCombine=1
+DOANALYSISPP_MCSTUDYCombine=0
+DOANALYSISPbPb_MCSTUDYCombine=0
 
-DORAA=1
-DORAAMB=1
+DORAA=0
+DORAAMB=0
 
-DOCombineCrossSectionPP=1
-#DOCombineCrossSectionPbPb=1
+DOCombineCrossSectionPP=0
+DOCombineCrossSectionPbPb=0
 DOCombineRAA=1
 
 #
@@ -87,7 +87,7 @@ INPUTDATAPbPbMBSKIMMED="/data/wangj/Data2015/Dntuple/PbPb/ntDntuple_PbPb_Minimum
 
 #
 
-PLOTFOLDERS=("plotCrossSection" "plotEff" "plotFONLL" "plotFits" "plotOthers" "plotRAA" "ROOTfiles${FILEEND}")
+PLOTFOLDERS=("plotCrossSection" "plotEff" "plotFONLL" "plotFits" "plotFitsYield" "plotOthers" "plotRAA" "ROOTfiles${FILEEND}")
 for ifolder in ${PLOTFOLDERS[@]}
 do
     if [ ! -d $ifolder ]; then
@@ -370,11 +370,11 @@ if [ $DOCombineCrossSectionPP -eq 1 ]; then
     rm CombineCrossSections.exe
 fi
 
-#if [ $DOCombineCrossSectionPbPb -eq 1 ]; then      
-#g++ CombineCrossSections.C $(root-config --cflags --libs) -g -o CombineCrossSections.exe 
-#./CombineCrossSections.exe "$OUTPUTFILEPlotPbPbMB" "$OUTPUTFILEPlotPbPb" "1" "$CENTPbPbMIN" "$CENTPbPbMAX"
-#rm CombineCrossSections.exe
-#fi
+if [ $DOCombineCrossSectionPbPb -eq 1 ]; then      
+    g++ CombineCrossSections.C $(root-config --cflags --libs) -g -o CombineCrossSections.exe 
+    ./CombineCrossSections.exe "$OUTPUTFILEPlotPbPbMB" "$OUTPUTFILEPlotPbPb" "1" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    rm CombineCrossSections.exe
+fi
 
 if [ $DOCombineRAA -eq 1 ]; then      
     g++ CombineRAA.C $(root-config --cflags --libs) -g -o CombineRAA.exe 

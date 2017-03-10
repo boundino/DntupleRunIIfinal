@@ -179,166 +179,156 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
    if(isHadDupl==1 && isTheoryComparison==1){ent_Dhighpt->SetTextSize(0.03);}
 
 
-    if(isHadDupl==1&&isTheoryComparison==0){
-      TLegendEntry *ent_Charged=legendSigma->AddEntry(hTrackPt_trkCorr_PbPb_copy1,"R_{AA} charged hadrons","pl");//pf
-       ent_Charged->SetTextFont(42);
-       ent_Charged->SetLineColor(1);
-       ent_Charged->SetMarkerColor(1);
-       ent_Charged->SetTextSize(0.043);//0.03
-      if(isHadDupl==1 && isTheoryComparison==1){ent_Charged->SetTextSize(0.03);}
-    } 
-   legendSigma->Draw();
-
-  if(isTheoryComparison && centMin==0. && centMax==100.)
-    {
-      TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-80.dat");
-      gShanshanD5TeV->SetLineWidth(3);
-      gShanshanD5TeV->SetLineColor(kRed+1);
-      gShanshanD5TeV->Draw("c same");
-      TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-0100-plot2.txt");
-      gMagdalenaD5TeV->SetLineColor(kGreen+4);
-      gMagdalenaD5TeV->SetFillColor(kGreen+4);
-
-      gMagdalenaD5TeV->SetFillStyle(3004);
-      gMagdalenaD5TeV->Draw("f same");
-      gMagdalenaD5TeV->Draw("l same");
-
-      TLegendEntry *ent_theory_Shanshan =legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al. 0-80%","l");
-      TLegendEntry *ent_theory_Magdalena =legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
-
-    }
-  if(isTheoryComparison && centMin==0. && centMax==10.)
-    {
-      TString predictions = "TheoryPredictions/PredictionsCUJET3_pt_0_10.root";
-      TFile* filePredictions = new TFile(predictions.Data());  
-      TGraphAsymmErrors* gRAApion5TeV = (TGraphAsymmErrors*)filePredictions->Get("gRAApion5TeV");
-      TGraphAsymmErrors* gRAADmeson5TeV = (TGraphAsymmErrors*)filePredictions->Get("gRAADmeson5TeV");
-      TGraphAsymmErrors* gRAABmeson5TeV = (TGraphAsymmErrors*)filePredictions->Get("gRAABmeson5TeV");
-      TGraphErrors* gPHSDWOShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWoShadowing.txt");
-      TGraphErrors* gPHSDWShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWShadowing.txt");
-//      TGraph *gMagdalenaD5TeV = new TGraph("Magdalena-5TeV.txt");
-      TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-plot2.txt");
-      TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-10.dat");
-      gRAApion5TeV->SetLineColor(kGreen+1);
-      gRAApion5TeV->SetMarkerColor(kGreen+1);
-      gRAApion5TeV->SetLineWidth(3);
-      gRAApion5TeV->SetMarkerSize(0.15);
-      gRAADmeson5TeV->SetLineColor(4);
-      gRAADmeson5TeV->SetMarkerColor(4);
-      gRAADmeson5TeV->SetLineWidth(3);
-      gRAADmeson5TeV->SetMarkerSize(0.15);
-      gMagdalenaD5TeV->SetLineColor(kGreen+4);
-      gMagdalenaD5TeV->SetFillColor(kGreen+4);
-      if (isTheoryComparison==1||isTheoryComparison==2){
-      gMagdalenaD5TeV->SetFillStyle(3004);
-      gMagdalenaD5TeV->Draw("f same");
-      gMagdalenaD5TeV->Draw("l same");
-      gRAADmeson5TeV->Draw("psame");
-
-      }
-      if (isTheoryComparison==1||isTheoryComparison==3){
-      gPHSDWShadowing->SetLineColor(kGreen+2);
-      gPHSDWShadowing->SetLineWidth(3);
-      gPHSDWShadowing->Draw("c same");
-      gPHSDWOShadowing->SetLineColor(kGreen+2);
-      gPHSDWOShadowing->SetLineWidth(3);
-      gPHSDWOShadowing->SetLineStyle(2);
-      gPHSDWOShadowing->Draw("c same");
-      gShanshanD5TeV->SetLineWidth(3);
-      gShanshanD5TeV->SetLineColor(kRed+1);
-      gShanshanD5TeV->Draw("c same");
-
-      }
-      //gRAApion5TeV->Draw("psame");
-      
-
-      if(superimposedALICE){
-      double p9059_d9x1y1_xval[9] = { 1.5, 2.5, 3.5, 4.5, 5.5, 7.0, 10.0, 14.0, 20.0 };
-      double p9059_d9x1y1_xerrminus[9] = { 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 2.0, 2.0, 4.0 };
-      double p9059_d9x1y1_xerrplus[9] = { 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 2.0, 2.0, 4.0 };
-      double p9059_d9x1y1_yval[9] = { 0.695, 0.694, 0.385, 0.245, 0.186, 0.153, 0.155, 0.174, 0.219 };
-      double p9059_d9x1y1_yerrminus[9] = { 0.3686583784481237, 0.29960307074527787, 0.123664869708418, 0.07561084578286371, 0.05500909015790027, 0.042485291572496, 0.0442944691807002, 0.06788225099390856, 0.137800580550301 };
-      double p9059_d9x1y1_yerrplus[9] = { 0.3318870289722092, 0.2141074496602115, 0.09546203433826454, 0.06264982043070834, 0.05060632371551998, 0.03982461550347976, 0.043416586692184816, 0.06859300255857008, 0.11045361017187261 };
-      double p9059_d9x1y1_ystatminus9[] = { 0.21, 0.079, 0.037, 0.026, 0.025, 0.019, 0.021, 0.048, 0.058 };
-      double p9059_d9x1y1_ystatplus[9] = { 0.21, 0.079, 0.037, 0.026, 0.025, 0.019, 0.021, 0.048, 0.058 };
-      int p9059_d9x1y1_numpoints = 9;
-      TGraphAsymmErrors *p9059_d9x1y1 = new TGraphAsymmErrors(p9059_d9x1y1_numpoints, p9059_d9x1y1_xval, p9059_d9x1y1_yval, p9059_d9x1y1_xerrminus, p9059_d9x1y1_xerrplus, p9059_d9x1y1_yerrminus, p9059_d9x1y1_yerrplus);
-      p9059_d9x1y1->SetName("/HepData/9059/d9x1y1");
-      p9059_d9x1y1->SetLineColor(2);
-      p9059_d9x1y1->SetMarkerColor(2);  
-      p9059_d9x1y1->SetLineWidth(4);  
-      p9059_d9x1y1->SetTitle("/HepData/9059/d9x1y1");
-      p9059_d9x1y1->Draw("psame");
-      }
-
-
-      if (isTheoryComparison==1||isTheoryComparison==2){
-      TLegendEntry *ent_theory_Magdalena =legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
-      TLegendEntry *ent_theoryD=legendSigma->AddEntry(gRAADmeson5TeV,"CUJET3.0 D^{0}","l");//pf
- //     ent_theoryD->SetTextFont(42);
-      ent_theoryD->SetLineColor(4);  
-      ent_theoryD->SetMarkerColor(4);
-      }
-  //    ent_theoryD->SetTextSize(0.043);//0.03
-      
-      //TLegendEntry *ent_theoryCharged=legendSigma->AddEntry(gRAApion5TeV,"CUJET3.0 #pi^{0}, h^{#pm}","l");//pf
-      //ent_theoryCharged->SetTextFont(42);
-      //ent_theoryCharged->SetLineColor(kGreen+1);
-      //ent_theoryCharged->SetMarkerColor(kGreen+1);
-      //ent_theoryCharged->SetTextSize(0.043);//0.03
-
-      if (isTheoryComparison==1||isTheoryComparison==3){
-      TLegendEntry *ent_theory_Shanshan =legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al.","l");
-      TLegendEntry *ent_theory_PHSDW =legendSigma->AddEntry(gPHSDWShadowing,"PHSD w/ shadowing ","l");
-      TLegendEntry *ent_theory_PHSDWO =legendSigma->AddEntry(gPHSDWOShadowing,"PHSD w/o shadowing ","l");
-      }
-    }
-  
-  if((isTheoryComparison==1||isTheoryComparison==2)&&centMax==10)
-    {
-      TGraph *R_PbPb_cen = new TGraph("TheoryPredictions/R-PbPb_cen_cron1.5_eloss1.5.5100GeVD0.txt");
-      R_PbPb_cen->SetLineColor(kViolet);
-      R_PbPb_cen->SetFillColor(kViolet);
-      R_PbPb_cen->SetFillStyle(3011);
-      R_PbPb_cen->Draw("f same");
-      R_PbPb_cen->Draw("l same");
-      TLegendEntry *ent_theory_R_PbPb_cen =legendSigma->AddEntry(R_PbPb_cen,"I.Vitev (g=1.8-2.0)","bf");
-    }
-
-
-  TLatex* texSystnorm = new TLatex(0.23,0.70,"T_{AA} and lumi.");
-  texSystnorm->SetNDC();
-  texSystnorm->SetTextColor(1);
-  texSystnorm->SetTextFont(42);
-  texSystnorm->SetTextSize(0.04);
-  texSystnorm->SetLineWidth(2);
-  texSystnorm->Draw();
-  texSystnorm = new TLatex(0.23,0.65,"uncertainty");
-  texSystnorm->SetNDC();
-  texSystnorm->SetTextColor(1);
-  texSystnorm->SetTextFont(42);
-  texSystnorm->SetTextSize(0.04);
-  texSystnorm->SetLineWidth(2);
-  texSystnorm->Draw();
-  canvasRAA->Update();
-  canvasRAA->RedrawAxis();
+    if(isHadDupl==1&&isTheoryComparison==0)
+      {
+        TLegendEntry *ent_Charged=legendSigma->AddEntry(hTrackPt_trkCorr_PbPb_copy1,"R_{AA} charged hadrons","pl");//pf
+        ent_Charged->SetTextFont(42);
+        ent_Charged->SetLineColor(1);
+        ent_Charged->SetMarkerColor(1);
+        ent_Charged->SetTextSize(0.043);//0.03
+        if(isHadDupl==1 && isTheoryComparison==1){ent_Charged->SetTextSize(0.03);}
+      } 
+    legendSigma->Draw();
     
-  if(isHadDupl==0&&isTheoryComparison==0) 
-    {
-      canvasRAA->SaveAs(Form("plotRAA/canvasRAA_%.0f_%.0f.pdf",centMin,centMax));
-      canvasRAA->SaveAs(Form("plotRAA/canvasRAA_%.0f_%.0f.C",centMin,centMax));
+    if(isTheoryComparison && centMin==0. && centMax==100.)
+      {
+        TFile* infCUJETD5TeV = new TFile("TheoryPredictions/CUJET_D0_RAA_0_100.root");  
+        TGraphAsymmErrors* gCUJETD5TeV = (TGraphAsymmErrors*)infCUJETD5TeV->Get("gRAADmeson5TeV");
+        gCUJETD5TeV->SetLineWidth(1);
+        gCUJETD5TeV->SetLineColor(4);
+        gCUJETD5TeV->SetFillColor(4);
+        gCUJETD5TeV->SetFillStyle(3001);
+        gCUJETD5TeV->Draw("3 same");
+        TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-80.dat");
+        gShanshanD5TeV->SetLineWidth(3);
+        gShanshanD5TeV->SetLineColor(kRed+1);
+        gShanshanD5TeV->Draw("c same");
+        TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-0100-plot2.txt");
+        gMagdalenaD5TeV->SetLineColor(kGreen+4);
+        gMagdalenaD5TeV->SetFillColor(kGreen+4);
+        gMagdalenaD5TeV->SetFillStyle(3004);
+        gMagdalenaD5TeV->Draw("f same");
+        gMagdalenaD5TeV->Draw("l same");
+        
+        TLegendEntry *ent_theory_Shanshan =legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al. 0-80%","l");
+        TLegendEntry *ent_theory_Magdalena =legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
+        TLegendEntry *ent_theory_CUJET =legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");
+      }
+    if(isTheoryComparison && centMin==0. && centMax==10.)
+      {
+        TFile* infCUJETD5TeV = new TFile("TheoryPredictions/CUJET_D0_RAA_0_10.root");
+        TGraphAsymmErrors* gCUJETD5TeV = (TGraphAsymmErrors*)infCUJETD5TeV->Get("gRAADmeson5TeV");
+        gCUJETD5TeV->SetLineWidth(1);
+        gCUJETD5TeV->SetLineColor(4);
+        gCUJETD5TeV->SetFillColor(4);
+        gCUJETD5TeV->SetFillStyle(3001);
+        gCUJETD5TeV->Draw("3 same");
+        
+        TGraphErrors* gPHSDWOShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWoShadowing.txt");
+        TGraphErrors* gPHSDWShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWShadowing.txt");
+        TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-plot2.txt");
+        TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-10.dat");
+        gMagdalenaD5TeV->SetLineColor(kGreen+4);
+        gMagdalenaD5TeV->SetFillColor(kGreen+4);
+        if (isTheoryComparison==1||isTheoryComparison==2)
+          {
+            gMagdalenaD5TeV->SetFillStyle(3004);
+            gMagdalenaD5TeV->Draw("f same");
+            gMagdalenaD5TeV->Draw("l same");
+            gCUJETD5TeV->Draw("3 same");
+            
+          }
+        if (isTheoryComparison==1||isTheoryComparison==3)
+          {
+            gPHSDWShadowing->SetLineColor(kGreen+2);
+            gPHSDWShadowing->SetLineWidth(3);
+            gPHSDWShadowing->Draw("c same");
+            gPHSDWOShadowing->SetLineColor(kGreen+2);
+            gPHSDWOShadowing->SetLineWidth(3);
+            gPHSDWOShadowing->SetLineStyle(2);
+            gPHSDWOShadowing->Draw("c same");
+            gShanshanD5TeV->SetLineWidth(3);
+            gShanshanD5TeV->SetLineColor(kRed+1);
+            gShanshanD5TeV->Draw("c same");          
+          }
+        
+        if(superimposedALICE)
+          {
+            double p9059_d9x1y1_xval[9] = { 1.5, 2.5, 3.5, 4.5, 5.5, 7.0, 10.0, 14.0, 20.0 };
+            double p9059_d9x1y1_xerrminus[9] = { 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 2.0, 2.0, 4.0 };
+            double p9059_d9x1y1_xerrplus[9] = { 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 2.0, 2.0, 4.0 };
+            double p9059_d9x1y1_yval[9] = { 0.695, 0.694, 0.385, 0.245, 0.186, 0.153, 0.155, 0.174, 0.219 };
+            double p9059_d9x1y1_yerrminus[9] = { 0.3686583784481237, 0.29960307074527787, 0.123664869708418, 0.07561084578286371, 0.05500909015790027, 0.042485291572496, 0.0442944691807002, 0.06788225099390856, 0.137800580550301 };
+            double p9059_d9x1y1_yerrplus[9] = { 0.3318870289722092, 0.2141074496602115, 0.09546203433826454, 0.06264982043070834, 0.05060632371551998, 0.03982461550347976, 0.043416586692184816, 0.06859300255857008, 0.11045361017187261 };
+            double p9059_d9x1y1_ystatminus9[] = { 0.21, 0.079, 0.037, 0.026, 0.025, 0.019, 0.021, 0.048, 0.058 };
+            double p9059_d9x1y1_ystatplus[9] = { 0.21, 0.079, 0.037, 0.026, 0.025, 0.019, 0.021, 0.048, 0.058 };
+            int p9059_d9x1y1_numpoints = 9;
+            TGraphAsymmErrors *p9059_d9x1y1 = new TGraphAsymmErrors(p9059_d9x1y1_numpoints, p9059_d9x1y1_xval, p9059_d9x1y1_yval, p9059_d9x1y1_xerrminus, p9059_d9x1y1_xerrplus, p9059_d9x1y1_yerrminus, p9059_d9x1y1_yerrplus);
+            p9059_d9x1y1->SetName("/HepData/9059/d9x1y1");
+            p9059_d9x1y1->SetLineColor(2);
+            p9059_d9x1y1->SetMarkerColor(2);  
+            p9059_d9x1y1->SetLineWidth(4);  
+            p9059_d9x1y1->SetTitle("/HepData/9059/d9x1y1");
+            p9059_d9x1y1->Draw("psame");
+          }
+        if (isTheoryComparison==1||isTheoryComparison==2)
+          {
+            TLegendEntry *ent_theory_Magdalena = legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
+            TLegendEntry *ent_theory_CUJET = legendSigma->AddEntry(gCUJETD5TeV,"CUJET3.0","f");//pf
+          }
+        if (isTheoryComparison==1||isTheoryComparison==3)
+          {
+            TLegendEntry *ent_theory_Shanshan =legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al.","l");
+            TLegendEntry *ent_theory_PHSDW =legendSigma->AddEntry(gPHSDWShadowing,"PHSD w/ shadowing ","l");
+            TLegendEntry *ent_theory_PHSDWO =legendSigma->AddEntry(gPHSDWOShadowing,"PHSD w/o shadowing ","l");
+          }
+      }
+    
+    if((isTheoryComparison==1||isTheoryComparison==2)&&centMax==10)
+      {
+        TGraph *R_PbPb_cen = new TGraph("TheoryPredictions/R-PbPb_cen_cron1.5_eloss1.5.5100GeVD0.txt");
+        R_PbPb_cen->SetLineColor(kViolet);
+        R_PbPb_cen->SetFillColor(kViolet);
+        R_PbPb_cen->SetFillStyle(3011);
+        R_PbPb_cen->Draw("f same");
+        R_PbPb_cen->Draw("l same");
+        TLegendEntry *ent_theory_R_PbPb_cen =legendSigma->AddEntry(R_PbPb_cen,"I.Vitev (g=1.8-2.0)","bf");
     }
-  if(isHadDupl==1&&isTheoryComparison==0) canvasRAA->SaveAs(Form("plotRAA/canvasRAAchargedParticle_%.0f_%.0f.pdf",centMin,centMax));
-  if(isTheoryComparison==1) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonAll_%.0f_%.0f.pdf",centMin,centMax));
-  if(isTheoryComparison==2) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonQCD_%.0f_%.0f.pdf",centMin,centMax));
-  if(isTheoryComparison==3) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonTransport_%.0f_%.0f.pdf",centMin,centMax));
-  
+    
+    
+    TLatex* texSystnorm = new TLatex(0.23,0.70,"T_{AA} and lumi.");
+    texSystnorm->SetNDC();
+    texSystnorm->SetTextColor(1);
+    texSystnorm->SetTextFont(42);
+    texSystnorm->SetTextSize(0.04);
+    texSystnorm->SetLineWidth(2);
+    texSystnorm->Draw();
+    texSystnorm = new TLatex(0.23,0.65,"uncertainty");
+    texSystnorm->SetNDC();
+    texSystnorm->SetTextColor(1);
+    texSystnorm->SetTextFont(42);
+    texSystnorm->SetTextSize(0.04);
+    texSystnorm->SetLineWidth(2);
+    texSystnorm->Draw();
+    canvasRAA->Update();
+    canvasRAA->RedrawAxis();
+    
+    if(isHadDupl==0&&isTheoryComparison==0) 
+      {
+        canvasRAA->SaveAs(Form("plotRAA/canvasRAA_%.0f_%.0f.pdf",centMin,centMax));
+        canvasRAA->SaveAs(Form("plotRAA/canvasRAA_%.0f_%.0f.C",centMin,centMax));
+      }
+    if(isHadDupl==1&&isTheoryComparison==0) canvasRAA->SaveAs(Form("plotRAA/canvasRAAchargedParticle_%.0f_%.0f.pdf",centMin,centMax));
+    if(isTheoryComparison==1) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonAll_%.0f_%.0f.pdf",centMin,centMax));
+    if(isTheoryComparison==2) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonQCD_%.0f_%.0f.pdf",centMin,centMax));
+    if(isTheoryComparison==3) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonTransport_%.0f_%.0f.pdf",centMin,centMax));
+    
     if(isHadDupl==0&&isTheoryComparison==0) canvasRAA->SaveAs(Form("plotRAA/canvasRAA_%.0f_%.0f.png",centMin,centMax));
-  if(isHadDupl==1&&isTheoryComparison==0) canvasRAA->SaveAs(Form("plotRAA/canvasRAAchargedParticle_%.0f_%.0f.png",centMin,centMax));
-  if(isTheoryComparison==1) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonAll_%.0f_%.0f.png",centMin,centMax));
-  if(isTheoryComparison==2) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonQCD_%.0f_%.0f.png",centMin,centMax));
-  if(isTheoryComparison==3) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonTransport_%.0f_%.0f.png",centMin,centMax));
-
+    if(isHadDupl==1&&isTheoryComparison==0) canvasRAA->SaveAs(Form("plotRAA/canvasRAAchargedParticle_%.0f_%.0f.png",centMin,centMax));
+    if(isTheoryComparison==1) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonAll_%.0f_%.0f.png",centMin,centMax));
+    if(isTheoryComparison==2) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonQCD_%.0f_%.0f.png",centMin,centMax));
+    if(isTheoryComparison==3) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonTransport_%.0f_%.0f.png",centMin,centMax));
+    
 }
 
 int main(int argc, char *argv[])

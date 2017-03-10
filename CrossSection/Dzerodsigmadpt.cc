@@ -1,3 +1,4 @@
+using namespace std;
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TLatex.h"
@@ -218,17 +219,17 @@ void Dzerodsigmadpt(TString inputFONLLdat, TString outputFONLL,TString label)
 
   gaeSigma->SetName("gaeSigma");
   gaeSigmaDzero->SetName("gaeSigmaDzero");
-  cr->SaveAs(Form("canvas_%s_%s.pdf",inputFONLLdat.Data(),label.Data()));
-  cr->SaveAs(Form("canvas_%s_%s.eps",inputFONLLdat.Data(),label.Data()));
+  cr->SaveAs(Form("plotFONLL/canvas_%s_%s.pdf",inputFONLLdat.Data(),label.Data()));
+  cr->SaveAs(Form("plotFONLL/canvas_%s_%s.eps",inputFONLLdat.Data(),label.Data()));
   
-  TFile*foutput=new TFile(outputFONLL.Data(),"recreate");
+  TFile* foutput = new TFile(outputFONLL.Data(),"recreate");
   foutput->cd();
   gaeSigma->Write();
   gaeSigmaDzero->Write();
   hpt->Write();
   hminall->Write();
   hmaxall->Write();
-
+  foutput->Close();
   
 }
 

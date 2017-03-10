@@ -243,7 +243,7 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   static int count=0;
   count++;
 
-  TCanvas* c= new TCanvas(Form("c%d",count),"",600,600);
+  TCanvas* c = new TCanvas(Form("c%d",count),"",600,600);
   TH1D* h = new TH1D(Form("h-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
   TH1D* hMCSignal = new TH1D(Form("hMCSignal-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
   TH1D* hMCSwapped = new TH1D(Form("hMCSwapped-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
@@ -386,8 +386,6 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   Double_t yield = mass->Integral(minhisto,maxhisto)/binwidthmass;
   Double_t yieldErr = mass->Integral(minhisto,maxhisto)/binwidthmass*mass->GetParError(0)/mass->GetParameter(0);
   
-  std::cout<<"YIELD="<<yield<<std::endl;
-
   TLegend* leg = new TLegend(0.65,0.58,0.82,0.88,NULL,"brNDC");
   leg->SetBorderSize(0);
   leg->SetTextSize(0.04);
@@ -416,42 +414,69 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   texCol->SetTextFont(42);
   texCol->Draw();
 
-  TLatex* tex;
-
-  tex = new TLatex(0.22,0.78,Form("%.1f < p_{T} < %.1f GeV/c",ptmin,ptmax));
+  TLatex* tex = new TLatex(0.22,0.78,Form("%.1f < p_{T} < %.1f GeV/c",ptmin,ptmax));
   tex->SetNDC();
   tex->SetTextFont(42);
   tex->SetTextSize(0.04);
   tex->SetLineWidth(2);
   tex->Draw();
   
-  if(centMax>0){
-  TString texper="%";
-  tex = new TLatex(0.22,0.71,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
-  tex->SetNDC();
-  tex->SetTextColor(1);
-  tex->SetTextFont(42);
-  tex->SetTextSize(0.045);
-  tex->SetLineWidth(2);
-  tex->Draw();
-  }
-
-  tex = new TLatex(0.22,0.83,"|y| < 1.0");
-  tex->SetNDC();
-  tex->SetTextFont(42);
-  tex->SetTextSize(0.04);
-  tex->SetLineWidth(2);
-  tex->Draw();
+  TLatex* texcent;
+  if(centMax>0)
+    {
+      TString texper="%";
+      texcent = new TLatex(0.22,0.71,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+      texcent->SetNDC();
+      texcent->SetTextColor(1);
+      texcent->SetTextFont(42);
+      texcent->SetTextSize(0.045);
+      texcent->SetLineWidth(2);
+      texcent->Draw();
+    }
+  TLatex* texrap = new TLatex(0.22,0.83,"|y| < 1.0");
+  texrap->SetNDC();
+  texrap->SetTextFont(42);
+  texrap->SetTextSize(0.04);
+  texrap->SetLineWidth(2);
+  texrap->Draw();
   
   total=f;
 
   h->GetFunction(Form("f%d",count))->Delete();
-  TH1F* histo_copy_nofitfun = ( TH1F * ) h->Clone("histo_copy_nofitfun");
+  TH1F* histo_copy_nofitfun = (TH1F*)h->Clone("histo_copy_nofitfun");
   histo_copy_nofitfun->Draw("esame");
 
 //
   if(!isPbPb) c->SaveAs(Form("plotFits/DMass%s_%d.pdf",collisionsystem.Data(),count));
   else c->SaveAs(Form("plotFits/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
+  
+  TCanvas* ccopy = new TCanvas(Form("ccopy%d",count),"",600,600);
+  h->Draw("e");
+  background->Draw("same");
+  mass->SetRange(minhisto,maxhisto);
+  mass->Draw("same");
+  massSwap->SetRange(minhisto,maxhisto);
+  massSwap->Draw("same");
+  f->Draw("same");
+  leg->Draw("same");
+  texCms->Draw();
+  texCol->Draw();
+  tex->Draw();
+  if(centMax>0)
+    {
+      texcent->Draw();
+    }
+  texrap->Draw();
+  TLatex* texyield = new TLatex(0.22,0.65,Form("N = %.0f #pm %.0f",yield,yieldErr));
+  texyield->SetNDC();
+  texyield->SetTextFont(42);
+  texyield->SetTextSize(0.04);
+  texyield->SetLineWidth(2);
+  texyield->Draw();
+  histo_copy_nofitfun->Draw("esame");
+
+  if(!isPbPb) ccopy->SaveAs(Form("plotFitswYield/DMass%s_%d.pdf",collisionsystem.Data(),count));
+  else ccopy->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
   
   return mass;
 }
