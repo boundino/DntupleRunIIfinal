@@ -222,8 +222,6 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
         gCUJETD5TeV->SetLineColor(4);
         gCUJETD5TeV->SetFillColor(4);
         gCUJETD5TeV->SetFillStyle(3001);
-        gCUJETD5TeV->Draw("3 same");
-        
         TGraphErrors* gPHSDWOShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWoShadowing.txt");
         TGraphErrors* gPHSDWShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWShadowing.txt");
         TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-plot2.txt");
