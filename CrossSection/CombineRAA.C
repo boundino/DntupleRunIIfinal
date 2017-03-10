@@ -204,15 +204,18 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
         gShanshanD5TeV->SetLineColor(kRed+1);
         gShanshanD5TeV->Draw("c same");
         TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-0100-plot2.txt");
-        gMagdalenaD5TeV->SetLineColor(kGreen+4);
-        gMagdalenaD5TeV->SetFillColor(kGreen+4);
+        gMagdalenaD5TeV->SetLineWidth(3);
+        gMagdalenaD5TeV->SetLineColor(kCyan+1);
         gMagdalenaD5TeV->SetFillStyle(3004);
         gMagdalenaD5TeV->Draw("f same");
         gMagdalenaD5TeV->Draw("l same");
-        
-        TLegendEntry *ent_theory_Shanshan =legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al. 0-80%","l");
-        TLegendEntry *ent_theory_Magdalena =legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
-        TLegendEntry *ent_theory_CUJET =legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");
+        /*
+        gMagdalenaD5TeV->SetLineColor(kGreen+4);
+        gMagdalenaD5TeV->SetFillColor(kGreen+4);
+        */
+        TLegendEntry *ent_theory_Shanshan = legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al. 0-80%","l");
+        TLegendEntry *ent_theory_Magdalena = legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
+        TLegendEntry *ent_theory_CUJET = legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");
       }
     if(isTheoryComparison && centMin==0. && centMax==10.)
       {
@@ -226,15 +229,26 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
         TGraphErrors* gPHSDWShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWShadowing.txt");
         TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-plot2.txt");
         TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-10.dat");
+        gMagdalenaD5TeV->SetLineWidth(2);
+        gMagdalenaD5TeV->SetLineColor(kCyan+1);
+        gMagdalenaD5TeV->SetFillColor(3);
+        gMagdalenaD5TeV->SetFillStyle(3004);
+        /*
         gMagdalenaD5TeV->SetLineColor(kGreen+4);
         gMagdalenaD5TeV->SetFillColor(kGreen+4);
-        if (isTheoryComparison==1||isTheoryComparison==2)
+        */
+        TGraph *R_PbPb_cen = new TGraph("TheoryPredictions/R-PbPb_cen_cron1.5_eloss1.5.5100GeVD0.txt");
+        R_PbPb_cen->SetLineColor(kViolet);
+        R_PbPb_cen->SetFillColor(kViolet);
+        R_PbPb_cen->SetFillStyle(3011);
+        R_PbPb_cen->SetLineWidth(2);
+        if(isTheoryComparison==1||isTheoryComparison==2)
           {
-            gMagdalenaD5TeV->SetFillStyle(3004);
+            gCUJETD5TeV->Draw("3 same");
             gMagdalenaD5TeV->Draw("f same");
             gMagdalenaD5TeV->Draw("l same");
-            gCUJETD5TeV->Draw("3 same");
-            
+            R_PbPb_cen->Draw("f same");
+            R_PbPb_cen->Draw("l same");
           }
         if (isTheoryComparison==1||isTheoryComparison==3)
           {
@@ -273,6 +287,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
           {
             TLegendEntry *ent_theory_Magdalena = legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
             TLegendEntry *ent_theory_CUJET = legendSigma->AddEntry(gCUJETD5TeV,"CUJET3.0","f");//pf
+            TLegendEntry *ent_theory_R_PbPb_cen =legendSigma->AddEntry(R_PbPb_cen,"I.Vitev (g=1.8-2.0)","bf");
           }
         if (isTheoryComparison==1||isTheoryComparison==3)
           {
@@ -281,18 +296,6 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
             TLegendEntry *ent_theory_PHSDWO =legendSigma->AddEntry(gPHSDWOShadowing,"PHSD w/o shadowing ","l");
           }
       }
-    
-    if((isTheoryComparison==1||isTheoryComparison==2)&&centMax==10)
-      {
-        TGraph *R_PbPb_cen = new TGraph("TheoryPredictions/R-PbPb_cen_cron1.5_eloss1.5.5100GeVD0.txt");
-        R_PbPb_cen->SetLineColor(kViolet);
-        R_PbPb_cen->SetFillColor(kViolet);
-        R_PbPb_cen->SetFillStyle(3011);
-        R_PbPb_cen->Draw("f same");
-        R_PbPb_cen->Draw("l same");
-        TLegendEntry *ent_theory_R_PbPb_cen =legendSigma->AddEntry(R_PbPb_cen,"I.Vitev (g=1.8-2.0)","bf");
-    }
-    
     
     TLatex* texSystnorm = new TLatex(0.23,0.70,"T_{AA} and lumi.");
     texSystnorm->SetNDC();
