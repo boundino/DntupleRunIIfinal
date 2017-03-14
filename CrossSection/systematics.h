@@ -41,8 +41,10 @@ TF1* fPPPtShape = new TF1("fPPPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
 // Normalization uncertainty
 double PbPbNMBUncertainty	= 2;			// uncertainty associated with minbias events,
 							// used in RAA for pT < 20 GeV (4/7/2016)
-double TAAUncertainty0to100	= 8.9;			// Updated number (4/7/2016)
-double TAAUncertainty0to10	= 1.7;			// Updated number (4/7/2016)
+double TAAUncertainty0to100HI	= 2.8;			// Updated number (4/7/2016)
+double TAAUncertainty0to100LO	= 3.4;			// Updated number (4/7/2016)
+double TAAUncertainty0to10HI	= 1.9;			// Updated number (4/7/2016)
+double TAAUncertainty0to10LO	= 3.0;			// Updated number (4/7/2016)
 double PbPbTrigger		= 2.0;			// Statistical uncertainty of the zero-coefficient of the linear fit
 double PbPbLumiUncertainty	= 10;			// 10% for the moment, to be updated (from Daniel), NOT used
 
@@ -272,20 +274,25 @@ void deleteinitial()
 // =============================================================================================================
 // RAA systematics
 // =============================================================================================================
-float normalizationUncertaintyForRAA(double centL=0,double centH=100)
+float normalizationUncertaintyForRAA(double centL=0,double centH=100,bool isupper=true)
 {
   double sys = 0;
   sys+=ppLumiUncertainty*ppLumiUncertainty;
-   sys+=PbPbNMBUncertainty*PbPbNMBUncertainty;
-   if(centL==0&&centH==10) 
-     {
-       // 0-10%
-       sys+=TAAUncertainty0to10*TAAUncertainty0to10;
-     } else {
-     // 0-100%
-     sys+=TAAUncertainty0to100*TAAUncertainty0to100;
-   }
-   return sqrt(sys);
+  sys+=PbPbNMBUncertainty*PbPbNMBUncertainty;
+  
+  if(centL==0&&centH==10) 
+    {
+      // 0-10%
+      double TAAUncertainty0to10 = isupper?TAAUncertainty0to10LO:TAAUncertainty0to10HI;
+      sys+=TAAUncertainty0to10*TAAUncertainty0to10;
+    } 
+  else
+    {
+      // 0-100%
+      double TAAUncertainty0to100 = isupper?TAAUncertainty0to100LO:TAAUncertainty0to100HI;
+      sys+=TAAUncertainty0to100*TAAUncertainty0to100;
+    }
+  return sqrt(sys);
 }
 
 float systematicsForRAA(double pt,double centL=0,double centH=100, double HLT=0, int stage=0)
@@ -394,17 +401,19 @@ float systematicsPP(double pt, double HLT=0,int stage=0)
 // =============================================================================================================
 // cross-section systematics for PbPb
 // =============================================================================================================
-float normalizationUncertaintyForPbPb(double centL=0,double centH=100)
+float normalizationUncertaintyForPbPb(double centL=0,double centH=100,bool isupper=true)
 {
   double sys = ((DKpiBRUncertainty*DKpiBRUncertainty)+(PbPbNMBUncertainty*PbPbNMBUncertainty));
   if(centL==0&&centH==10)
     {
       // 0-10%
+      double TAAUncertainty0to10 = isupper?TAAUncertainty0to10LO:TAAUncertainty0to10HI;
       sys+=TAAUncertainty0to10*TAAUncertainty0to10;
     }
   else
     {
       // 0-100%
+      double TAAUncertainty0to100 = isupper?TAAUncertainty0to100LO:TAAUncertainty0to100HI;
       sys+=TAAUncertainty0to100*TAAUncertainty0to100;
     }   
   return sqrt(sys);
@@ -434,7 +443,7 @@ float systematicsPbPb(double pt, double centL=0,double centH=100, double HLT=0, 
 
   sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
 
-  sys+=TAAUncertainty0to100*TAAUncertainty0to100;
+  //sys+=TAAUncertainty0to100*TAAUncertainty0to100;
   
   if(stage==2) return sqrt(sys);
   sys+=PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))* 

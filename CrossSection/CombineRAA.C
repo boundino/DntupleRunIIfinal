@@ -111,10 +111,11 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   hNuclearModificationMB->SetMarkerColor(1);//kGreen+4
   hNuclearModificationMB->Draw("psame");//same
 
-  Float_t systnorm = normalizationUncertaintyForRAA(centMin,centMax)*1.e-2;
+  Float_t systnormup = normalizationUncertaintyForRAA(centMin,centMax,true)*1.e-2;
+  Float_t systnormlo = normalizationUncertaintyForRAA(centMin,centMax,false)*1.e-2;
   TBox* bSystnorm;
-  if(isHadDupl==1)  bSystnorm= new TBox(0.7,1-systnorm,0.9,1+systnorm);
-  else bSystnorm= new TBox(1.0,1-systnorm,1.2,1+systnorm);
+  if(isHadDupl==1)  bSystnorm = new TBox(0.7,1-systnormlo,0.9,1+systnormup);
+  else bSystnorm= new TBox(1.0,1-systnormlo,1.2,1+systnormup);
   bSystnorm->SetLineColor(16);
   bSystnorm->SetFillColor(16);
   bSystnorm->Draw();
