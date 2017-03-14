@@ -164,7 +164,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigma->Draw("same");
    
   TLatex * tlatex1;
-  if(isPbPb==0) tlatex1 = new TLatex(0.95,0.96,"25.8 pb^{-1} (5.02 TeV pp)");
+  if(isPbPb==0) tlatex1 = new TLatex(0.95,0.96,"27.4 pb^{-1} (5.02 TeV pp)");
   else tlatex1 = new TLatex(0.95,0.96,"404 #mub^{-1} (5.02 TeV PbPb)");
   tlatex1->SetNDC();
   tlatex1->SetTextAlign(32);

@@ -24,7 +24,7 @@ double DKpiBRUncertainty	= 1.29;			// from PDG
 double ppLumiUncertainty 	= 2.3;			// 5% for the moment, to be updated (4/7/2016)
 
 // Point-to-point
-double ppTrackingEfficiency 	= 4;   			// single track systematics from D* studies //4
+double ppTrackingEfficiency 	        = 4;   		// single track systematics from D* studies //4
 double PbPbTrackingEfficiency0100 	= 6;   		// single track systematics from D* studies //5
 double PbPbTrackingEfficiency010 	= 6.5;   	// single track systematics from D* studies //5
 TH1D*  ppSignalExtraction;				// (4/7/2016)
@@ -325,12 +325,12 @@ float systematicsForRAA(double pt,double centL=0,double centH=100, double HLT=0,
   
   if(centL==0&&centH==10)  
     {
-      sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
+      //sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
       sys+=(PbPbTrackingEfficiency010*2)*(PbPbTrackingEfficiency010*2);      
     }	    
   if(centL==0&&centH==100) 
     {
-      sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
+      //sys+=(ppTrackingEfficiency*2)*(ppTrackingEfficiency*2);
       sys+=(PbPbTrackingEfficiency0100*2)*(PbPbTrackingEfficiency0100*2);      
     }
   if (stage==3) return sqrt(sys);
@@ -392,7 +392,7 @@ float systematicsPP(double pt, double HLT=0,int stage=0)
   
   sys+=ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt))* 
     ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt));
-
+  
   deleteinitial();
   
   return sqrt(sys);
@@ -517,17 +517,16 @@ void plotSystematicsRAA(double centL=0,double centH=10)
 
    for (double i=2;i<100;i+=0.1)
    {      
-      drawSys(i,systematicsForRAA(i,centL,centH,0,0), i+0.1,systematicsForRAA(i+0.1,centL,centH,0,0),1);
-//      drawSys(i,systematicsForRAA(i,0,1), i+0.1,systematicsForRAA(i+0.1,0,1),2);
-      drawSys(i,sqrt((systematicsForRAA(i,centL,centH,0,2)*systematicsForRAA(i,centL,centH,0,2))-(systematicsForRAA(i,centL,centH,0,1)*systematicsForRAA(i,centL,centH,0,1))),
-              i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,2)*systematicsForRAA(i+0.1,centL,centH,0,2))-(systematicsForRAA(i+0.1,centL,centH,0,1)*systematicsForRAA(i+0.1,centL,centH,0,1))),4);
-      drawSys(i,sqrt((systematicsForRAA(i,centL,centH,0,3)*systematicsForRAA(i,centL,centH,0,3))-(systematicsForRAA(i,centL,centH,0,2)*systematicsForRAA(i,centL,centH,0,2))),
-              i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,3)*systematicsForRAA(i+0.1,centL,centH,0,3))-(systematicsForRAA(i+0.1,centL,centH,0,2)*systematicsForRAA(i+0.1,centL,centH,0,2))),kGreen+2);
-      drawSys(i,sqrt((systematicsForRAA(i,centL,centH,0,0)*systematicsForRAA(i,centL,centH,0,0))-(systematicsForRAA(i,centL,centH,0,3)*systematicsForRAA(i,centL,centH,0,3))),
-              i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,0)*systematicsForRAA(i+0.1,centL,centH,0,0))-(systematicsForRAA(i+0.1,centL,centH,0,3)*systematicsForRAA(i+0.1,centL,centH,0,3))),kMagenta);
-
+     drawSys(i,systematicsForRAA(i,centL,centH,0,0), i+0.1,systematicsForRAA(i+0.1,centL,centH,0,0),1);
+     //      drawSys(i,systematicsForRAA(i,0,1), i+0.1,systematicsForRAA(i+0.1,0,1),2);
+     drawSys(i,sqrt((systematicsForRAA(i,centL,centH,0,2)*systematicsForRAA(i,centL,centH,0,2))-(systematicsForRAA(i,centL,centH,0,1)*systematicsForRAA(i,centL,centH,0,1))),
+             i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,2)*systematicsForRAA(i+0.1,centL,centH,0,2))-(systematicsForRAA(i+0.1,centL,centH,0,1)*systematicsForRAA(i+0.1,centL,centH,0,1))),4);
+     drawSys(i,sqrt((systematicsForRAA(i,centL,centH,0,3)*systematicsForRAA(i,centL,centH,0,3))-(systematicsForRAA(i,centL,centH,0,2)*systematicsForRAA(i,centL,centH,0,2))),
+             i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,3)*systematicsForRAA(i+0.1,centL,centH,0,3))-(systematicsForRAA(i+0.1,centL,centH,0,2)*systematicsForRAA(i+0.1,centL,centH,0,2))),kGreen+2);
+     drawSys(i,sqrt((systematicsForRAA(i,centL,centH,0,0)*systematicsForRAA(i,centL,centH,0,0))-(systematicsForRAA(i,centL,centH,0,3)*systematicsForRAA(i,centL,centH,0,3))),
+             i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,0)*systematicsForRAA(i+0.1,centL,centH,0,0))-(systematicsForRAA(i+0.1,centL,centH,0,3)*systematicsForRAA(i+0.1,centL,centH,0,3))),kMagenta);     
    }
-
+   
    TH1D *h1 = new TH1D("h1","",100,0,1);
    h1->SetLineWidth(2); h1->SetLineColor(1);
    TH1D *h2 = new TH1D("h2","",100,0,1);
@@ -589,8 +588,6 @@ void plotSystematicsRAA(double centL=0,double centH=10)
    leg->AddEntry(h6,"B feed down subtraction","l");
    leg->Draw();
    canvas->SaveAs(Form("SystematicSummaryPbPb_Cent%d.pdf",(int)centH));
-
-
 }
 
 // =============================================================================================================
@@ -598,7 +595,7 @@ void plotSystematicsRAA(double centL=0,double centH=10)
 // =============================================================================================================
 void plotSystematicsPP()
 {
-  TCanvas*canvas=new TCanvas("canvas","canvas",600,600);//550,500
+  TCanvas* canvas = new TCanvas("canvas","canvas",600,600);//550,500
   canvas->cd();
   canvas->SetFillColor(0);
   canvas->SetBorderMode(0);
@@ -689,28 +686,27 @@ void plotSystematicsPP()
   texY->SetTextSize(0.045);
   texY->SetLineWidth(2);
   texY->Draw();
-
-   TLegend *leg = new TLegend(0.2147651,0.1762653,0.7818792,0.3717277);
-   leg->SetBorderSize(0);
-   leg->SetFillStyle(0);
-   leg->SetTextSize(0.04);
-   leg->AddEntry(h2,"Overall Normalization (Lumi + BR)","l");
-   leg->AddEntry(h1,"Total Systematics","l");
-   leg->AddEntry(h4,"Signal Extraction","l");
-   leg->AddEntry(h5,"D Meson Selection and Correction","l");
-   leg->AddEntry(h6,"B feed down subtraction","l");
-   leg->Draw();
-
+  
+  TLegend *leg = new TLegend(0.2147651,0.1762653,0.7818792,0.3717277);
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.04);
+  leg->AddEntry(h2,"Overall Normalization (Lumi + BR)","l");
+  leg->AddEntry(h1,"Total Systematics","l");
+  leg->AddEntry(h4,"Signal Extraction","l");
+  leg->AddEntry(h5,"D Meson Selection and Correction","l");
+  leg->AddEntry(h6,"B feed down subtraction","l");
+  leg->Draw();
+  
   canvas->SaveAs("SystematicSummaryPP.pdf");
-  }
+}
 
 
-void plotNormalisationUnc(){
-
-std::cout<<"normalisation uncertainty RAA 0-100="<<normalizationUncertaintyForRAA(0,100)<<std::endl;
-std::cout<<"normalisation uncertainty RAA 0-10="<<normalizationUncertaintyForRAA(0,10)<<std::endl;
-std::cout<<"normalisation uncertainty pp="<<normalizationUncertaintyForPP()<<std::endl;
-std::cout<<"normalisation uncertainty PbPb 0-100="<<normalizationUncertaintyForPbPb(0,100)<<std::endl;
-std::cout<<"normalisation uncertainty PbPb 0-10="<<normalizationUncertaintyForPbPb(0,10)<<std::endl;
-
+void plotNormalisationUnc()
+{
+  std::cout<<"normalisation uncertainty RAA 0-100="<<normalizationUncertaintyForRAA(0,100)<<std::endl;
+  std::cout<<"normalisation uncertainty RAA 0-10="<<normalizationUncertaintyForRAA(0,10)<<std::endl;
+  std::cout<<"normalisation uncertainty pp="<<normalizationUncertaintyForPP()<<std::endl;
+  std::cout<<"normalisation uncertainty PbPb 0-100="<<normalizationUncertaintyForPbPb(0,100)<<std::endl;
+  std::cout<<"normalisation uncertainty PbPb 0-10="<<normalizationUncertaintyForPbPb(0,10)<<std::endl; 
 }
