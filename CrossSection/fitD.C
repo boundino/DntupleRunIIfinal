@@ -22,8 +22,9 @@ TString selmceff;
 TString selmcgen;
 TString collisionsystem;
 Float_t hiBinMin,hiBinMax,centMin,centMax;
+TString tGJ;
 
-void fitD(int usePbPb=1, TString inputdata="/data/HeavyFlavourRun2/MC2015/Dntuple/PbPb/ntD_EvtBase_20160513_DfinderMC_PbPb_20160502_dPt1tkPt0p5_D0_prompt_Dpt2Dy1p1tkPt0p7tkEta2Decay2p9Dalpha0p14Skim_pthatweight.root" , TString inputmc="/data/HeavyFlavourRun2/MC2015/Dntuple/PbPb/ntD_EvtBase_20160513_DfinderMC_PbPb_20160502_dPt1tkPt0p5_D0_prompt_Dpt2Dy1p1tkPt0p7tkEta2Decay2p9Dalpha0p14Skim_pthatweight.root", TString trgselection="1",  TString cut="Dy>-1.&&Dy<1.&&Dtrk1highPurity&&Dtrk2highPurity&&Dtrk1Pt>1.0&&Dtrk2Pt>1.0&&Dtrk1PtErr/Dtrk1Pt<0.3&&Dtrk2PtErr/Dtrk2Pt<0.3&&abs(Dtrk1Eta)<1.5&&abs(Dtrk2Eta)<1.5&&((DlxyBS/DlxyBSErr)>1.5&&Dalpha<0.12&&((Dpt>1&&Dpt<2&&(DsvpvDistance/DsvpvDisErr)>6.0&&Dchi2cl>0.25)||(Dpt>2&&Dpt<4&&(DsvpvDistance/DsvpvDisErr)>5.86&&Dchi2cl>0.224)||(Dpt>4&&Dpt<5&&(DsvpvDistance/DsvpvDisErr)>5.46&&Dchi2cl>0.196)||(Dpt>5&&Dpt<6&&(DsvpvDistance/DsvpvDisErr)>4.86&&Dchi2cl>0.170)||(Dpt>6&&Dpt<8&&(DsvpvDistance/DsvpvDisErr)>4.54&&Dchi2cl>0.125)||(Dpt>8&&Dpt<10&&(DsvpvDistance/DsvpvDisErr)>4.42&&Dchi2cl>0.091)||(Dpt>10&&Dpt<15&&(DsvpvDistance/DsvpvDisErr)>4.06&&Dchi2cl>0.069)||(Dpt>15&&Dpt<20&&(DsvpvDistance/DsvpvDisErr)>3.71&&Dchi2cl>0.056)||(Dpt>20&&Dpt<25&&(DsvpvDistance/DsvpvDisErr)>3.25&&Dchi2cl>0.054)||(Dpt>25&&(DsvpvDistance/DsvpvDisErr)>2.97&&Dchi2cl>0.050)))", TString cutmcgen="((GisSignal==1||GisSignal==2)&&(Gy>-1&&Gy<1))", int isMC=1, Double_t luminosity=1., int doweight=0, TString collsyst="PbPbMB", TString outputfile="ROOTfiles/hPtSpectrumDzeroPbPbMBMCClosureMYTEST.root", Float_t centmin=0., Float_t centmax=0.)
+void fitD(int usePbPb=1, TString inputdata="/data/HeavyFlavourRun2/MC2015/Dntuple/PbPb/ntD_EvtBase_20160513_DfinderMC_PbPb_20160502_dPt1tkPt0p5_D0_prompt_Dpt2Dy1p1tkPt0p7tkEta2Decay2p9Dalpha0p14Skim_pthatweight.root" , TString inputmc="/data/HeavyFlavourRun2/MC2015/Dntuple/PbPb/ntD_EvtBase_20160513_DfinderMC_PbPb_20160502_dPt1tkPt0p5_D0_prompt_Dpt2Dy1p1tkPt0p7tkEta2Decay2p9Dalpha0p14Skim_pthatweight.root", TString trgselection="1",  TString cut="Dy>-1.&&Dy<1.&&Dtrk1highPurity&&Dtrk2highPurity&&Dtrk1Pt>1.0&&Dtrk2Pt>1.0&&Dtrk1PtErr/Dtrk1Pt<0.3&&Dtrk2PtErr/Dtrk2Pt<0.3&&abs(Dtrk1Eta)<1.5&&abs(Dtrk2Eta)<1.5&&((DlxyBS/DlxyBSErr)>1.5&&Dalpha<0.12&&((Dpt>1&&Dpt<2&&(DsvpvDistance/DsvpvDisErr)>6.0&&Dchi2cl>0.25)||(Dpt>2&&Dpt<4&&(DsvpvDistance/DsvpvDisErr)>5.86&&Dchi2cl>0.224)||(Dpt>4&&Dpt<5&&(DsvpvDistance/DsvpvDisErr)>5.46&&Dchi2cl>0.196)||(Dpt>5&&Dpt<6&&(DsvpvDistance/DsvpvDisErr)>4.86&&Dchi2cl>0.170)||(Dpt>6&&Dpt<8&&(DsvpvDistance/DsvpvDisErr)>4.54&&Dchi2cl>0.125)||(Dpt>8&&Dpt<10&&(DsvpvDistance/DsvpvDisErr)>4.42&&Dchi2cl>0.091)||(Dpt>10&&Dpt<15&&(DsvpvDistance/DsvpvDisErr)>4.06&&Dchi2cl>0.069)||(Dpt>15&&Dpt<20&&(DsvpvDistance/DsvpvDisErr)>3.71&&Dchi2cl>0.056)||(Dpt>20&&Dpt<25&&(DsvpvDistance/DsvpvDisErr)>3.25&&Dchi2cl>0.054)||(Dpt>25&&(DsvpvDistance/DsvpvDisErr)>2.97&&Dchi2cl>0.050)))", TString cutmcgen="((GisSignal==1||GisSignal==2)&&(Gy>-1&&Gy<1))", int isMC=1, Double_t luminosity=1., int doweight=0, TString collsyst="PbPbMB", TString outputfile="ROOTfiles/hPtSpectrumDzeroPbPbMBMCClosureMYTEST.root", Float_t centmin=0., Float_t centmax=0., Int_t useGJ=1.)
 {
   collisionsystem=collsyst;
   hiBinMin = centmin*2;
@@ -35,7 +36,9 @@ void fitD(int usePbPb=1, TString inputdata="/data/HeavyFlavourRun2/MC2015/Dntupl
   
   if (!(usePbPb==1||usePbPb==0)) std::cout<<"ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!, you are using a non valid isPbPb option"<<std::endl;
   bool isPbPb=(bool)(usePbPb);
-
+  bool isGJ=(bool)(useGJ);
+  tGJ = isGJ?"GJ":"TO";
+  
   if(!isPbPb)
     {
       seldata = Form("%s&&%s",trgselection.Data(),cut.Data());
@@ -447,8 +450,8 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   histo_copy_nofitfun->Draw("esame");
 
 //
-  if(!isPbPb) c->SaveAs(Form("plotFits/DMass%s_%d.pdf",collisionsystem.Data(),count));
-  else c->SaveAs(Form("plotFits/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
+  if(!isPbPb) c->SaveAs(Form("plotFits/DMass%s_%d_%s.pdf",collisionsystem.Data(),count,tGJ.Data()));
+  else c->SaveAs(Form("plotFits/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
   
   TCanvas* ccopy = new TCanvas(Form("ccopy%d",count),"",600,600);
   h->Draw("e");
@@ -475,8 +478,8 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   texyield->Draw();
   histo_copy_nofitfun->Draw("esame");
 
-  if(!isPbPb) ccopy->SaveAs(Form("plotFitswYield/DMass%s_%d.pdf",collisionsystem.Data(),count));
-  else ccopy->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
+  if(!isPbPb) ccopy->SaveAs(Form("plotFitsYield/DMass%s_%d_%s.pdf",collisionsystem.Data(),count,tGJ.Data()));
+  else ccopy->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
   
   return mass;
 }
@@ -484,9 +487,9 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 
 int main(int argc, char *argv[])
 {
-  if(argc==14)
+  if(argc==15)
     {
-      fitD(atoi(argv[1]),argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],atof(argv[12]),atof(argv[13]));
+      fitD(atoi(argv[1]),argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],atof(argv[12]),atof(argv[13]),atoi(argv[14]));
       return 0;
     }
   else if(argc==12)
