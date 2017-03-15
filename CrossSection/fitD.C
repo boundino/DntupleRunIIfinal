@@ -24,9 +24,12 @@ TString collisionsystem;
 Float_t hiBinMin,hiBinMax,centMin,centMax;
 TString tGJ;
 
-void fitD(int usePbPb=1, TString inputdata="/data/HeavyFlavourRun2/MC2015/Dntuple/PbPb/ntD_EvtBase_20160513_DfinderMC_PbPb_20160502_dPt1tkPt0p5_D0_prompt_Dpt2Dy1p1tkPt0p7tkEta2Decay2p9Dalpha0p14Skim_pthatweight.root" , TString inputmc="/data/HeavyFlavourRun2/MC2015/Dntuple/PbPb/ntD_EvtBase_20160513_DfinderMC_PbPb_20160502_dPt1tkPt0p5_D0_prompt_Dpt2Dy1p1tkPt0p7tkEta2Decay2p9Dalpha0p14Skim_pthatweight.root", TString trgselection="1",  TString cut="Dy>-1.&&Dy<1.&&Dtrk1highPurity&&Dtrk2highPurity&&Dtrk1Pt>1.0&&Dtrk2Pt>1.0&&Dtrk1PtErr/Dtrk1Pt<0.3&&Dtrk2PtErr/Dtrk2Pt<0.3&&abs(Dtrk1Eta)<1.5&&abs(Dtrk2Eta)<1.5&&((DlxyBS/DlxyBSErr)>1.5&&Dalpha<0.12&&((Dpt>1&&Dpt<2&&(DsvpvDistance/DsvpvDisErr)>6.0&&Dchi2cl>0.25)||(Dpt>2&&Dpt<4&&(DsvpvDistance/DsvpvDisErr)>5.86&&Dchi2cl>0.224)||(Dpt>4&&Dpt<5&&(DsvpvDistance/DsvpvDisErr)>5.46&&Dchi2cl>0.196)||(Dpt>5&&Dpt<6&&(DsvpvDistance/DsvpvDisErr)>4.86&&Dchi2cl>0.170)||(Dpt>6&&Dpt<8&&(DsvpvDistance/DsvpvDisErr)>4.54&&Dchi2cl>0.125)||(Dpt>8&&Dpt<10&&(DsvpvDistance/DsvpvDisErr)>4.42&&Dchi2cl>0.091)||(Dpt>10&&Dpt<15&&(DsvpvDistance/DsvpvDisErr)>4.06&&Dchi2cl>0.069)||(Dpt>15&&Dpt<20&&(DsvpvDistance/DsvpvDisErr)>3.71&&Dchi2cl>0.056)||(Dpt>20&&Dpt<25&&(DsvpvDistance/DsvpvDisErr)>3.25&&Dchi2cl>0.054)||(Dpt>25&&(DsvpvDistance/DsvpvDisErr)>2.97&&Dchi2cl>0.050)))", TString cutmcgen="((GisSignal==1||GisSignal==2)&&(Gy>-1&&Gy<1))", int isMC=1, Double_t luminosity=1., int doweight=0, TString collsyst="PbPbMB", TString outputfile="ROOTfiles/hPtSpectrumDzeroPbPbMBMCClosureMYTEST.root", Float_t centmin=0., Float_t centmax=0., Int_t useGJ=1.)
+void fitD(int usePbPb, TString inputdata, TString inputmc, TString trgselection, 
+          TString cut, TString cutmcgen, int isMC, Double_t luminosity, int doweight, TString collsyst, 
+          TString outputfile, TString outputfilefitmass,
+          Float_t centmin=0., Float_t centmax=0., Int_t useGJ=1.)
 {
-  collisionsystem=collsyst;
+  collisionsystem = collsyst;
   hiBinMin = centmin*2;
   hiBinMax = centmax*2;
   centMin = centmin;
@@ -38,7 +41,7 @@ void fitD(int usePbPb=1, TString inputdata="/data/HeavyFlavourRun2/MC2015/Dntupl
   bool isPbPb=(bool)(usePbPb);
   bool isGJ=(bool)(useGJ);
   tGJ = isGJ?"GJ":"TO";
-  
+
   if(!isPbPb)
     {
       seldata = Form("%s&&%s",trgselection.Data(),cut.Data());
@@ -63,28 +66,31 @@ void fitD(int usePbPb=1, TString inputdata="/data/HeavyFlavourRun2/MC2015/Dntupl
   gStyle->SetTitleX(.0f);
 
   void clean0 (TH1D* h);
-  TF1* fit (TTree* nt, TTree* ntMC, double ptmin, double ptmax, int isMC,bool, TF1* &total,Float_t centmin, Float_t centmax);
+  TF1* fit (TTree* nt, TTree* ntMC, double ptmin, double ptmax, int isMC,bool, TF1* &total, TString foutputfilefitmass, Float_t centmin, Float_t centmax);
 
-  if(doweight==0) {
-     weightgen="1";
-     weight="1";
-  }
-
+  if(doweight==0) 
+    {
+      weightgen="1";
+      weight="1";
+    }
   // pp weight
-  if(doweight==1) {
-     weightgen="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Gpt*(0.0602697)+Gpt*Gpt*(-0.00226879)+Gpt*Gpt*Gpt*(3.91035e-05)+Gpt*Gpt*Gpt*Gpt*(-3.0699e-07)+Gpt*Gpt*Gpt*Gpt*Gpt*(8.73234e-10))";
-     weight="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Dgenpt*(0.0602697)+Dgenpt*Dgenpt*(-0.00226879)+Dgenpt*Dgenpt*Dgenpt*(3.91035e-05)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*(-3.0699e-07)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*Dgenpt*(8.73234e-10))";
-  }
+  if(doweight==1)
+    {
+      weightgen="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Gpt*(0.0602697)+Gpt*Gpt*(-0.00226879)+Gpt*Gpt*Gpt*(3.91035e-05)+Gpt*Gpt*Gpt*Gpt*(-3.0699e-07)+Gpt*Gpt*Gpt*Gpt*Gpt*(8.73234e-10))";
+      weight="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Dgenpt*(0.0602697)+Dgenpt*Dgenpt*(-0.00226879)+Dgenpt*Dgenpt*Dgenpt*(3.91035e-05)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*(-3.0699e-07)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*Dgenpt*(8.73234e-10))";
+    }
   //PbPb weight
-  if(doweight==2) {
-    weightgen="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))";
-    weight="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))";
-  }
+  if(doweight==2)
+    {
+      weightgen="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))";
+      weight="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))";
+    }
   //PbPb low pt weight
-  if(doweight==3) {
-   weightgen="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))*(-0.00600791+Gpt*(0.0838585)+Gpt*Gpt*(-0.00991096)+Gpt*Gpt*Gpt*(0.000496019)+Gpt*Gpt*Gpt*Gpt*(-8.50065e-06))";
-   weight="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))*(-0.00600791+Dgenpt*(0.0838585)+Dgenpt*Dgenpt*(-0.00991096)+Dgenpt*Dgenpt*Dgenpt*(0.000496019)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*(-8.50065e-06))";
-  }
+  if(doweight==3)
+    {
+      weightgen="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))*(-0.00600791+Gpt*(0.0838585)+Gpt*Gpt*(-0.00991096)+Gpt*Gpt*Gpt*(0.000496019)+Gpt*Gpt*Gpt*Gpt*(-8.50065e-06))";
+      weight="(pthatweight)*(maxDgenpt<pthat/1.2)*(6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09))*(-0.00600791+Dgenpt*(0.0838585)+Dgenpt*Dgenpt*(-0.00991096)+Dgenpt*Dgenpt*Dgenpt*(0.000496019)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*(-8.50065e-06))";
+    }
   if(doweight<0 || doweight>4) std::cout<<"ERROR, this weighting option is not defined"<<std::endl;
   
   std::cout<<"we are using weight="<<weight<<std::endl;
@@ -138,7 +144,7 @@ void fitD(int usePbPb=1, TString inputdata="/data/HeavyFlavourRun2/MC2015/Dntupl
 
   for(int i=0;i<nBins;i++)
     {
-      TF1* f = fit(nt,ntMC,ptBins[i],ptBins[i+1],isMC,isPbPb, totalmass,centmin, centmax);
+      TF1* f = fit(nt,ntMC,ptBins[i],ptBins[i+1],isMC,isPbPb,totalmass,outputfilefitmass,centmin,centmax);
       double yield = f->Integral(minhisto,maxhisto)/binwidthmass;
       double yieldErr = f->Integral(minhisto,maxhisto)/binwidthmass*f->GetParError(0)/f->GetParameter(0);
       hPt->SetBinContent(i+1,yield/(ptBins[i+1]-ptBins[i]));
@@ -241,7 +247,7 @@ void clean0(TH1D* h)
     }
 }
 
-TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &total,Float_t centmin, Float_t centmax)
+TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC, bool isPbPb, TF1* &total, TString foutputfilefitmass, Float_t centmin, Float_t centmax)
 {
   static int count=0;
   count++;
@@ -257,8 +263,14 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   else nt->Project(Form("h-%d",count),"Dmass",Form("(%s&&Dpt>%f&&Dpt<%f)",seldata.Data(),ptmin,ptmax));   
   
   ntMC->Project(Form("hMCSignal-%d",count),"Dmass",Form("%s*(%s&&Dpt>%f&&Dpt<%f&&(Dgen==23333))","1",selmc.Data(),ptmin,ptmax));   
-  ntMC->Project(Form("hMCSwapped-%d",count),"Dmass",Form("%s*(%s&&Dpt>%f&&Dpt<%f&&(Dgen==23344))","1",selmc.Data(),ptmin,ptmax));   
+  ntMC->Project(Form("hMCSwapped-%d",count),"Dmass",Form("%s*(%s&&Dpt>%f&&Dpt<%f&&(Dgen==23344))","1",selmc.Data(),ptmin,ptmax));
   
+  TFile* outputfitmass = new TFile(Form("%s.root",foutputfilefitmass.Data()),"update");
+  h->Write();
+  hMCSignal->Write();
+  hMCSwapped->Write();
+  outputfitmass->Close();
+
   f->SetParLimits(4,-1000,1000);
   f->SetParLimits(10,0.001,0.05);
   f->SetParLimits(2,0.01,0.5);
@@ -450,7 +462,8 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   histo_copy_nofitfun->Draw("esame");
 
 //
-  if(!isPbPb) c->SaveAs(Form("plotFits/DMass%s_%d_%s.pdf",collisionsystem.Data(),count,tGJ.Data()));
+  if(!isPbPb) c->SaveAs(Form("plotFits/DMass%s_%d.pdf",collisionsystem.Data(),count));
+  else if(collisionsystem=="PbPbMB") c->SaveAs(Form("plotFits/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
   else c->SaveAs(Form("plotFits/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
   
   TCanvas* ccopy = new TCanvas(Form("ccopy%d",count),"",600,600);
@@ -478,23 +491,26 @@ TF1* fit(TTree* nt, TTree* ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
   texyield->Draw();
   histo_copy_nofitfun->Draw("esame");
 
-  if(!isPbPb) ccopy->SaveAs(Form("plotFitsYield/DMass%s_%d_%s.pdf",collisionsystem.Data(),count,tGJ.Data()));
+  if(!isPbPb) ccopy->SaveAs(Form("plotFitsYield/DMass%s_%d.pdf",collisionsystem.Data(),count));
+  else if(collisionsystem=="PbPbMB") ccopy->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
   else ccopy->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
-  
+
   return mass;
+
+
 }
 
 
 int main(int argc, char *argv[])
 {
-  if(argc==15)
+  if(argc==16)
     {
-      fitD(atoi(argv[1]),argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],atof(argv[12]),atof(argv[13]),atoi(argv[14]));
+      fitD(atoi(argv[1]),argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],argv[12],atof(argv[13]),atof(argv[14]),atoi(argv[15]));
       return 0;
     }
-  else if(argc==12)
+  else if(argc==13)
     {
-      fitD(atoi(argv[1]), argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11]);
+      fitD(atoi(argv[1]), argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],argv[12]);
       return 0;
     }
   else
