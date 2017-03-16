@@ -4,7 +4,7 @@ using namespace std;
 #include "TLegendEntry.h"
 #include "TNtuple.h"
 #include "TH1F.h"
-#include "../TriggerStudies/triggerEfficiency.C"
+#include "triggerEfficiency.C"
 
 double TAA=392.4/(70.*1e9);
 

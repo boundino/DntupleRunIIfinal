@@ -207,6 +207,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
         TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-0100-plot2.txt");
         gMagdalenaD5TeV->SetLineWidth(3);
         gMagdalenaD5TeV->SetLineColor(kCyan+1);
+        gMagdalenaD5TeV->SetFillColor(kCyan+1);
         gMagdalenaD5TeV->SetFillStyle(3004);
         gMagdalenaD5TeV->Draw("f same");
         gMagdalenaD5TeV->Draw("l same");
@@ -230,9 +231,9 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
         TGraphErrors* gPHSDWShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWShadowing.txt");
         TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-plot2.txt");
         TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-10.dat");
-        gMagdalenaD5TeV->SetLineWidth(2);
+        gMagdalenaD5TeV->SetLineWidth(3);
         gMagdalenaD5TeV->SetLineColor(kCyan+1);
-        gMagdalenaD5TeV->SetFillColor(3);
+        gMagdalenaD5TeV->SetFillColor(kCyan+1);
         gMagdalenaD5TeV->SetFillStyle(3004);
         /*
         gMagdalenaD5TeV->SetLineColor(kGreen+4);
@@ -242,7 +243,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
         R_PbPb_cen->SetLineColor(kViolet);
         R_PbPb_cen->SetFillColor(kViolet);
         R_PbPb_cen->SetFillStyle(3011);
-        R_PbPb_cen->SetLineWidth(2);
+        R_PbPb_cen->SetLineWidth(3);
         if(isTheoryComparison==1||isTheoryComparison==2)
           {
             gCUJETD5TeV->Draw("3 same");

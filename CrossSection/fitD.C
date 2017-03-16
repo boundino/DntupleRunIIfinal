@@ -508,6 +508,11 @@ int main(int argc, char *argv[])
       fitD(atoi(argv[1]),argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],argv[12],atof(argv[13]),atof(argv[14]),atoi(argv[15]));
       return 0;
     }
+  else if(argc==15)
+    {
+      fitD(atoi(argv[1]),argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],argv[12],atof(argv[13]),atof(argv[14]));
+      return 0;
+    }
   else if(argc==13)
     {
       fitD(atoi(argv[1]), argv[2], argv[3], argv[4], argv[5], argv[6], atoi(argv[7]), atof(argv[8]), atoi(argv[9]),argv[10],argv[11],argv[12]);
