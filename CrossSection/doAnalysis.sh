@@ -22,34 +22,38 @@ fi
 DOANALYSISPP_FONLL=0
 DOANALYSISPP_TRGCOMBINATION=0
 DOANALYSISPP_FIT=0
+DOANALYSISPP_DRAWFIT=1
 DOANALYSISPP_MCSTUDY=0
-DOANALYSISPP_CROSS=1
+DOANALYSISPP_CROSS=0
 
 DOANALYSISPbPb_FONLL=0
 DOANALYSISPbPb_TRGCOMBINATION=0
 DOANALYSISPbPb_FIT=0
+DOANALYSISPbPb_DRAWFIT=1
 DOANALYSISPbPb_MCSTUDY=0
-DOANALYSISPbPb_CROSS=1
+DOANALYSISPbPb_CROSS=0
 DOANALYSISPbPb_COMBGJTO=1
 
 DOANALYSISPPMB_FONLL=0
 DOANALYSISPPMB_FIT=0
+DOANALYSISPPMB_DRAWFIT=1
 DOANALYSISPPMB_MCSTUDY=0
-DOANALYSISPPMB_CROSS=1
+DOANALYSISPPMB_CROSS=0
 
 DOANALYSISPbPbMB_FONLL=0
 DOANALYSISPbPbMB_FIT=0
+DOANALYSISPbPbMB_DRAWFIT=1
 DOANALYSISPbPbMB_MCSTUDY=0
-DOANALYSISPbPbMB_CROSS=1
+DOANALYSISPbPbMB_CROSS=0
 
 DOANALYSISPP_MCSTUDYCombine=0
 DOANALYSISPbPb_MCSTUDYCombine=0
 
-DORAA=1
-DORAAMB=1
+DORAA=0
+DORAAMB=0
 
-DOCombineCrossSectionPP=1
-DOCombineCrossSectionPbPb=1
+DOCombineCrossSectionPP=0
+DOCombineCrossSectionPbPb=0
 DOCombineRAA=1
 
 #
@@ -87,7 +91,7 @@ INPUTDATAPbPbMBSKIMMED="/data/wangj/Data2015/Dntuple/PbPb/ntDntuple_PbPb_Minimum
 
 #
 
-PLOTFOLDERS=("plotCrossSection" "plotEff" "plotFONLL" "plotFits" "plotFitsYield" "plotOthers" "plotRAA" "ROOTfiles${FILEEND}")
+PLOTFOLDERS=("plotCrossSection" "plotEff" "plotFONLL" "plotFits" "plotFitsYield" "plotFitsPaper" "plotOthers" "plotRAA" "ROOTfiles${FILEEND}")
 for ifolder in ${PLOTFOLDERS[@]}
 do
     if [ ! -d $ifolder ]; then
@@ -141,6 +145,12 @@ if [ $DOANALYSISPP_FIT -eq 1 ]; then
     g++ fitD.C $(root-config --cflags --libs) -g -o fitD.exe 
     ./fitD.exe 0 "$INPUTDATAPPSKIMMED"  "$INPUTMCPP"  "$TRGPP" "$CUTPP"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPP" "$OUTPUTFILEFITMASSPP"
     rm fitD.exe
+fi 
+
+if [ $DOANALYSISPP_DRAWFIT -eq 1 ]; then      
+    g++ fitDdraw.C $(root-config --cflags --libs) -g -o fitDdraw.exe 
+    ./fitDdraw.exe 0 "$OUTPUTFILEFITMASSPP" "$LABELPP"
+    rm fitDdraw.exe
 fi 
 
 if [ $DOANALYSISPP_MCSTUDY -eq 1 ]; then      
@@ -214,6 +224,17 @@ if [ $DOANALYSISPbPb_FIT -eq 1 ]; then
     rm combineGJTOfitD.exe
 fi
 
+if [ $DOANALYSISPbPb_DRAWFIT -eq 1 ]; then      
+    g++ fitDdraw.C $(root-config --cflags --libs) -g -o fitDdraw.exe 
+    ./fitDdraw.exe 1 "$OUTPUTFILEFITMASSPbPbTO" "$LABELPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX" 0
+    ./fitDdraw.exe 1 "$OUTPUTFILEFITMASSPbPbGJ" "$LABELPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX" 1
+    rm fitDdraw.exe
+    g++ combineGJTOfitD.C $(root-config --cflags --libs) -g -o combineGJTOfitD.exe 
+    ./combineGJTOfitD.exe 1 "$OUTPUTFILEFITMASSPbPbGJ" "$OUTPUTFILEFITMASSPbPbTO" "$LABELPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    rm combineGJTOfitD.exe
+fi 
+
+
 if [ $DOANALYSISPbPb_MCSTUDY -eq 1 ]; then      
     g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
     ./MCefficiency.exe 1 "$INPUTMCPbPb"  "$SELGENPbPb" "$SELGENACCPbPb"  "$RECOONLYPbPb" "$CUTPbPb"  "$LABELPbPb" "$OUTPUTFILEMCSTUDYPbPb" "$ISDOWEIGHTPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
@@ -285,6 +306,12 @@ if [ $DOANALYSISPPMB_FIT -eq 1 ]; then
     rm fitD.exe
 fi
 
+if [ $DOANALYSISPPMB_DRAWFIT -eq 1 ]; then      
+    g++ fitDdraw.C $(root-config --cflags --libs) -g -o fitDdraw.exe 
+    ./fitDdraw.exe 0 "$OUTPUTFILEFITMASSPPMB" "$LABELPPMB"
+    rm fitDdraw.exe
+fi 
+
 if [ $DOANALYSISPPMB_MCSTUDY -eq 1 ]; then      
     g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
     ./MCefficiency.exe 0 "$INPUTMCPP"  "$SELGENPPMB" "$SELGENACCPPMB"  "$RECOONLYPPMB" "$CUTPPMB"  "$LABELPPMB" "$OUTPUTFILEMCSTUDYPPMB" "$ISDOWEIGHTPPMB" "$CENTPbPbMIN" "$CENTPbPbMAX"
@@ -341,6 +368,12 @@ if [ $DOANALYSISPbPbMB_FIT -eq 1 ]; then
     ./fitD.exe 1 "$INPUTDATAPbPbMBSKIMMED"  "$INPUTMCPbPb"  "$TRGPbPbMB" "$CUTPbPbMB"   "$SELGENPbPbMB"   "$ISMCPbPbMB"   1   "$ISDOWEIGHTPbPbMB"   "$LABELPbPbMB"  "$OUTPUTFILEPbPbMB" "$OUTPUTFILEFITMASSPbPbMB" "$CENTPbPbMIN" "$CENTPbPbMAX"
     rm fitD.exe
 fi
+
+if [ $DOANALYSISPbPbMB_DRAWFIT -eq 1 ]; then      
+    g++ fitDdraw.C $(root-config --cflags --libs) -g -o fitDdraw.exe 
+    ./fitDdraw.exe 1 "$OUTPUTFILEFITMASSPbPbMB" "$LABELPbPbMB" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    rm fitDdraw.exe
+fi 
 
 if [ $DOANALYSISPbPbMB_MCSTUDY -eq 1 ]; then      
     g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 

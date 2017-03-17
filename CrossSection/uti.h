@@ -24,6 +24,7 @@
 #include <TPad.h>
 #include <TLatex.h>
 #include <TLegend.h>
+#include "TLegendEntry.h"
 #include <TLine.h>
 #include <TBox.h>
 #include <TCut.h>
@@ -35,6 +36,8 @@
 #include <TProfile.h>
 #include <TFitResult.h>
 #include <TFitter.h>
+#include "TGaxis.h"
+
 
 // Remove error
 void removeError(TH1F* h)
