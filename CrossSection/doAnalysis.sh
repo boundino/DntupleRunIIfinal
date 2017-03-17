@@ -52,7 +52,7 @@ DOANALYSISPbPb_MCSTUDYCombine=0
 DORAA=0
 DORAAMB=0
 
-DOCombineCrossSectionPP=0
+DOCombineCrossSectionPP=1
 DOCombineCrossSectionPbPb=0
 DOCombineRAA=1
 
