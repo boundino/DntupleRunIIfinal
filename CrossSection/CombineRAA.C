@@ -5,6 +5,7 @@ using namespace std;
 #include "TLegendEntry.h"
 #include "TGraphErrors.h"
 #include "systematics.h"
+#include "drawTheory.h"
 
 void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file="ROOTfilesCent10/outputRAA.root", Float_t centMin=0., Float_t centMax=10., Int_t isHadDupl=1, Int_t isTheoryComparison=2)
 {
@@ -13,7 +14,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   gStyle->SetEndErrorSize(0);
   gStyle->SetMarkerStyle(20);
   
-  bool superimposedALICE=false;
+  bool superimposedALICE = false;
 
   TFile* filePPMB = new TFile(fileMB.Data());  
   TGraphAsymmErrors* gNuclearModificationMB = (TGraphAsymmErrors*)filePPMB->Get("gNuclearModification");
@@ -31,7 +32,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   hTrackPt_trkCorr_PbPb_copy1->SetMarkerSize(0.8); 
   hTrackPt_trkCorr_PbPb_copy1->SetMarkerColor(kRed);
   
-  TCanvas*canvasRAA=new TCanvas("canvasRAA","canvasRAA",600,600);//550,500
+  TCanvas*canvasRAA = new TCanvas("canvasRAA","canvasRAA",600,600);//550,500
   canvasRAA->cd();
   canvasRAA->SetFillColor(0);
   canvasRAA->SetBorderMode(0);
@@ -44,7 +45,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   canvasRAA->SetLogx();
 
   TH2F* hemptyEff;
-  if(isHadDupl==1) hemptyEff=new TH2F("hemptyEff","",50,0.7,400.,10.,0,1.55); else hemptyEff=new TH2F("hemptyEff","",50,1.0,150.,10.,0,1.55);//50,-2,120.,10.,0,1.5
+  if(isHadDupl==1) hemptyEff = new TH2F("hemptyEff","",50,0.7,400.,10.,0,1.55); else hemptyEff=new TH2F("hemptyEff","",50,1.0,150.,10.,0,1.55);//50,-2,120.,10.,0,1.5
   hemptyEff->GetXaxis()->CenterTitle();
   hemptyEff->GetYaxis()->CenterTitle();
   hemptyEff->GetYaxis()->SetTitle("D^{0} R_{AA}");
@@ -172,17 +173,16 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   legendSigma->SetTextFont(42);
   legendSigma->SetTextSize(0.031);//0.05
 
-  TLegendEntry *ent_Dhighpt=legendSigma->AddEntry(gNuclearModification,"R_{AA} D^{0}","pf");
+  TLegendEntry *ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"R_{AA} D^{0}","pf");
    ent_Dhighpt->SetTextFont(42);
    ent_Dhighpt->SetLineColor(4);
    ent_Dhighpt->SetMarkerColor(4);
    ent_Dhighpt->SetTextSize(0.043);//0.03
    if(isHadDupl==1 && isTheoryComparison==1){ent_Dhighpt->SetTextSize(0.03);}
 
-
     if(isHadDupl==1&&isTheoryComparison==0)
       {
-        TLegendEntry *ent_Charged=legendSigma->AddEntry(hTrackPt_trkCorr_PbPb_copy1,"R_{AA} charged hadrons","pl");//pf
+        TLegendEntry *ent_Charged = legendSigma->AddEntry(hTrackPt_trkCorr_PbPb_copy1,"R_{AA} charged hadrons","pl");//pf
         ent_Charged->SetTextFont(42);
         ent_Charged->SetLineColor(1);
         ent_Charged->SetMarkerColor(1);
@@ -193,77 +193,25 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
     
     if(isTheoryComparison && centMin==0. && centMax==100.)
       {
-        TFile* infCUJETD5TeV = new TFile("TheoryPredictions/CUJET_D0_RAA_0_100.root");  
-        TGraphAsymmErrors* gCUJETD5TeV = (TGraphAsymmErrors*)infCUJETD5TeV->Get("gRAADmeson5TeV");
-        gCUJETD5TeV->SetLineWidth(1);
-        gCUJETD5TeV->SetLineColor(4);
-        gCUJETD5TeV->SetFillColor(4);
-        gCUJETD5TeV->SetFillStyle(3001);
-        gCUJETD5TeV->Draw("3 same");
-        TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-80.dat");
-        gShanshanD5TeV->SetLineWidth(3);
-        gShanshanD5TeV->SetLineColor(kRed+1);
-        gShanshanD5TeV->Draw("c same");
-        TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-0100-plot2.txt");
-        gMagdalenaD5TeV->SetLineWidth(3);
-        gMagdalenaD5TeV->SetLineColor(kCyan+1);
-        gMagdalenaD5TeV->SetFillColor(kCyan+1);
-        gMagdalenaD5TeV->SetFillStyle(3004);
-        gMagdalenaD5TeV->Draw("f same");
-        gMagdalenaD5TeV->Draw("l same");
-        /*
-        gMagdalenaD5TeV->SetLineColor(kGreen+4);
-        gMagdalenaD5TeV->SetFillColor(kGreen+4);
-        */
-        TLegendEntry *ent_theory_Shanshan = legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al. 0-80%","l");
-        TLegendEntry *ent_theory_Magdalena = legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
-        TLegendEntry *ent_theory_CUJET = legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");
+        drawTheory0100();
+        legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al. 0-80%","l");
+        legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
+        legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");
       }
     if(isTheoryComparison && centMin==0. && centMax==10.)
       {
-        TFile* infCUJETD5TeV = new TFile("TheoryPredictions/CUJET_D0_RAA_0_10.root");
-        TGraphAsymmErrors* gCUJETD5TeV = (TGraphAsymmErrors*)infCUJETD5TeV->Get("gRAADmeson5TeV");
-        gCUJETD5TeV->SetLineWidth(1);
-        gCUJETD5TeV->SetLineColor(4);
-        gCUJETD5TeV->SetFillColor(4);
-        gCUJETD5TeV->SetFillStyle(3001);
-        TGraphErrors* gPHSDWOShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWoShadowing.txt");
-        TGraphErrors* gPHSDWShadowing = new TGraphErrors("TheoryPredictions/phsd502TeVWShadowing.txt");
-        TGraph *gMagdalenaD5TeV = new TGraph("TheoryPredictions/Magdalena-5TeV-plot2.txt");
-        TGraph *gShanshanD5TeV = new TGraph("TheoryPredictions/Shanshan-D-RAA_PbPb5020_00-10.dat");
-        gMagdalenaD5TeV->SetLineWidth(3);
-        gMagdalenaD5TeV->SetLineColor(kCyan+1);
-        gMagdalenaD5TeV->SetFillColor(kCyan+1);
-        gMagdalenaD5TeV->SetFillStyle(3004);
-        /*
-        gMagdalenaD5TeV->SetLineColor(kGreen+4);
-        gMagdalenaD5TeV->SetFillColor(kGreen+4);
-        */
-        TGraph *R_PbPb_cen = new TGraph("TheoryPredictions/R-PbPb_cen_cron1.5_eloss1.5.5100GeVD0.txt");
-        R_PbPb_cen->SetLineColor(kViolet);
-        R_PbPb_cen->SetFillColor(kViolet);
-        R_PbPb_cen->SetFillStyle(3011);
-        R_PbPb_cen->SetLineWidth(3);
+        drawTheory010(isTheoryComparison);
         if(isTheoryComparison==1||isTheoryComparison==2)
           {
-            gCUJETD5TeV->Draw("3 same");
-            gMagdalenaD5TeV->Draw("f same");
-            gMagdalenaD5TeV->Draw("l same");
-            R_PbPb_cen->Draw("f same");
-            R_PbPb_cen->Draw("l same");
+            legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
+            legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");//pf
+            legendSigma->AddEntry(gIvan5TeV,"I. Vitev (g=1.8-2.0)","bf");
           }
         if (isTheoryComparison==1||isTheoryComparison==3)
           {
-            gPHSDWShadowing->SetLineColor(kGreen+2);
-            gPHSDWShadowing->SetLineWidth(3);
-            gPHSDWShadowing->Draw("c same");
-            gPHSDWOShadowing->SetLineColor(kGreen+2);
-            gPHSDWOShadowing->SetLineWidth(3);
-            gPHSDWOShadowing->SetLineStyle(2);
-            gPHSDWOShadowing->Draw("c same");
-            gShanshanD5TeV->SetLineWidth(3);
-            gShanshanD5TeV->SetLineColor(kRed+1);
-            gShanshanD5TeV->Draw("c same");          
+            legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al.","l");
+            legendSigma->AddEntry(gPHSDWShadowing,"PHSD w/ shadowing ","l");
+            legendSigma->AddEntry(gPHSDWOShadowing,"PHSD w/o shadowing ","l");
           }
         
         if(superimposedALICE)
@@ -284,18 +232,6 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
             p9059_d9x1y1->SetLineWidth(4);  
             p9059_d9x1y1->SetTitle("/HepData/9059/d9x1y1");
             p9059_d9x1y1->Draw("psame");
-          }
-        if (isTheoryComparison==1||isTheoryComparison==2)
-          {
-            TLegendEntry *ent_theory_Magdalena = legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
-            TLegendEntry *ent_theory_CUJET = legendSigma->AddEntry(gCUJETD5TeV,"CUJET3.0","f");//pf
-            TLegendEntry *ent_theory_R_PbPb_cen =legendSigma->AddEntry(R_PbPb_cen,"I.Vitev (g=1.8-2.0)","bf");
-          }
-        if (isTheoryComparison==1||isTheoryComparison==3)
-          {
-            TLegendEntry *ent_theory_Shanshan =legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al.","l");
-            TLegendEntry *ent_theory_PHSDW =legendSigma->AddEntry(gPHSDWShadowing,"PHSD w/ shadowing ","l");
-            TLegendEntry *ent_theory_PHSDWO =legendSigma->AddEntry(gPHSDWOShadowing,"PHSD w/o shadowing ","l");
           }
       }
     
@@ -331,7 +267,13 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
     if(isTheoryComparison==1) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonAll_%.0f_%.0f.png",centMin,centMax));
     if(isTheoryComparison==2) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonQCD_%.0f_%.0f.png",centMin,centMax));
     if(isTheoryComparison==3) canvasRAA->SaveAs(Form("plotRAA/canvasRAAComparisonTransport_%.0f_%.0f.png",centMin,centMax));
-    
+
+    Int_t nbinsRaaMB = hNuclearModificationMB->GetSize()-2;
+    Int_t nbinsRaa = hNuclearModification->GetSize()-2;
+    cout<<nbinsRaaMB<<"  "<<nbinsRaa<<endl;
+    for(int i=0;i<nbinsRaaMB;i++) cout<<hNuclearModificationMB->GetBinCenter(i+1)-hNuclearModificationMB->GetBinWidth(i+1)/2.<<" "<<hNuclearModificationMB->GetBinCenter(i+1)+hNuclearModificationMB->GetBinWidth(i+1)/2.<<" "<<hNuclearModificationMB->GetBinCenter(i+1)<<" "<<hNuclearModificationMB->GetBinContent(i+1)<<" "<<hNuclearModificationMB->GetBinError(i+1)<<" "<<gNuclearModificationMB->GetErrorYhigh(i)<<" "<<gNuclearModificationMB->GetErrorYlow(i)<<endl;
+    for(int i=0;i<nbinsRaa;i++) cout<<hNuclearModification->GetBinCenter(i+1)-hNuclearModification->GetBinWidth(i+1)/2.<<" "<<hNuclearModification->GetBinCenter(i+1)+hNuclearModification->GetBinWidth(i+1)/2.<<" "<<hNuclearModification->GetBinCenter(i+1)<<" "<<hNuclearModification->GetBinContent(i+1)<<" "<<hNuclearModification->GetBinError(i+1)<<" "<<gNuclearModification->GetErrorYhigh(i)<<" "<<gNuclearModification->GetErrorYlow(i)<<endl;
+
 }
 
 int main(int argc, char *argv[])
