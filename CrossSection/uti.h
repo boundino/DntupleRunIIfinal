@@ -37,6 +37,7 @@
 #include <TFitResult.h>
 #include <TFitter.h>
 #include "TGaxis.h"
+#include <TColor.h>
 
 
 // Remove error
