@@ -1,7 +1,7 @@
 void canvasRAA_cent_0_10()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Wed Apr 19 06:47:51 2017) by ROOT version6.02/13
+//=========  (Wed Apr 19 06:52:59 2017) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -124,7 +124,7 @@ tex->SetNDC();
    grae->SetTitle("Graph");
 
    ci = 924;
-   color = new TColor(ci, 0.6, 1, 0.6, " ", 0.6);
+   color = new TColor(ci, 0.6, 1, 0.6, " ", 0.7);
    grae->SetFillColor(ci);
 
    ci = TColor::GetColor("#006600");
@@ -221,7 +221,7 @@ tex->SetNDC();
    grae->SetTitle("Graph");
 
    ci = 925;
-   color = new TColor(ci, 0.6, 1, 0.6, " ", 0.6);
+   color = new TColor(ci, 0.6, 1, 0.6, " ", 0.7);
    grae->SetFillColor(ci);
 
    ci = TColor::GetColor("#006600");
@@ -340,7 +340,7 @@ tex->SetNDC();
    TLegendEntry *entry=leg->AddEntry("gNuclearModification","D^{0} |y| < 1.0","pf");
 
    ci = 924;
-   color = new TColor(ci, 0.6, 1, 0.6, " ", 0.6);
+   color = new TColor(ci, 0.6, 1, 0.6, " ", 0.7);
    entry->SetFillColor(ci);
    entry->SetFillStyle(1001);
    entry->SetLineColor(1);

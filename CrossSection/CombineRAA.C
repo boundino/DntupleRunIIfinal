@@ -74,7 +74,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
         }
     }
   gNuclearModification->SetFillColor(kGreen-9);//Yellow: 5
-  gNuclearModification->SetFillColorAlpha(kGreen-9, 0.6);
+  gNuclearModification->SetFillColorAlpha(kGreen-9, 0.7);
   gNuclearModification->SetFillStyle(1001);//3001
   gNuclearModification->SetLineWidth(1);//
   gNuclearModification->SetMarkerSize(1);
@@ -85,7 +85,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
 
   //gNuclearModificationMB->SetFillColor(5);//1
   gNuclearModificationMB->SetFillColor(kGreen-9);//1
-  gNuclearModificationMB->SetFillColorAlpha(kGreen-9, 0.6);
+  gNuclearModificationMB->SetFillColorAlpha(kGreen-9, 0.7);
   gNuclearModificationMB->SetFillStyle(1001);//3001
   gNuclearModificationMB->SetLineWidth(1);//3
   gNuclearModificationMB->SetMarkerSize(1);
