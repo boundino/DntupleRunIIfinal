@@ -225,8 +225,6 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
 
   gNuclearModification->Draw("5same");
   gNuclearModificationMB->Draw("5same");  
-  hNuclearModification->Draw("psame");//same
-  hNuclearModificationMB->Draw("psame");//same
 
   if(isTheoryComparison && centMin==0. && centMax==100.)
     {
@@ -279,6 +277,9 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
           p9059_d9x1y1->Draw("psame");
         }
     }
+
+  hNuclearModification->Draw("psame");//same
+  hNuclearModificationMB->Draw("psame");//same
 
   legendSigma->Draw();  
   
