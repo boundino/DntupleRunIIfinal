@@ -73,37 +73,37 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
           cout<<"ERROR: Invalid Centrality range"<<endl;
         }
     }
-  gNuclearModification->SetFillColor(5);//1
-  gNuclearModification->SetFillStyle(3001);//0 
-  gNuclearModification->SetLineWidth(1);//3
+  gNuclearModification->SetFillColor(kGreen-9);//Yellow: 5
+  gNuclearModification->SetFillColorAlpha(kGreen-9, 0.6);
+  gNuclearModification->SetFillStyle(1001);//3001
+  gNuclearModification->SetLineWidth(1);//
   gNuclearModification->SetMarkerSize(1);
   gNuclearModification->SetMarkerStyle(21);
   gNuclearModification->SetLineColor(1);//kGreen+4
-  gNuclearModification->SetMarkerColor(1);//kGreen+4
-  gNuclearModification->Draw("5same");
-  gNuclearModificationMB->SetFillColor(5);//1
-  gNuclearModificationMB->SetFillStyle(3001);//0 
+  gNuclearModification->SetMarkerColor(kGreen+3);
+  //gNuclearModification->SetMarkerColor(1);//kGreen+4
+
+  //gNuclearModificationMB->SetFillColor(5);//1
+  gNuclearModificationMB->SetFillColor(kGreen-9);//1
+  gNuclearModificationMB->SetFillColorAlpha(kGreen-9, 0.6);
+  gNuclearModificationMB->SetFillStyle(1001);//3001
   gNuclearModificationMB->SetLineWidth(1);//3
   gNuclearModificationMB->SetMarkerSize(1);
   gNuclearModificationMB->SetMarkerStyle(21);
-  gNuclearModificationMB->SetLineColor(1);//kGreen+4
-  gNuclearModificationMB->SetMarkerColor(1);//kGreen+4
+  gNuclearModificationMB->SetLineColor(1);//
+  gNuclearModificationMB->SetMarkerColor(kGreen+3);//1
 
-  gNuclearModificationMB->Draw("5same");
-  
   hNuclearModification->SetLineWidth(3);
   hNuclearModification->SetMarkerSize(1);
   hNuclearModification->SetMarkerStyle(21);
-  hNuclearModification->SetLineColor(1);//kGreen+4
-  hNuclearModification->SetMarkerColor(1);//kGreen+4
+  hNuclearModification->SetLineColor(1);//1
+  hNuclearModification->SetMarkerColor(kGreen+3);//1
 
-  hNuclearModification->Draw("psame");//same
   hNuclearModificationMB->SetLineWidth(3);
   hNuclearModificationMB->SetMarkerSize(1);
   hNuclearModificationMB->SetMarkerStyle(21);
   hNuclearModificationMB->SetLineColor(1);//kGreen+4
-  hNuclearModificationMB->SetMarkerColor(1);//kGreen+4
-  hNuclearModificationMB->Draw("psame");//same
+  hNuclearModificationMB->SetMarkerColor(kGreen+3);//1
 
   if(isBnNjpsi==1 && centMax==100)
     {
@@ -203,7 +203,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
       ent_BnNjpsi->SetTextFont(42);
       ent_BnNjpsi->SetTextSize(0.043);
       if(isBnNjpsi>0) ent_BnNjpsi->SetTextSize(0.035);
-      TLegendEntry* ent_Njpsi = legendSigma->AddEntry((TObject*)0,"nonprompt J/#psi (2.76 TeV)",NULL);
+      TLegendEntry* ent_Njpsi = legendSigma->AddEntry((TObject*)0,"",NULL);
       ent_Njpsi->SetTextFont(42);
       ent_Njpsi->SetTextSize(0.043);
       if(isBnNjpsi>0) ent_Njpsi->SetTextSize(0.035);
@@ -215,7 +215,18 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
       ent_Njpsi2->SetTextFont(42);
       ent_Njpsi2->SetTextSize(0.043);
       if(isBnNjpsi>0) ent_Njpsi2->SetTextSize(0.035);
+      TLatex* texNJpsi = new TLatex(0.47,0.728,"nonprompt J/#psi (2.76 TeV)");
+      texNJpsi->SetNDC();
+      texNJpsi->SetTextColor(1);
+      texNJpsi->SetTextFont(42);
+      texNJpsi->SetTextSize(0.035);
+      texNJpsi->Draw();
     } 
+
+  gNuclearModification->Draw("5same");
+  gNuclearModificationMB->Draw("5same");  
+  hNuclearModification->Draw("psame");//same
+  hNuclearModificationMB->Draw("psame");//same
 
   if(isTheoryComparison && centMin==0. && centMax==100.)
     {

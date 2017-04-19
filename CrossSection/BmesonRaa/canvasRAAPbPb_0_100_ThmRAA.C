@@ -46,17 +46,19 @@ void canvasRAAPbPb_0_100_ThmRAA()
    0.05734825};
    
    grae = new TGraphAsymmErrors(5,gNuclearModification_fx3002,gNuclearModification_fy3002,gNuclearModification_felx3002,gNuclearModification_fehx3002,gNuclearModification_fely3002,gNuclearModification_fehy3002);
-   grae->SetName("gNuclearModification");
+   grae->SetName("gBNuclearModification");
    grae->SetTitle("Graph");
 
-   ci = 924;
-   color = new TColor(ci, 0, 0.6, 1, " ", 0.5);
-   grae->SetFillColor(ci);
+   //ci = 924;
+   //color = new TColor(ci, 0, 0.6, 1, " ", 0.5);
+   //grae->SetFillColor(ci);
+   grae->SetFillColor(kAzure+7);
+   grae->SetFillColorAlpha(kAzure+7, 0.4);
 
    ci = TColor::GetColor("#0033cc");
    grae->SetMarkerColor(ci);
    grae->SetMarkerStyle(21);
-   grae->SetMarkerSize(1.2);
+   grae->SetMarkerSize(1.0);
    grae->SetLineColor(ci);
    grae->SetLineWidth(1);
    
@@ -106,7 +108,7 @@ void canvasRAAPbPb_0_100_ThmRAA()
    ci = TColor::GetColor("#0033cc");
    hNuclearModification2->SetMarkerColor(ci);
    hNuclearModification2->SetMarkerStyle(21);
-   hNuclearModification2->SetMarkerSize(1.2);
+   hNuclearModification2->SetMarkerSize(1.0);
    hNuclearModification2->GetXaxis()->SetTitle("D^{0} p_{T} (GeV/c)");
    hNuclearModification2->GetXaxis()->SetLabelFont(42);
    hNuclearModification2->GetXaxis()->SetLabelSize(0.035);
@@ -146,7 +148,7 @@ void canvasRAAPbPb_0_100_ThmRAA()
    ci = TColor::GetColor("#0033cc");
    hNuclearModification3->SetMarkerColor(ci);
    hNuclearModification3->SetMarkerStyle(21);
-   hNuclearModification3->SetMarkerSize(1.2);
+   hNuclearModification3->SetMarkerSize(1.0);
    hNuclearModification3->GetXaxis()->SetTitle("D^{0} p_{T} (GeV/c)");
    hNuclearModification3->GetXaxis()->SetLabelFont(42);
    hNuclearModification3->GetXaxis()->SetLabelSize(0.035);
