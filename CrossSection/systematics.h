@@ -46,7 +46,7 @@ double TAAUncertainty0to100LO	= 3.4;			// Updated number (4/7/2016)
 double TAAUncertainty0to10HI	= 1.9;			// Updated number (4/7/2016)
 double TAAUncertainty0to10LO	= 3.0;			// Updated number (4/7/2016)
 double PbPbTrigger		= 2.0;			// Statistical uncertainty of the zero-coefficient of the linear fit
-double PbPbLumiUncertainty	= 10;			// 10% for the moment, to be updated (from Daniel), NOT used
+double PbPbLumiUncertainty	= 2;			// 10% for the moment, to be updated (from Daniel), NOT used
 
 // Point-to-point
 
@@ -430,7 +430,7 @@ float systematicsPbPb(double pt, double centL=0,double centH=100, double HLT=0, 
   
   sys+= PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt))* 
     PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt));
-
+  
   if(stage==2) return sqrt(sys);
   if(pt<20) sys+=PbPbNMBUncertainty*PbPbNMBUncertainty;
   else sys+=PbPbLumiUncertainty*PbPbLumiUncertainty;
@@ -440,7 +440,7 @@ float systematicsPbPb(double pt, double centL=0,double centH=100, double HLT=0, 
 
   sys+=PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))* 
     PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
-
+  
   sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
 
   //sys+=TAAUncertainty0to100*TAAUncertainty0to100;
