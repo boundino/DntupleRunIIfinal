@@ -288,7 +288,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigmaOnly->Draw("same");
   tlatex1Only->Draw();
   texcmsOnly->Draw();
-  texpreOnly->Draw();
+  //texpreOnly->Draw();
 
   TString tprev = doComparisonLHC?"CrossSectionComparisonExperiments":"CrossSectionComparison";
   TString tend = isPbPb?Form("%s_%.0f_%.0f",texPbPb.Data(),centMin,centMax):Form("%s",texPbPb.Data());
@@ -336,7 +336,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigma->Draw("same");
   tlatex1->Draw();
   texcms->Draw();
-  texpre->Draw();
+  //texpre->Draw();
 
   cSigma->cd();
   TPad* pRatio = new TPad("pRatio","",0,0,1,0.30);

@@ -54,7 +54,10 @@ DORAAMB=0
 
 DOCombineCrossSectionPP=1
 DOCombineCrossSectionPbPb=1
-DOCombineRAA=1
+DOCombineRAA=0
+
+#
+DOCombineCrossSectionPPnPbPb=1
 
 #
 
@@ -433,4 +436,10 @@ if [ $DOCombineRAA -eq 1 ]; then
     #    ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 0 3
     #fi
     rm CombineRAA.exe
+fi
+
+if [ $DOCombineCrossSectionPPnPbPb -eq 1 ]; then      
+    g++ CombineCrossSectionsPPnPbPb.C $(root-config --cflags --libs) -g -o CombineCrossSectionsPPnPbPb.exe 
+    ./CombineCrossSectionsPPnPbPb.exe "ROOTfiles/CrossSectionFONLLPPMB.root" "ROOTfiles/CrossSectionFONLLPP.root" "ROOTfiles/CrossSectionFONLLPbPbMB.root" "ROOTfiles/CrossSectionFONLLPbPb.root" "ROOTfilesCent10/CrossSectionFONLLPbPbMB.root" "ROOTfilesCent10/CrossSectionFONLLPbPb.root"
+    rm CombineCrossSectionsPPnPbPb.exe
 fi
