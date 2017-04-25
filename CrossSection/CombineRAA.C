@@ -139,7 +139,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   texpre->SetTextFont(52);
   texpre->SetTextSize(0.04);
   texpre->SetLineWidth(2);
-  texpre->Draw();
+  //texpre->Draw();
 
   TString texper="%";
   //TLatex * tlatexeff2=new TLatex(0.65,0.20,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
@@ -233,9 +233,9 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
       legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
       legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");
       gADSCFT1D5TeV->SetLineColor(0);
-      legendSigma->AddEntry(gADSCFT1D5TeV,"ADS/CFT HH D = const","f");
+      legendSigma->AddEntry(gADSCFT1D5TeV,"AdS/CFT HH D = const","f");
       gADSCFT2D5TeV->SetLineColor(0);
-      legendSigma->AddEntry(gADSCFT2D5TeV,"ADS/CFT HH D(p)","f");
+      legendSigma->AddEntry(gADSCFT2D5TeV,"AdS/CFT HH D(p)","f");
     }
   if(isTheoryComparison && centMin==0. && centMax==10.)
     {
@@ -252,9 +252,9 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
           legendSigma->AddEntry(gPHSDWShadowing,"PHSD w/ shadowing ","l");
           legendSigma->AddEntry(gPHSDWOShadowing,"PHSD w/o shadowing ","l");
           gADSCFT1D5TeV->SetLineColor(0);
-          legendSigma->AddEntry(gADSCFT1D5TeV,"ADS/CFT HH D = const","f");
+          legendSigma->AddEntry(gADSCFT1D5TeV,"AdS/CFT HH D = const","f");
           gADSCFT2D5TeV->SetLineColor(0);
-          legendSigma->AddEntry(gADSCFT2D5TeV,"ADS/CFT HH D(p)","f");
+          legendSigma->AddEntry(gADSCFT2D5TeV,"AdS/CFT HH D(p)","f");
         }
       
       if(superimposedALICE)

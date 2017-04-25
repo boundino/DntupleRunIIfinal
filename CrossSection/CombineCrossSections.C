@@ -170,15 +170,38 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texYOnly->SetTextSize(0.0315);
   texYOnly->SetLineWidth(2);
 
-  Float_t systnorm;
-  if(isPbPb==1) systnorm = normalizationUncertaintyForPbPb(centMin,centMax);
-  else systnorm = normalizationUncertaintyForPP();
-  TLatex* texSystnorm = new TLatex(0.55,0.61,Form("Global uncert. %.1f%s",systnorm,texper.Data()));
+  Float_t systnormhigh,systnormlow;
+  if(isPbPb==1) 
+    {
+      systnormhigh = normalizationUncertaintyForPbPb(centMin,centMax);
+      systnormlow = normalizationUncertaintyForPbPb(centMin,centMax,false);
+    }
+  else
+    {
+      systnormhigh = normalizationUncertaintyForPP();
+    }
+  TLatex* texSystnorm;
+  if(isPbPb==1)
+    {
+      texSystnorm = new TLatex(0.55,0.61,Form("Global uncert. ^{+ %.1f%s}_{-  %.1f%s}",systnormhigh,texper.Data(),systnormlow,texper.Data()));
+    }
+  else
+    {
+      texSystnorm = new TLatex(0.55,0.61,Form("Global uncert. %.1f%s",systnormhigh,texper.Data()));
+    }
   texSystnorm->SetNDC();
   texSystnorm->SetTextFont(42);
   texSystnorm->SetTextSize(0.045);
   texSystnorm->SetLineWidth(2);
-  TLatex* texSystnormOnly = new TLatex(0.55,0.727,Form("Global uncert. %.1f%s",systnorm,texper.Data()));
+  TLatex* texSystnormOnly;// = new TLatex(0.55,0.727,Form("Global uncert. %.1f%s",systnorm,texper.Data()));
+  if(isPbPb==1)
+    {
+      texSystnormOnly = new TLatex(0.55,0.727,Form("Global uncert. ^{+ %.1f%s}_{-  %.1f%s}",systnormhigh,texper.Data(),systnormlow,texper.Data()));
+    }
+  else
+    {
+      texSystnormOnly = new TLatex(0.55,0.727,Form("Global uncert. %.1f%s",systnormhigh,texper.Data()));
+    }
   texSystnormOnly->SetNDC();
   texSystnormOnly->SetTextFont(42);
   texSystnormOnly->SetTextSize(0.0315);

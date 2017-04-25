@@ -6,6 +6,7 @@ using namespace std;
 
 void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString filePbPb0100MB, TString filePbPb0100, TString filePbPb010MB, TString filePbPb010)
 {
+  void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Double_t fscale, Int_t pcolor, Int_t pstyle);
 
   gStyle->SetOptTitle(0);
   gStyle->SetOptStat(0);
@@ -91,73 +92,15 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   gaeRatioCrossFONLLsyst->SetLineColor(1);//kGreen+4
 
   // data
-  hSigmaPPStatMB->SetLineWidth(2);
-  hSigmaPPStatMB->SetMarkerSize(1);//4
-  hSigmaPPStatMB->SetMarkerStyle(20);
-  hSigmaPPStatMB->SetLineColor(1);//kGreen+4
-  hSigmaPPStatMB->SetMarkerColor(1);//kGreen+4
-
-  hSigmaPPStat->SetLineWidth(2);
-  hSigmaPPStat->SetMarkerSize(1);//4
-  hSigmaPPStat->SetMarkerStyle(20);
-  hSigmaPPStat->SetLineColor(1);//kGreen+4
-  hSigmaPPStat->SetMarkerColor(1);//kGreen+4
-
-  gaeCrossPPSystMB->SetFillColor(1);
-  gaeCrossPPSystMB->SetFillStyle(0); 
-  gaeCrossPPSystMB->SetLineWidth(2);
-  gaeCrossPPSystMB->SetLineColor(1);//kGreen+4
-
-  gaeCrossPPSyst->SetFillColor(1);
-  gaeCrossPPSyst->SetFillStyle(0); 
-  gaeCrossPPSyst->SetLineWidth(2);
-  gaeCrossPPSyst->SetLineColor(1);//kGreen+4
-
-  // PbPb 0-100%
-  hSigmaPbPb0100StatMB->SetLineWidth(2);
-  hSigmaPbPb0100StatMB->SetMarkerSize(1);//4
-  hSigmaPbPb0100StatMB->SetMarkerStyle(20);
-  hSigmaPbPb0100StatMB->SetLineColor(kRed+1);
-  hSigmaPbPb0100StatMB->SetMarkerColor(kRed+1);
-
-  hSigmaPbPb0100Stat->SetLineWidth(2);
-  hSigmaPbPb0100Stat->SetMarkerSize(1);//4
-  hSigmaPbPb0100Stat->SetMarkerStyle(20);
-  hSigmaPbPb0100Stat->SetLineColor(kRed+1);
-  hSigmaPbPb0100Stat->SetMarkerColor(kRed+1);
-
-  gaeCrossPbPb0100SystMB->SetFillColor(1);
-  gaeCrossPbPb0100SystMB->SetFillStyle(0); 
-  gaeCrossPbPb0100SystMB->SetLineWidth(2);
-  gaeCrossPbPb0100SystMB->SetLineColor(kRed+1);
-
-  gaeCrossPbPb0100Syst->SetFillColor(1);
-  gaeCrossPbPb0100Syst->SetFillStyle(0); 
-  gaeCrossPbPb0100Syst->SetLineWidth(2);
-  gaeCrossPbPb0100Syst->SetLineColor(kRed+1);
-
-  // PbPb 0-10%
-  hSigmaPbPb010StatMB->SetLineWidth(2);
-  hSigmaPbPb010StatMB->SetMarkerSize(1);//4
-  hSigmaPbPb010StatMB->SetMarkerStyle(20);
-  hSigmaPbPb010StatMB->SetLineColor(kAzure-1);
-  hSigmaPbPb010StatMB->SetMarkerColor(kAzure-1);
-
-  hSigmaPbPb010Stat->SetLineWidth(2);
-  hSigmaPbPb010Stat->SetMarkerSize(1);//4
-  hSigmaPbPb010Stat->SetMarkerStyle(20);
-  hSigmaPbPb010Stat->SetLineColor(kAzure-1);
-  hSigmaPbPb010Stat->SetMarkerColor(kAzure-1);
-
-  gaeCrossPbPb010SystMB->SetFillColor(1);
-  gaeCrossPbPb010SystMB->SetFillStyle(0); 
-  gaeCrossPbPb010SystMB->SetLineWidth(2);
-  gaeCrossPbPb010SystMB->SetLineColor(kAzure-1);
-
-  gaeCrossPbPb010Syst->SetFillColor(1);
-  gaeCrossPbPb010Syst->SetFillStyle(0); 
-  gaeCrossPbPb010Syst->SetLineWidth(2);
-  gaeCrossPbPb010Syst->SetLineColor(kAzure-1);
+  cout<<"pp"<<endl;
+  scaleNsetCrossSection(hSigmaPPStat, gaeCrossPPSyst, 1, 1, 20);
+  scaleNsetCrossSection(hSigmaPPStatMB, gaeCrossPPSystMB, 1, 1, 20);
+  cout<<"PbPb 0-100"<<endl;
+  scaleNsetCrossSection(hSigmaPbPb0100Stat, gaeCrossPbPb0100Syst, 1/3., kRed+2, 21);
+  scaleNsetCrossSection(hSigmaPbPb0100StatMB, gaeCrossPbPb0100SystMB, 1/3., kRed+2, 21);
+  cout<<"PbPb 0-10"<<endl;
+  scaleNsetCrossSection(hSigmaPbPb010Stat, gaeCrossPbPb010Syst, 1/10., kAzure+3, 22);
+  scaleNsetCrossSection(hSigmaPbPb010StatMB, gaeCrossPbPb010SystMB, 1/10., kAzure+3, 22);
 
   //
 
@@ -241,24 +184,27 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texYOnly->SetLineWidth(2);
 
   Float_t systnormPP = normalizationUncertaintyForPP();
-  Float_t systnormPbPb0100 = normalizationUncertaintyForPbPb(0,100);
-  Float_t systnormPbPb010 = normalizationUncertaintyForPbPb(0,10);
-  TLatex* texSystnormPP = new TLatex(0.23,0.55,Form("Global uncert. (pp) %.1f%s",systnormPP,texper.Data()));
+  Float_t systnormPbPbhigh0100 = normalizationUncertaintyForPbPb(0,100);
+  Float_t systnormPbPblow0100 = normalizationUncertaintyForPbPb(0,100,false);
+  Float_t systnormPbPbhigh010 = normalizationUncertaintyForPbPb(0,10);
+  Float_t systnormPbPblow010 = normalizationUncertaintyForPbPb(0,10,false);
+  TLatex* texSystnormPP = new TLatex(0.23,0.55,Form("pp, %.1f%s",systnormPP,texper.Data()));
   texSystnormPP->SetNDC();
   texSystnormPP->SetTextFont(42);
   texSystnormPP->SetTextSize(0.045);
   texSystnormPP->SetLineWidth(2);
-  TLatex* texSystnormPbPb0100 = new TLatex(0.23,0.495,Form("Global uncert. (PbPb 0-100%s) %.1f%s",systnormPbPb0100,texper.Data(),texper.Data()));
+  TLatex* texSystnormPbPb0100 = new TLatex(0.23,0.495,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()));
   texSystnormPbPb0100->SetNDC();
   texSystnormPbPb0100->SetTextFont(42);
   texSystnormPbPb0100->SetTextSize(0.045);
   texSystnormPbPb0100->SetLineWidth(2);
-  TLatex* texSystnormPbPb010 = new TLatex(0.23,0.44,Form("Global uncert. (PbPb 0-10%s) %.1f%s",systnormPbPb010,texper.Data(),texper.Data()));
+  TLatex* texSystnormPbPb010 = new TLatex(0.23,0.44,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()));
   texSystnormPbPb010->SetNDC();
   texSystnormPbPb010->SetTextFont(42);
   texSystnormPbPb010->SetTextSize(0.045);
   texSystnormPbPb010->SetLineWidth(2);
 
+  /*
   TLatex* texSystnormPbPb0100Only = new TLatex(0.55,0.727,Form("Global uncert. (0-100%s) %.1f%s",texper.Data(),systnormPbPb0100,texper.Data()));
   texSystnormPbPb0100Only->SetNDC();
   texSystnormPbPb0100Only->SetTextFont(42);
@@ -269,7 +215,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texSystnormPbPb010Only->SetTextFont(42);
   texSystnormPbPb010Only->SetTextSize(0.0315);
   texSystnormPbPb010Only->SetLineWidth(2);
-
+  */
   TLegend* legendSigma = new TLegend(0.54,0.61,0.87,0.83,"");
   legendSigma->SetBorderSize(0);
   legendSigma->SetLineColor(0);
@@ -281,11 +227,11 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaPPMB->SetTextFont(42);
   ent_SigmaPPMB->SetLineColor(2);
   ent_SigmaPPMB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaPbPb0100MB = legendSigma->AddEntry(hSigmaPbPb0100StatMB,Form("PbPb (0-100%s), %.1f%s",texper.Data(),systnormPbPb0100,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaPbPb0100MB = legendSigma->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
   ent_SigmaPbPb0100MB->SetTextFont(42);
   ent_SigmaPbPb0100MB->SetLineColor(2);
   ent_SigmaPbPb0100MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaPbPb010MB = legendSigma->AddEntry(hSigmaPbPb010StatMB,Form("PbPb (0-10%s), %.1f%s",texper.Data(),systnormPbPb010,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaPbPb010MB = legendSigma->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
   ent_SigmaPbPb010MB->SetTextFont(42);
   ent_SigmaPbPb010MB->SetLineColor(2);
   ent_SigmaPbPb010MB->SetMarkerColor(2);
@@ -300,11 +246,11 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   legendSigmaOnly->SetFillStyle(1001);
   legendSigmaOnly->SetTextFont(42);
   legendSigmaOnly->SetTextSize(0.0315);
-  TLegendEntry* ent_SigmaOnlyPbPb0100MB = legendSigmaOnly->AddEntry(hSigmaPbPb0100StatMB,Form("Cent. 0-100%s",texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnlyPbPb0100MB = legendSigmaOnly->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
   ent_SigmaOnlyPbPb0100MB->SetTextFont(42);
   ent_SigmaOnlyPbPb0100MB->SetLineColor(2);
   ent_SigmaOnlyPbPb0100MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaOnlyPbPb010MB = legendSigmaOnly->AddEntry(hSigmaPbPb010StatMB,Form("Cent. 0-10%s",texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnlyPbPb010MB = legendSigmaOnly->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
   ent_SigmaOnlyPbPb010MB->SetTextFont(42);
   ent_SigmaOnlyPbPb010MB->SetLineColor(2);
   ent_SigmaOnlyPbPb010MB->SetMarkerColor(2);
@@ -381,8 +327,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   gaeCrossPbPb010SystMB->Draw("5same");  
   gaeCrossPbPb010Syst->Draw("5same");  
   texYOnly->Draw();
-  texSystnormPbPb0100Only->Draw();
-  texSystnormPbPb010Only->Draw();
+  //texSystnormPbPb0100Only->Draw();
+  //texSystnormPbPb010Only->Draw();
   legendSigmaOnly->Draw("same");
   tlatex1Only->Draw();
   texcmsOnly->Draw();
@@ -465,6 +411,39 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   cSigma->SaveAs("plotCrossSection/CrossSection_ComparisonPPnPbPb.pdf");
 }
 
+void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Double_t fscale, Int_t pcolor, Int_t pstyle)
+{
+  Int_t ngrbins = gaeCrossSyst->GetN();
+  for(int i=0;i<ngrbins;i++)
+    {
+      cout<<left<<"  "<<setw(5)<<i;
+      Double_t x,y;
+      gaeCrossSyst->GetPoint(i,x,y);
+      cout<<left<<setw(8)<<x<<setw(15)<<y<<setw(15)<<hSigmaStat->GetBinContent(i+1);
+      gaeCrossSyst->SetPoint(i,x,y*fscale);
+      Double_t exl = gaeCrossSyst->GetErrorXlow(i);
+      Double_t exh = gaeCrossSyst->GetErrorXhigh(i);
+      Double_t eyl = gaeCrossSyst->GetErrorYlow(i);
+      Double_t eyh = gaeCrossSyst->GetErrorYhigh(i);
+      cout<<left<<setw(15)<<eyl<<setw(15)<<eyh<<endl;
+      gaeCrossSyst->SetPointError(i,exl,exh,eyl*fscale,eyh*fscale);
+    }
+  hSigmaStat->Scale(fscale);
+  cout<<endl;
+  
+  hSigmaStat->SetLineWidth(2);
+  hSigmaStat->SetMarkerSize(1);
+  hSigmaStat->SetMarkerStyle(pstyle);
+  hSigmaStat->SetLineColor(pcolor);
+  hSigmaStat->SetMarkerColor(pcolor);
+  
+  gaeCrossSyst->SetMarkerSize(1);
+  gaeCrossSyst->SetMarkerStyle(pstyle);
+  gaeCrossSyst->SetFillColor(1);
+  gaeCrossSyst->SetFillStyle(0);
+  gaeCrossSyst->SetLineWidth(2);
+  gaeCrossSyst->SetLineColor(pcolor);
+}
 
 int main(int argc, char *argv[])
 {
