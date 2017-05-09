@@ -104,85 +104,101 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
 
   //
 
-  TH2F* hemptySigmaOnly = new TH2F("hemptySigmaOnly","",50,0.,110.,10.,1.1,1.e10);  
+  TH2F* hemptySigmaOnly = new TH2F("hemptySigmaOnly","",50,0.,110.,10.,0.1,1.e11); //1.1, 1.e10
   hemptySigmaOnly->GetXaxis()->CenterTitle();
   hemptySigmaOnly->GetYaxis()->CenterTitle();
-  hemptySigmaOnly->GetXaxis()->SetTitle("p_{T} (GeV/c)");
-  //hemptySigmaOnly->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
-  hemptySigmaOnly->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
+  hemptySigmaOnly->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  hemptySigmaOnly->GetYaxis()->SetTitle("#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  //hemptySigmaOnly->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
   hemptySigmaOnly->GetXaxis()->SetTitleOffset(1.0);
-  hemptySigmaOnly->GetYaxis()->SetTitleOffset(1.286);//1.3
+  hemptySigmaOnly->GetYaxis()->SetTitleOffset(1.7861);// 1.286 before y title changes
   hemptySigmaOnly->GetXaxis()->SetTitleSize(0.039);
-  hemptySigmaOnly->GetYaxis()->SetTitleSize(0.0385);
+  hemptySigmaOnly->GetYaxis()->SetTitleSize(0.028);// 0.0385 before y title changes
   hemptySigmaOnly->GetXaxis()->SetTitleFont(42);
   hemptySigmaOnly->GetYaxis()->SetTitleFont(42);
   hemptySigmaOnly->GetXaxis()->SetLabelFont(42);
   hemptySigmaOnly->GetYaxis()->SetLabelFont(42);
   hemptySigmaOnly->GetXaxis()->SetLabelSize(0.03);
-  hemptySigmaOnly->GetYaxis()->SetLabelSize(0.0315);  
+  hemptySigmaOnly->GetYaxis()->SetLabelSize(0.028);// 0.0315 before y title changes  
   hemptySigmaOnly->GetXaxis()->SetLabelOffset(0.001);
   hemptySigmaOnly->SetMaximum(2);
   hemptySigmaOnly->SetMinimum(0.);
 
-  //
-  TH2F* hemptySigma = new TH2F("hemptySigma","",50,0.,110.,10.,1.1,1.e10);  
+  TH2F* hemptySigmaOnly2 = new TH2F("hemptySigmaOnly2","",50,0.,110.,10.,0.1,1.e11); //1.1, 1.e10
+  hemptySigmaOnly2->GetXaxis()->CenterTitle();
+  hemptySigmaOnly2->GetYaxis()->CenterTitle();
+  hemptySigmaOnly2->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  hemptySigmaOnly2->GetYaxis()->SetTitle("#frac{d#sigma^{pp}}{dp_{T}}  or  #frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  //hemptySigmaOnly2->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
+  hemptySigmaOnly2->GetXaxis()->SetTitleOffset(1.0);
+  hemptySigmaOnly2->GetYaxis()->SetTitleOffset(1.7861);// 1.286 before y title changes
+  hemptySigmaOnly2->GetXaxis()->SetTitleSize(0.039);
+  hemptySigmaOnly2->GetYaxis()->SetTitleSize(0.028);// 0.0385 before y title changes
+  hemptySigmaOnly2->GetXaxis()->SetTitleFont(42);
+  hemptySigmaOnly2->GetYaxis()->SetTitleFont(42);
+  hemptySigmaOnly2->GetXaxis()->SetLabelFont(42);
+  hemptySigmaOnly2->GetYaxis()->SetLabelFont(42);
+  hemptySigmaOnly2->GetXaxis()->SetLabelSize(0.03);
+  hemptySigmaOnly2->GetYaxis()->SetLabelSize(0.028);// 0.0315 before y title changes  
+  hemptySigmaOnly2->GetXaxis()->SetLabelOffset(0.001);
+  hemptySigmaOnly2->SetMaximum(2);
+  hemptySigmaOnly2->SetMinimum(0.);
+
+  TH2F* hemptySigma = new TH2F("hemptySigma","",50,0.,110.,10.,0.11,1.e11); //1.1, 1.e10
   hemptySigma->GetXaxis()->CenterTitle();
   hemptySigma->GetYaxis()->CenterTitle();
-  hemptySigma->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
-  //if(isPbPb==1) hemptySigma->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
+  hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma^{pp}}{dp_{T}}  or  #frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  //hemptySigma->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
   hemptySigma->GetXaxis()->SetTitleOffset(0.7);
-  hemptySigma->GetYaxis()->SetTitleOffset(0.9);//1.3
+  hemptySigma->GetYaxis()->SetTitleOffset(1.25);// 0.9 before y title changes
   hemptySigma->GetXaxis()->SetTitleSize(0.05);
-  hemptySigma->GetYaxis()->SetTitleSize(0.055);
+  hemptySigma->GetYaxis()->SetTitleSize(0.040);// 0.055 before y title changes
   hemptySigma->GetXaxis()->SetTitleFont(42);
   hemptySigma->GetYaxis()->SetTitleFont(42);
   hemptySigma->GetXaxis()->SetLabelFont(42);
   hemptySigma->GetYaxis()->SetLabelFont(42);
   hemptySigma->GetXaxis()->SetLabelSize(0.04);
-  hemptySigma->GetYaxis()->SetLabelSize(0.045);  
+  hemptySigma->GetYaxis()->SetLabelSize(0.040);// 0.045 before y title changes
   hemptySigma->SetMaximum(2);
   hemptySigma->SetMinimum(0.);
 
-  TH2F* hemptyRatio = new TH2F("hemptyRatio","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
-  hemptyRatio->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+  TH2F* hemptyRatio = new TH2F("hemptyRatio","",50,0.,110.,10.,0.,2.7);
+  hemptyRatio->GetXaxis()->SetTitle("p_{T} [GeV/c]");
   hemptyRatio->GetXaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->SetTitle("pp / FONLL");
-  hemptyRatio->GetXaxis()->SetTitleOffset(1.0);//0.9
-  hemptyRatio->GetYaxis()->SetTitleOffset(0.4);//0.5
-  hemptyRatio->GetXaxis()->SetTitleSize(0.13);//0.12
-  hemptyRatio->GetYaxis()->SetTitleSize(0.12);
+  hemptyRatio->GetXaxis()->SetTitleOffset(1.0);
+  hemptyRatio->GetYaxis()->SetTitleOffset(0.5455);// 0.4 before y title changes -> 0.5555
+  hemptyRatio->GetXaxis()->SetTitleSize(0.13);
+  hemptyRatio->GetYaxis()->SetTitleSize(0.096);// 0.12 before y title changes -> 0.096
   hemptyRatio->GetXaxis()->SetTitleFont(42);
   hemptyRatio->GetYaxis()->SetTitleFont(42);
   hemptyRatio->GetXaxis()->SetLabelFont(42);
   hemptyRatio->GetYaxis()->SetLabelFont(42);
   hemptyRatio->GetYaxis()->SetLabelOffset(0.015);
   hemptyRatio->GetXaxis()->SetLabelSize(0.1);
-  hemptyRatio->GetYaxis()->SetLabelSize(0.1);  
+  hemptyRatio->GetYaxis()->SetLabelSize(0.08889);// 0.1 before y title changes -> 0.08889
 
   TString texper="%";
-  /*
-  TLatex* texCent = new TLatex(0.55,0.85,Form("Centrality %.0f - %.0f%s",centMin,centMax,texper.Data()));
-  texCent->SetNDC();
-  texCent->SetTextFont(42);
-  texCent->SetTextSize(0.045);
-  TLatex* texCentOnly = new TLatex(0.55,0.895,Form("Centrality %.0f - %.0f%s",centMin,centMax,texper.Data()));
-  texCentOnly->SetNDC();
-  texCentOnly->SetTextFont(42);
-  texCentOnly->SetTextSize(0.0315);
-  */
 
+  //
   TLatex* texY = new TLatex(0.55,0.85,"|y| < 1.0, Global uncert.");
   texY->SetNDC();
   texY->SetTextFont(42);
   texY->SetTextSize(0.045);
   texY->SetLineWidth(2);
-  TLatex* texYOnly = new TLatex(0.55,0.853,"|y| < 1.0");
+  TLatex* texYOnly = new TLatex(0.55,0.853,"|y| < 1.0, Global uncert.");
   texYOnly->SetNDC();
   texYOnly->SetTextFont(42);
   texYOnly->SetTextSize(0.0315);
   texYOnly->SetLineWidth(2);
+  TLatex* texYOnly2 = new TLatex(0.55,0.895,"|y| < 1.0, Global uncert.");
+  texYOnly2->SetNDC();
+  texYOnly2->SetTextFont(42);
+  texYOnly2->SetTextSize(0.0315);
+  texYOnly2->SetLineWidth(2);
 
+  //
   Float_t systnormPP = normalizationUncertaintyForPP();
   Float_t systnormPbPbhigh0100 = normalizationUncertaintyForPbPb(0,100);
   Float_t systnormPbPblow0100 = normalizationUncertaintyForPbPb(0,100,false);
@@ -204,18 +220,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texSystnormPbPb010->SetTextSize(0.045);
   texSystnormPbPb010->SetLineWidth(2);
 
-  /*
-  TLatex* texSystnormPbPb0100Only = new TLatex(0.55,0.727,Form("Global uncert. (0-100%s) %.1f%s",texper.Data(),systnormPbPb0100,texper.Data()));
-  texSystnormPbPb0100Only->SetNDC();
-  texSystnormPbPb0100Only->SetTextFont(42);
-  texSystnormPbPb0100Only->SetTextSize(0.0315);
-  texSystnormPbPb0100Only->SetLineWidth(2);
-  TLatex* texSystnormPbPb010Only = new TLatex(0.55,0.6885,Form("Global uncert. (0-10%s) %.1f%s",texper.Data(),systnormPbPb010,texper.Data()));
-  texSystnormPbPb010Only->SetNDC();
-  texSystnormPbPb010Only->SetTextFont(42);
-  texSystnormPbPb010Only->SetTextSize(0.0315);
-  texSystnormPbPb010Only->SetLineWidth(2);
-  */
+  //
   TLegend* legendSigma = new TLegend(0.54,0.61,0.87,0.83,"");
   legendSigma->SetBorderSize(0);
   legendSigma->SetLineColor(0);
@@ -239,6 +244,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaFONLL->SetTextFont(42);
   ent_SigmaFONLL->SetLineColor(5);
   ent_SigmaFONLL->SetMarkerColor(1);
+
   TLegend* legendSigmaOnly = new TLegend(0.54,0.762,0.87,0.839,"");
   legendSigmaOnly->SetBorderSize(0);
   legendSigmaOnly->SetLineColor(0);
@@ -255,7 +261,31 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaOnlyPbPb010MB->SetLineColor(2);
   ent_SigmaOnlyPbPb010MB->SetMarkerColor(2);
 
-  
+  TLegend* legendSigmaOnly2 = new TLegend(0.54,0.727,0.87,0.881,"");
+  legendSigmaOnly2->SetBorderSize(0);
+  legendSigmaOnly2->SetLineColor(0);
+  legendSigmaOnly2->SetFillColor(0);
+  legendSigmaOnly2->SetFillStyle(1001);
+  legendSigmaOnly2->SetTextFont(42);
+  legendSigmaOnly2->SetTextSize(0.0315);
+  TLegendEntry* ent_SigmaOnly2PPMB = legendSigmaOnly2->AddEntry(hSigmaPPStatMB,Form("pp, %.1f%s",systnormPP,texper.Data()),"pf");
+  ent_SigmaOnly2PPMB->SetTextFont(42);
+  ent_SigmaOnly2PPMB->SetLineColor(2);
+  ent_SigmaOnly2PPMB->SetMarkerColor(2);
+  TLegendEntry* ent_SigmaOnly2PbPb0100MB = legendSigmaOnly2->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
+  ent_SigmaOnly2PbPb0100MB->SetTextFont(42);
+  ent_SigmaOnly2PbPb0100MB->SetLineColor(2);
+  ent_SigmaOnly2PbPb0100MB->SetMarkerColor(2);
+  TLegendEntry* ent_SigmaOnly2PbPb010MB = legendSigmaOnly2->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  ent_SigmaOnly2PbPb010MB->SetTextFont(42);
+  ent_SigmaOnly2PbPb010MB->SetLineColor(2);
+  ent_SigmaOnly2PbPb010MB->SetMarkerColor(2);
+  TLegendEntry* ent_SigmaOnly2FONLL = legendSigmaOnly2->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
+  ent_SigmaOnly2FONLL->SetTextFont(42);
+  ent_SigmaOnly2FONLL->SetLineColor(5);
+  ent_SigmaOnly2FONLL->SetMarkerColor(1);
+
+  //
   TString tlumi = "27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)";
   TString tlumiPbPb = "530 #mub^{-1} (5.02 TeV PbPb)";
   TLatex* tlatex1 = new TLatex(0.95,0.96,tlumi.Data());
@@ -270,6 +300,12 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   tlatex1Only->SetTextColor(1);
   tlatex1Only->SetTextFont(42);
   tlatex1Only->SetTextSize(0.0315);
+  TLatex* tlatex1Only2 = new TLatex(0.95,0.972,tlumi.Data());
+  tlatex1Only2->SetNDC();
+  tlatex1Only2->SetTextAlign(32);
+  tlatex1Only2->SetTextColor(1);
+  tlatex1Only2->SetTextFont(42);
+  tlatex1Only2->SetTextSize(0.0315);
 
   TLatex* texcms = new TLatex(0.15,0.90,"CMS");
   texcms->SetNDC();
@@ -283,6 +319,33 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texcmsOnly->SetTextFont(62);//61
   texcmsOnly->SetTextSize(0.042);
   texcmsOnly->SetLineWidth(2);
+  TLatex* texcmsOnly2 = new TLatex(0.15,0.93,"CMS");
+  texcmsOnly2->SetNDC();
+  texcmsOnly2->SetTextAlign(13);
+  texcmsOnly2->SetTextFont(62);//61
+  texcmsOnly2->SetTextSize(0.042);
+  texcmsOnly2->SetLineWidth(2);
+
+  TLatex* texDzero = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  texDzero->SetNDC();
+  texDzero->SetTextAlign(13);
+  texDzero->SetTextFont(62);//61
+  texDzero->SetTextSize(0.06);
+  texDzero->SetLineWidth(2);
+  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  texDzeroOnly->SetNDC();
+  texDzeroOnly->SetTextAlign(13);
+  texDzeroOnly->SetTextFont(62);//61
+  texDzeroOnly->SetTextSize(0.042);
+  texDzeroOnly->SetLineWidth(2);
+  TLatex* texDzeroOnly2 = new TLatex(0.15,0.888,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  texDzeroOnly2->SetNDC();
+  texDzeroOnly2->SetTextAlign(13);
+  texDzeroOnly2->SetTextFont(62);//61
+  texDzeroOnly2->SetTextSize(0.042);
+  texDzeroOnly2->SetLineWidth(2);
+
+  /*
   TLatex* texpre = new TLatex(0.15,0.84,"Preliminary");
   texpre->SetNDC();
   texpre->SetTextAlign(13);
@@ -295,6 +358,13 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texpreOnly->SetTextFont(52);
   texpreOnly->SetTextSize(0.028);
   texpreOnly->SetLineWidth(2);
+  TLatex* texpreOnly2 = new TLatex(0.15,0.888,"Preliminary");
+  texpreOnly2->SetNDC();
+  texpreOnly2->SetTextAlign(13);
+  texpreOnly2->SetTextFont(52);
+  texpreOnly2->SetTextSize(0.028);
+  texpreOnly2->SetLineWidth(2);
+  */
 
   TLine* l = new TLine(2.2,1,110,1);//10,1,105,1
   l->SetLineWidth(1);
@@ -327,14 +397,54 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   gaeCrossPbPb010SystMB->Draw("5same");  
   gaeCrossPbPb010Syst->Draw("5same");  
   texYOnly->Draw();
-  //texSystnormPbPb0100Only->Draw();
-  //texSystnormPbPb010Only->Draw();
   legendSigmaOnly->Draw("same");
   tlatex1Only->Draw();
   texcmsOnly->Draw();
+  texDzeroOnly->Draw();
   //texpreOnly->Draw();
 
   cSigmaOnly->SaveAs("plotCrossSection/CrossSection_ComparisonPbPb.pdf");
+
+  TCanvas* cSigmaOnly2 = new TCanvas("cSigmaOnly2","",750,750);
+  cSigmaOnly2->SetFrameBorderMode(0);
+  cSigmaOnly2->SetFrameBorderMode(0);
+  cSigmaOnly2->Range(-1.989924,-0.2917772,25.49622,2.212202);
+  cSigmaOnly2->SetFillColor(0);
+  cSigmaOnly2->SetBorderMode(0);
+  cSigmaOnly2->SetBorderSize(2);
+  cSigmaOnly2->SetLeftMargin(0.12);//0.1451613
+  cSigmaOnly2->SetRightMargin(0.03);//0.05443548
+  cSigmaOnly2->SetTopMargin(0.049);//0.08474576
+  cSigmaOnly2->SetBottomMargin(0.099);//0.1165254
+  cSigmaOnly2->SetFrameBorderMode(0);
+  cSigmaOnly2->SetFrameBorderMode(0);
+  cSigmaOnly2->SetLogx();
+  cSigmaOnly2->SetLogy();
+  cSigmaOnly2->cd();
+
+  hemptySigmaOnly2->Draw();
+  gaeBplusReferenceMB->Draw("5same");
+  gaeBplusReference->Draw("5same");
+  hSigmaPPStatMB->Draw("epsame"); 
+  hSigmaPPStat->Draw("epsame"); 
+  gaeCrossPPSystMB->Draw("5same");  
+  gaeCrossPPSyst->Draw("5same");  
+  hSigmaPbPb0100StatMB->Draw("epsame"); 
+  hSigmaPbPb0100Stat->Draw("epsame"); 
+  gaeCrossPbPb0100SystMB->Draw("5same");  
+  gaeCrossPbPb0100Syst->Draw("5same");  
+  hSigmaPbPb010StatMB->Draw("epsame"); 
+  hSigmaPbPb010Stat->Draw("epsame"); 
+  gaeCrossPbPb010SystMB->Draw("5same");  
+  gaeCrossPbPb010Syst->Draw("5same");  
+
+  texYOnly2->Draw();
+  legendSigmaOnly2->Draw("same");
+  tlatex1Only2->Draw();
+  texcmsOnly2->Draw();
+  texDzeroOnly2->Draw();
+  //texpreOnly2->Draw();
+  cSigmaOnly2->SaveAs("plotCrossSection/CrossSection_ComparisonPPnPbPb_noRatio.pdf");
 
   TCanvas* cSigma = new TCanvas("cSigma","",750,750);
   cSigma->SetFrameBorderMode(0);
@@ -387,6 +497,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   legendSigma->Draw("same");
   tlatex1->Draw();
   texcms->Draw();
+  texDzero->Draw();
   //texpre->Draw();
 
   cSigma->cd();

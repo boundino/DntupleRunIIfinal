@@ -92,62 +92,65 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   gaeRatioCrossFONLLsyst->SetLineColor(1);//kGreen+4
 
   //
+  TString yaxistitle = (isPbPb==1)?"#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]":"#frac{d#sigma^{pp}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]";
 
-  TH2F* hemptySigmaOnly = new TH2F("hemptySigmaOnly","",50,0.,110.,10.,1.1,1.e10);  
+  TH2F* hemptySigmaOnly = new TH2F("hemptySigmaOnly","",50,0.,110.,10.,0.1,1.e11);
   hemptySigmaOnly->GetXaxis()->CenterTitle();
   hemptySigmaOnly->GetYaxis()->CenterTitle();
-  hemptySigmaOnly->GetXaxis()->SetTitle("p_{T} (GeV/c)");
-  hemptySigmaOnly->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
-  if(isPbPb==1) hemptySigmaOnly->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
+  hemptySigmaOnly->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  hemptySigmaOnly->GetYaxis()->SetTitle(yaxistitle);
+  //hemptySigmaOnly->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
+  //if(isPbPb==1) hemptySigmaOnly->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
   hemptySigmaOnly->GetXaxis()->SetTitleOffset(1.0);
-  hemptySigmaOnly->GetYaxis()->SetTitleOffset(1.286);//1.3
+  hemptySigmaOnly->GetYaxis()->SetTitleOffset(1.7861);// 1.286 before y title changes
   hemptySigmaOnly->GetXaxis()->SetTitleSize(0.039);
-  hemptySigmaOnly->GetYaxis()->SetTitleSize(0.0385);
+  hemptySigmaOnly->GetYaxis()->SetTitleSize(0.028);// 0.0385 before y title changes
   hemptySigmaOnly->GetXaxis()->SetTitleFont(42);
   hemptySigmaOnly->GetYaxis()->SetTitleFont(42);
   hemptySigmaOnly->GetXaxis()->SetLabelFont(42);
   hemptySigmaOnly->GetYaxis()->SetLabelFont(42);
   hemptySigmaOnly->GetXaxis()->SetLabelSize(0.03);
-  hemptySigmaOnly->GetYaxis()->SetLabelSize(0.0315);  
+  hemptySigmaOnly->GetYaxis()->SetLabelSize(0.028);// 0.0315 before y title changes
   hemptySigmaOnly->GetXaxis()->SetLabelOffset(0.001);
   hemptySigmaOnly->SetMaximum(2);
   hemptySigmaOnly->SetMinimum(0.);
 
   //
-  TH2F* hemptySigma = new TH2F("hemptySigma","",50,0.,110.,10.,1.1,1.e10);  
+  TH2F* hemptySigma = new TH2F("hemptySigma","",50,0.,110.,10.,0.11,1.e11);
   hemptySigma->GetXaxis()->CenterTitle();
   hemptySigma->GetYaxis()->CenterTitle();
-  hemptySigma->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
-  if(isPbPb==1) hemptySigma->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
+  hemptySigma->GetYaxis()->SetTitle(yaxistitle);
+  //hemptySigma->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
+  //if(isPbPb==1) hemptySigma->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
   hemptySigma->GetXaxis()->SetTitleOffset(0.7);
-  hemptySigma->GetYaxis()->SetTitleOffset(0.9);//1.3
+  hemptySigma->GetYaxis()->SetTitleOffset(1.25);// 0.9 before y title changes
   hemptySigma->GetXaxis()->SetTitleSize(0.05);
-  hemptySigma->GetYaxis()->SetTitleSize(0.055);
+  hemptySigma->GetYaxis()->SetTitleSize(0.040);// 0.055 before y title changes
   hemptySigma->GetXaxis()->SetTitleFont(42);
   hemptySigma->GetYaxis()->SetTitleFont(42);
   hemptySigma->GetXaxis()->SetLabelFont(42);
   hemptySigma->GetYaxis()->SetLabelFont(42);
   hemptySigma->GetXaxis()->SetLabelSize(0.04);
-  hemptySigma->GetYaxis()->SetLabelSize(0.045);  
+  hemptySigma->GetYaxis()->SetLabelSize(0.040);// 0.045 before y title changes
   hemptySigma->SetMaximum(2);
   hemptySigma->SetMinimum(0.);
 
   TH2F* hemptyRatio = new TH2F("hemptyRatio","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
-  hemptyRatio->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+  hemptyRatio->GetXaxis()->SetTitle("p_{T} [GeV/c]");
   hemptyRatio->GetXaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->SetTitle("Data / FONLL");
-  hemptyRatio->GetXaxis()->SetTitleOffset(1.0);//0.9
-  hemptyRatio->GetYaxis()->SetTitleOffset(0.4);//0.5
-  hemptyRatio->GetXaxis()->SetTitleSize(0.13);//0.12
-  hemptyRatio->GetYaxis()->SetTitleSize(0.12);
+  hemptyRatio->GetXaxis()->SetTitleOffset(1.0);
+  hemptyRatio->GetYaxis()->SetTitleOffset(0.5455);// 0.4 before y title changes -> 0.5555
+  hemptyRatio->GetXaxis()->SetTitleSize(0.13);
+  hemptyRatio->GetYaxis()->SetTitleSize(0.096);// 0.12 before y title changes -> 0.096
   hemptyRatio->GetXaxis()->SetTitleFont(42);
   hemptyRatio->GetYaxis()->SetTitleFont(42);
   hemptyRatio->GetXaxis()->SetLabelFont(42);
   hemptyRatio->GetYaxis()->SetLabelFont(42);
   hemptyRatio->GetYaxis()->SetLabelOffset(0.015);
   hemptyRatio->GetXaxis()->SetLabelSize(0.1);
-  hemptyRatio->GetYaxis()->SetLabelSize(0.1);  
+  hemptyRatio->GetYaxis()->SetLabelSize(0.08889);// 0.1 before y title changes -> 0.08889
 
   TString texper="%";
   TLatex* texCent = new TLatex(0.55,0.85,Form("Centrality %.0f - %.0f%s",centMin,centMax,texper.Data()));
@@ -264,6 +267,21 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texcmsOnly->SetTextFont(62);//61
   texcmsOnly->SetTextSize(0.042);
   texcmsOnly->SetLineWidth(2);
+
+  TLatex* texDzero = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  texDzero->SetNDC();
+  texDzero->SetTextAlign(13);
+  texDzero->SetTextFont(62);//61
+  texDzero->SetTextSize(0.06);
+  texDzero->SetLineWidth(2);
+  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  texDzeroOnly->SetNDC();
+  texDzeroOnly->SetTextAlign(13);
+  texDzeroOnly->SetTextFont(62);//61
+  texDzeroOnly->SetTextSize(0.042);
+  texDzeroOnly->SetLineWidth(2);
+
+  /*
   TLatex* texpre = new TLatex(0.15,0.84,"Preliminary");
   texpre->SetNDC();
   texpre->SetTextAlign(13);
@@ -276,6 +294,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texpreOnly->SetTextFont(52);
   texpreOnly->SetTextSize(0.028);
   texpreOnly->SetLineWidth(2);
+  */
 
   TLine* l = new TLine(2.2,1,110,1);//10,1,105,1
   l->SetLineWidth(1);
@@ -311,6 +330,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigmaOnly->Draw("same");
   tlatex1Only->Draw();
   texcmsOnly->Draw();
+  texDzeroOnly->Draw();
   //texpreOnly->Draw();
 
   TString tprev = doComparisonLHC?"CrossSectionComparisonExperiments":"CrossSectionComparison";
@@ -359,6 +379,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigma->Draw("same");
   tlatex1->Draw();
   texcms->Draw();
+  texDzero->Draw();
   //texpre->Draw();
 
   cSigma->cd();
