@@ -127,7 +127,7 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   h->SetYTitle("Entries / (5 MeV/c^{2})");
   h->GetXaxis()->CenterTitle();
   h->GetYaxis()->CenterTitle();
-  h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
+  h->SetAxisRange(0,h->GetMaximum()*1.55*1.3,"Y");
   h->GetXaxis()->SetTitleOffset(1.3);
   h->GetYaxis()->SetTitleOffset(1.8);
   h->GetXaxis()->SetLabelOffset(0.007);
