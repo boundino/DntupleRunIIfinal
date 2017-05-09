@@ -261,7 +261,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaOnlyPbPb010MB->SetLineColor(2);
   ent_SigmaOnlyPbPb010MB->SetMarkerColor(2);
 
-  TLegend* legendSigmaOnly2 = new TLegend(0.54,0.727,0.87,0.881,"");
+  TLegend* legendSigmaOnly2 = new TLegend(0.54,0.7655,0.87,0.881,"");// 727 -> 7655
   legendSigmaOnly2->SetBorderSize(0);
   legendSigmaOnly2->SetLineColor(0);
   legendSigmaOnly2->SetFillColor(0);
@@ -280,10 +280,10 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaOnly2PbPb010MB->SetTextFont(42);
   ent_SigmaOnly2PbPb010MB->SetLineColor(2);
   ent_SigmaOnly2PbPb010MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaOnly2FONLL = legendSigmaOnly2->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
-  ent_SigmaOnly2FONLL->SetTextFont(42);
-  ent_SigmaOnly2FONLL->SetLineColor(5);
-  ent_SigmaOnly2FONLL->SetMarkerColor(1);
+  //TLegendEntry* ent_SigmaOnly2FONLL = legendSigmaOnly2->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
+  //ent_SigmaOnly2FONLL->SetTextFont(42);
+  //ent_SigmaOnly2FONLL->SetLineColor(5);
+  //ent_SigmaOnly2FONLL->SetMarkerColor(1);
 
   //
   TString tlumi = "27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)";
@@ -423,8 +423,10 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   cSigmaOnly2->cd();
 
   hemptySigmaOnly2->Draw();
+  /*
   gaeBplusReferenceMB->Draw("5same");
   gaeBplusReference->Draw("5same");
+  */
   hSigmaPPStatMB->Draw("epsame"); 
   hSigmaPPStat->Draw("epsame"); 
   gaeCrossPPSystMB->Draw("5same");  
