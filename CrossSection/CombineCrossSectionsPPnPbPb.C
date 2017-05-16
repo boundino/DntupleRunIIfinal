@@ -189,7 +189,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   hemptyRatio->GetXaxis()->SetTitle("p_{T} [GeV/c]");
   hemptyRatio->GetXaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->CenterTitle();
-  hemptyRatio->GetYaxis()->SetTitle("pp / FONLL");
+  hemptyRatio->GetYaxis()->SetTitle("#frac{pp}{FONLL}");
+  //hemptyRatio->GetYaxis()->SetTitle("pp / FONLL");
   hemptyRatio->GetXaxis()->SetTitleOffset(1.0);
   hemptyRatio->GetYaxis()->SetTitleOffset(0.5455);// 0.4 before y title changes -> 0.5555
   hemptyRatio->GetXaxis()->SetTitleSize(0.13);

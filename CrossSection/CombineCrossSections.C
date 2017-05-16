@@ -163,7 +163,8 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatio->GetXaxis()->SetTitle("p_{T} [GeV/c]");
   hemptyRatio->GetXaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->CenterTitle();
-  hemptyRatio->GetYaxis()->SetTitle("Data / FONLL");
+  hemptyRatio->GetYaxis()->SetTitle("#frac{Data}{FONLL}");
+  //hemptyRatio->GetYaxis()->SetTitle("Data / FONLL");
   hemptyRatio->GetXaxis()->SetTitleOffset(1.0);
   hemptyRatio->GetYaxis()->SetTitleOffset(0.5455);// 0.4 before y title changes -> 0.5555
   hemptyRatio->GetXaxis()->SetTitleSize(0.13);
@@ -181,7 +182,8 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatioBor->GetXaxis()->SetTitle("p_{T} [GeV/c]");
   hemptyRatioBor->GetXaxis()->CenterTitle();
   hemptyRatioBor->GetYaxis()->CenterTitle();
-  hemptyRatioBor->GetYaxis()->SetTitle("Data / FONLL");
+  hemptyRatioBor->GetYaxis()->SetTitle("#frac{Data}{FONLL}");
+  //hemptyRatioBor->GetYaxis()->SetTitle("Data / FONLL");
   hemptyRatioBor->GetXaxis()->SetTitleOffset(1.0);
   hemptyRatioBor->GetYaxis()->SetTitleOffset(0.36367);
   hemptyRatioBor->GetXaxis()->SetTitleSize(0.13);
@@ -198,11 +200,12 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatioBorGM->GetXaxis()->SetTitle("p_{T} [GeV/c]");
   hemptyRatioBorGM->GetXaxis()->CenterTitle();
   hemptyRatioBorGM->GetYaxis()->CenterTitle();
-  hemptyRatioBorGM->GetYaxis()->SetTitle("Data / GM-VFNS");
+  hemptyRatioBorGM->GetYaxis()->SetTitle("#frac{Data}{GM-VFNS}");
+  //hemptyRatioBorGM->GetYaxis()->SetTitle("Data / GM-VFNS");
   hemptyRatioBorGM->GetXaxis()->SetTitleOffset(1.0);
   hemptyRatioBorGM->GetYaxis()->SetTitleOffset(0.5455);// 0.4 before y title changes -> 0.5555
   hemptyRatioBorGM->GetXaxis()->SetTitleSize(0.13);
-  hemptyRatioBorGM->GetYaxis()->SetTitleSize(0.094);// 0.12 before y title changes -> 0.096
+  hemptyRatioBorGM->GetYaxis()->SetTitleSize(0.096);// 0.12 before y title changes -> 0.096
   hemptyRatioBorGM->GetXaxis()->SetTitleFont(42);
   hemptyRatioBorGM->GetYaxis()->SetTitleFont(42);
   hemptyRatioBorGM->GetXaxis()->SetLabelFont(42);
