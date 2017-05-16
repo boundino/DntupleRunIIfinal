@@ -1,5 +1,6 @@
 #include "uti.h"
 
+// RAA
 TGraphAsymmErrors* gCUJETD5TeV;
 TGraph* gShanshanD5TeV;
 TGraphErrors* gMagdalenaD5TeV;
@@ -8,9 +9,14 @@ TGraphErrors* gPHSDWShadowing;
 TGraph* gIvanD5TeV;
 TGraphErrors* gADSCFT1D5TeV;
 TGraphErrors* gADSCFT2D5TeV;
+// pp
+TGraphAsymmErrors* gGMVFNSD5TeV;
+TGraphAsymmErrors* gGMVFNSD5TeVunity;
 
-//void fillgadscft(TString datfile, TGraphErrors* gadscft);
 TGraphErrors* fillgadscft(TString datfile);
+Int_t findbin(Float_t bincenter, Float_t* ptmin, Float_t* ptmax, Int_t nbin);
+
+//
 void drawTheory0100()
 {
   gStyle->SetHatchesLineWidth(3);
@@ -167,4 +173,173 @@ TGraphErrors* fillgadscft(TString datfile)
 
   TGraphErrors* gadscft = new TGraphErrors(nbin, aADSCFTD5TeVx, aADSCFTD5TeVy, aADSCFTD5TeVxe, aADSCFTD5TeVye);
   return gadscft;
+}
+
+void drawTheoryPP(Bool_t isRatio, TH1D* hSigmaStatMB=0, TH1D* hSigmaStat=0, TGraphAsymmErrors* gaeCrossSystMB=0, TGraphAsymmErrors* gaeCrossSyst=0, Bool_t verbose=false)
+{
+  const int npost = 15;
+  TString postfix[npost] = {"111","112","11h","121","122","1h1","1hh","211","212","221","222","h11","h1h","hh1","hhh"};
+  TString suffix = "TheoryPredictions/cms5_d0_22_32/cms5_d0_22_32";
+  const int n = 1000;
+  Float_t ptmin[n],ptmax[n];
+  Int_t nbin=0;
+  ifstream getgmvfns_init(Form("%s_%s.dat",suffix.Data(),postfix[0].Data()));
+  if(!getgmvfns_init.is_open()) cout<<"Opening the file fails: "<<Form("%s_%s.dat",suffix.Data(),postfix[0].Data())<<endl;
+  nbin=0;
+  while(!getgmvfns_init.eof())
+    {
+      Float_t temp;
+      getgmvfns_init>>ptmin[nbin];
+      if(getgmvfns_init.eof()) break;
+      getgmvfns_init>>ptmax[nbin]>>temp>>temp>>temp>>temp>>temp;      
+      nbin++;
+    }
+  getgmvfns_init.close();
+  getgmvfns_init.clear();
+
+  Float_t yall[npost][nbin];
+  Float_t ymin[nbin],ymax[nbin];
+  Int_t xmin[nbin],xmax[nbin];
+  for(int j=0;j<npost;j++)
+    {
+      ifstream getgmvfns(Form("%s_%s.dat",suffix.Data(),postfix[j].Data()));
+      if(!getgmvfns.is_open()) cout<<"Opening the file fails: "<<Form("%s_%s.dat",suffix.Data(),postfix[j].Data())<<endl;
+      for(int i=0;i<nbin;i++)
+        {
+          Float_t temp;
+          getgmvfns>>temp>>temp>>temp>>temp>>temp>>temp>>yall[j][i];
+          yall[j][i]*=1000;
+          if(j==0)
+            {
+              ymin[i] = yall[j][i];
+              ymax[i] = yall[j][i];
+              xmin[i] = j;
+              xmax[i] = j;
+            }
+          else
+            {
+              if(yall[j][i]<ymin[i]) 
+                {
+                  ymin[i] = yall[j][i];
+                  xmin[i] = j;
+                }
+              if(yall[j][i]>ymax[i]) 
+                {
+                  ymax[i] = yall[j][i];
+                  xmax[i] = j;
+                }
+            }
+        }
+    }
+
+  Float_t* aGMVFNSD5TeVx = new Float_t[nbin];
+  Float_t* aGMVFNSD5TeVxe = new Float_t[nbin];
+  Float_t* aGMVFNSD5TeVy = new Float_t[nbin];
+  Float_t* aGMVFNSD5TeVyel = new Float_t[nbin];
+  Float_t* aGMVFNSD5TeVyeh = new Float_t[nbin];
+  Float_t* aGMVFNSD5TeVuy = new Float_t[nbin];
+  Float_t* aGMVFNSD5TeVuyel = new Float_t[nbin];
+  Float_t* aGMVFNSD5TeVuyeh = new Float_t[nbin];
+  for(int i=0;i<nbin;i++)
+    {
+      aGMVFNSD5TeVx[i] = (ptmax[i]+ptmin[i])/2.;
+      aGMVFNSD5TeVxe[i] = (ptmax[i]-ptmin[i])/2.;
+      aGMVFNSD5TeVy[i] = yall[0][i];
+      aGMVFNSD5TeVyel[i] = yall[0][i] - ymin[i];
+      aGMVFNSD5TeVyeh[i] = ymax[i] - yall[0][i];
+      if(verbose)
+        {
+          if(i==0) cout<<left<<"  "<<setw(8)<<"pT min"<<setw(8)<<"pT max"<<setw(10)<<"xsec min"<<setw(10)<<"xsec max"<<setw(10)<<"xsec"<<endl;
+          cout<<left<<"  "<<setw(8)<<ptmin[i]<<setw(8)<<ptmax[i]<<setw(10)<<postfix[xmin[i]]<<setw(10)<<postfix[xmax[i]]<<setw(10)<<yall[0][i]<<endl;
+        }
+      aGMVFNSD5TeVuy[i] = 1;
+      aGMVFNSD5TeVuyel[i] = aGMVFNSD5TeVyel[i]/aGMVFNSD5TeVy[i];
+      aGMVFNSD5TeVuyeh[i] = aGMVFNSD5TeVyeh[i]/aGMVFNSD5TeVy[i];
+    }
+  gGMVFNSD5TeV = new TGraphAsymmErrors(nbin, aGMVFNSD5TeVx, aGMVFNSD5TeVy, aGMVFNSD5TeVxe, aGMVFNSD5TeVxe, aGMVFNSD5TeVyel, aGMVFNSD5TeVyeh);
+  /*
+  gGMVFNSD5TeV->SetFillColor(kRed-4);
+  gGMVFNSD5TeV->SetFillColorAlpha(kRed-4,0.5);
+  gGMVFNSD5TeV->SetFillStyle(1001);
+  gGMVFNSD5TeV->SetLineWidth(1);
+  gGMVFNSD5TeV->SetLineColor(4);
+  */
+  gGMVFNSD5TeV->SetFillColor(kGreen-5);// kRed-7
+  gGMVFNSD5TeV->SetFillColorAlpha(kGreen-5,0.1);
+  gGMVFNSD5TeV->SetFillStyle(1001);
+  gGMVFNSD5TeV->SetLineWidth(2);
+  gGMVFNSD5TeV->SetLineColor(kGreen+3);// kRed+2
+  if(!isRatio) gGMVFNSD5TeV->Draw("5same");
+
+  //
+  if(!isRatio) return;
+  //
+
+  gGMVFNSD5TeVunity = new TGraphAsymmErrors(nbin, aGMVFNSD5TeVx, aGMVFNSD5TeVuy, aGMVFNSD5TeVxe, aGMVFNSD5TeVxe, aGMVFNSD5TeVuyel, aGMVFNSD5TeVuyeh);
+  /*
+  gGMVFNSD5TeVunity->SetFillColor(kRed-4);
+  gGMVFNSD5TeVunity->SetFillColorAlpha(kRed-4,0.5);
+  gGMVFNSD5TeVunity->SetFillStyle(1001);
+  gGMVFNSD5TeVunity->SetLineWidth(1);
+  gGMVFNSD5TeVunity->SetLineColor(4);
+  */
+  gGMVFNSD5TeVunity->SetFillColor(kGreen-5); // kRed-7
+  gGMVFNSD5TeVunity->SetFillColorAlpha(kGreen-5,0.1);
+  gGMVFNSD5TeVunity->SetFillStyle(1001);
+  gGMVFNSD5TeVunity->SetLineWidth(2);
+  gGMVFNSD5TeVunity->SetLineColor(kGreen+3);// kRed+2
+  gGMVFNSD5TeVunity->Draw("5same");
+
+  TH1D* hRatioSigmaStatMB = (TH1D*)hSigmaStatMB->Clone("hRatioSigmaStatMB");
+  TGraphAsymmErrors* gaeRatioCrossSystMB = (TGraphAsymmErrors*)gaeCrossSystMB->Clone("gaeRatioCrossSystMB");
+  TH1D* hRatioSigmaStat = (TH1D*)hSigmaStat->Clone("hRatioSigmaStat");
+  TGraphAsymmErrors* gaeRatioCrossSyst = (TGraphAsymmErrors*)gaeCrossSyst->Clone("gaeRatioCrossSyst");
+  Int_t endbinMB=0,endbin=0, ibin=0;
+  while(!(endbinMB&&endbin))
+    {
+      if(ibin>(hSigmaStatMB->GetSize()-3)) endbinMB++;
+      else
+        {
+          Int_t getbinMB = findbin(hSigmaStatMB->GetBinCenter(ibin+1),ptmin,ptmax,nbin);
+          hRatioSigmaStatMB->SetBinContent(ibin+1,hSigmaStatMB->GetBinContent(ibin+1)/aGMVFNSD5TeVy[getbinMB]);
+          hRatioSigmaStatMB->SetBinError(ibin+1,hSigmaStatMB->GetBinError(ibin+1)/aGMVFNSD5TeVy[getbinMB]);
+          Double_t xxMB,yyMB,eylMB,eyhMB;
+          gaeCrossSystMB->GetPoint(ibin,xxMB,yyMB);
+          gaeRatioCrossSystMB->SetPoint(ibin,xxMB,yyMB/aGMVFNSD5TeVy[getbinMB]);
+          eylMB = gaeCrossSystMB->GetErrorYlow(ibin);
+          eyhMB = gaeCrossSystMB->GetErrorYhigh(ibin);
+          gaeRatioCrossSystMB->SetPointEYlow(ibin,eylMB/aGMVFNSD5TeVy[getbinMB]);
+          gaeRatioCrossSystMB->SetPointEYhigh(ibin,eyhMB/aGMVFNSD5TeVy[getbinMB]);
+        }
+      if(ibin>(hSigmaStat->GetSize()-3)) endbin++;
+      else
+        {
+          Int_t getbin = findbin(hSigmaStat->GetBinCenter(ibin+1),ptmin,ptmax,nbin);
+          hRatioSigmaStat->SetBinContent(ibin+1,hSigmaStat->GetBinContent(ibin+1)/aGMVFNSD5TeVy[getbin]);
+          hRatioSigmaStat->SetBinError(ibin+1,hSigmaStat->GetBinError(ibin+1)/aGMVFNSD5TeVy[getbin]);
+          Double_t xx,yy,eyl,eyh;
+          gaeCrossSyst->GetPoint(ibin,xx,yy);
+          gaeRatioCrossSyst->SetPoint(ibin,xx,yy/aGMVFNSD5TeVy[getbin]);
+          eyl = gaeCrossSyst->GetErrorYlow(ibin);
+          eyh = gaeCrossSyst->GetErrorYhigh(ibin);
+          gaeRatioCrossSyst->SetPointEYlow(ibin,eyl/aGMVFNSD5TeVy[getbin]);
+          gaeRatioCrossSyst->SetPointEYhigh(ibin,eyh/aGMVFNSD5TeVy[getbin]);
+        }
+      ibin++;
+    }
+  hRatioSigmaStatMB->Draw("epsame");
+  gaeRatioCrossSystMB->Draw("5same");
+  hRatioSigmaStat->Draw("epsame");
+  gaeRatioCrossSyst->Draw("5same");
+}
+
+
+Int_t findbin(Float_t bincenter, Float_t* ptmin, Float_t* ptmax, Int_t nbin)
+{
+  for(int i=0;i<nbin;i++)
+    {
+      if(bincenter>=ptmin[i] && bincenter<ptmax[i]) return i;
+    }
+  cout<<"  Error: findbin error."<<endl;
+  return -1;
 }

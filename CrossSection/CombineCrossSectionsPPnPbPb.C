@@ -56,6 +56,18 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   hSigmaPbPb010Stat->SetName("hSigmaPbPb010Stat");
 
   // FONLL
+  gaeBplusReferenceMB->SetFillColor(kOrange+1);
+  gaeBplusReferenceMB->SetFillColorAlpha(kOrange+1,0.2);
+  gaeBplusReferenceMB->SetFillStyle(1001);
+  gaeBplusReferenceMB->SetLineWidth(2);
+  gaeBplusReferenceMB->SetLineColor(kOrange+7);
+  gaeBplusReference->SetFillColor(kOrange+1);
+  gaeBplusReference->SetFillColorAlpha(kOrange+1,0.2);
+  gaeBplusReference->SetFillStyle(1001);
+  gaeBplusReference->SetLineWidth(2);
+  gaeBplusReference->SetLineColor(kOrange+7);
+
+  /* // yellow
   gaeBplusReferenceMB->SetFillColor(5);//2
   gaeBplusReferenceMB->SetFillStyle(1001);//3001 
   gaeBplusReferenceMB->SetLineWidth(1);//3
@@ -64,30 +76,41 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   gaeBplusReference->SetFillStyle(1001);//3001 
   gaeBplusReference->SetLineWidth(1);//3
   gaeBplusReference->SetLineColor(4);//2
+  */
 
+  gaeRatioCrossFONLLunityMB->SetFillColor(kOrange+1); //kBlue-7
+  gaeRatioCrossFONLLunityMB->SetFillColorAlpha(kOrange+1,0.2);
+  gaeRatioCrossFONLLunityMB->SetFillStyle(1001);
+  gaeRatioCrossFONLLunityMB->SetLineWidth(2);
+  gaeRatioCrossFONLLunityMB->SetLineColor(kOrange+7); //kBlue+2
+  gaeRatioCrossFONLLunity->SetFillColor(kOrange+1);
+  gaeRatioCrossFONLLunity->SetFillColorAlpha(kOrange+1,0.2);
+  gaeRatioCrossFONLLunity->SetFillStyle(1001);
+  gaeRatioCrossFONLLunity->SetLineWidth(2);
+  gaeRatioCrossFONLLunity->SetLineColor(kOrange+7);
+
+  /* // yellow
   gaeRatioCrossFONLLunityMB->SetFillColor(5);
   gaeRatioCrossFONLLunityMB->SetFillStyle(1001);
   gaeRatioCrossFONLLunityMB->SetLineWidth(1);
   gaeRatioCrossFONLLunityMB->SetLineColor(4);
+  gaeRatioCrossFONLLunity->SetFillColor(5);
+  gaeRatioCrossFONLLunity->SetFillStyle(1001);
+  gaeRatioCrossFONLLunity->SetLineWidth(1);
+  gaeRatioCrossFONLLunity->SetLineColor(4);
+  */
   
   gaeRatioCrossFONLLstatMB->SetMarkerSize(1);
   gaeRatioCrossFONLLstatMB->SetLineWidth(2);
   gaeRatioCrossFONLLstatMB->SetLineColor(1);//kGreen+4 
   gaeRatioCrossFONLLstatMB->SetMarkerColor(1);//kGreen+4
-  
-  gaeRatioCrossFONLLsystMB->SetLineWidth(3);
-  gaeRatioCrossFONLLsystMB->SetLineColor(1);//kGreen+4
-
-  gaeRatioCrossFONLLunity->SetFillColor(5);
-  gaeRatioCrossFONLLunity->SetFillStyle(1001);
-  gaeRatioCrossFONLLunity->SetLineWidth(1);
-  gaeRatioCrossFONLLunity->SetLineColor(4);
-
   gaeRatioCrossFONLLstat->SetMarkerSize(1);
   gaeRatioCrossFONLLstat->SetLineWidth(2);
   gaeRatioCrossFONLLstat->SetLineColor(1);//kGreen+4
   gaeRatioCrossFONLLstat->SetMarkerColor(1);//kGreen+4
-
+  
+  gaeRatioCrossFONLLsystMB->SetLineWidth(3);
+  gaeRatioCrossFONLLsystMB->SetLineColor(1);//kGreen+4
   gaeRatioCrossFONLLsyst->SetLineWidth(3);
   gaeRatioCrossFONLLsyst->SetLineColor(1);//kGreen+4
 
