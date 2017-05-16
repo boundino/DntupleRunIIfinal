@@ -6,7 +6,7 @@ using namespace std;
 
 void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString filePbPb0100MB, TString filePbPb0100, TString filePbPb010MB, TString filePbPb010)
 {
-  void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Double_t fscale, Int_t pcolor, Int_t pstyle);
+  void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Double_t fscale, Int_t pcolor, Int_t pstyle, Bool_t verbose=false);
 
   gStyle->SetOptTitle(0);
   gStyle->SetOptStat(0);
@@ -115,13 +115,10 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   gaeRatioCrossFONLLsyst->SetLineColor(1);//kGreen+4
 
   // data
-  cout<<"pp"<<endl;
   scaleNsetCrossSection(hSigmaPPStat, gaeCrossPPSyst, 1, 1, 20);
   scaleNsetCrossSection(hSigmaPPStatMB, gaeCrossPPSystMB, 1, 1, 20);
-  cout<<"PbPb 0-100"<<endl;
   scaleNsetCrossSection(hSigmaPbPb0100Stat, gaeCrossPbPb0100Syst, 1/3., kRed+2, 21);
   scaleNsetCrossSection(hSigmaPbPb0100StatMB, gaeCrossPbPb0100SystMB, 1/3., kRed+2, 21);
-  cout<<"PbPb 0-10"<<endl;
   scaleNsetCrossSection(hSigmaPbPb010Stat, gaeCrossPbPb010Syst, 1/10., kAzure+3, 22);
   scaleNsetCrossSection(hSigmaPbPb010StatMB, gaeCrossPbPb010SystMB, 1/10., kAzure+3, 22);
 
@@ -206,17 +203,18 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   TString texper="%";
 
   //
-  TLatex* texY = new TLatex(0.55,0.85,"|y| < 1.0, Global uncert.");
+  //TLatex* texY = new TLatex(0.51,0.85,"|y| < 1.0, Global uncert."); // x: 0.55
+  TLatex* texY = new TLatex(0.51,0.85,"|y| < 1.0                     Global uncert."); // x: 0.55
   texY->SetNDC();
   texY->SetTextFont(42);
   texY->SetTextSize(0.045);
   texY->SetLineWidth(2);
-  TLatex* texYOnly = new TLatex(0.55,0.853,"|y| < 1.0, Global uncert.");
+  TLatex* texYOnly = new TLatex(0.51,0.853,"|y| < 1.0                     Global uncert.");
   texYOnly->SetNDC();
   texYOnly->SetTextFont(42);
   texYOnly->SetTextSize(0.0315);
   texYOnly->SetLineWidth(2);
-  TLatex* texYOnly2 = new TLatex(0.55,0.895,"|y| < 1.0, Global uncert.");
+  TLatex* texYOnly2 = new TLatex(0.51,0.895,"|y| < 1.0                     Global uncert.");
   texYOnly2->SetNDC();
   texYOnly2->SetTextFont(42);
   texYOnly2->SetTextSize(0.0315);
@@ -228,6 +226,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   Float_t systnormPbPblow0100 = normalizationUncertaintyForPbPb(0,100,false);
   Float_t systnormPbPbhigh010 = normalizationUncertaintyForPbPb(0,10);
   Float_t systnormPbPblow010 = normalizationUncertaintyForPbPb(0,10,false);
+  /*
   TLatex* texSystnormPP = new TLatex(0.23,0.55,Form("pp, %.1f%s",systnormPP,texper.Data()));
   texSystnormPP->SetNDC();
   texSystnormPP->SetTextFont(42);
@@ -243,24 +242,28 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texSystnormPbPb010->SetTextFont(42);
   texSystnormPbPb010->SetTextSize(0.045);
   texSystnormPbPb010->SetLineWidth(2);
+  */
 
   //
-  TLegend* legendSigma = new TLegend(0.54,0.61,0.87,0.83,"");
+  TLegend* legendSigma = new TLegend(0.50,0.61,0.85,0.83,"");
   legendSigma->SetBorderSize(0);
   legendSigma->SetLineColor(0);
   legendSigma->SetFillColor(0);
   legendSigma->SetFillStyle(1001);
   legendSigma->SetTextFont(42);
   legendSigma->SetTextSize(0.045);
-  TLegendEntry* ent_SigmaPPMB = legendSigma->AddEntry(hSigmaPPStatMB,Form("pp, %.1f%s",systnormPP,texper.Data()),"pf");
+  //TLegendEntry* ent_SigmaPPMB = legendSigma->AddEntry(hSigmaPPStatMB,Form("pp, %.1f%s",systnormPP,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaPPMB = legendSigma->AddEntry(hSigmaPPStatMB,Form("pp                    %.1f%s",systnormPP,texper.Data()),"pf");
   ent_SigmaPPMB->SetTextFont(42);
   ent_SigmaPPMB->SetLineColor(2);
   ent_SigmaPPMB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaPbPb0100MB = legendSigma->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
+  //TLegendEntry* ent_SigmaPbPb0100MB = legendSigma->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaPbPb0100MB = legendSigma->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
   ent_SigmaPbPb0100MB->SetTextFont(42);
   ent_SigmaPbPb0100MB->SetLineColor(2);
   ent_SigmaPbPb0100MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaPbPb010MB = legendSigma->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  //TLegendEntry* ent_SigmaPbPb010MB = legendSigma->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaPbPb010MB = legendSigma->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
   ent_SigmaPbPb010MB->SetTextFont(42);
   ent_SigmaPbPb010MB->SetLineColor(2);
   ent_SigmaPbPb010MB->SetMarkerColor(2);
@@ -269,38 +272,38 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaFONLL->SetLineColor(5);
   ent_SigmaFONLL->SetMarkerColor(1);
 
-  TLegend* legendSigmaOnly = new TLegend(0.54,0.762,0.87,0.839,"");
+  TLegend* legendSigmaOnly = new TLegend(0.50,0.762,0.85,0.839,""); // x: 0.54, 0.87
   legendSigmaOnly->SetBorderSize(0);
   legendSigmaOnly->SetLineColor(0);
   legendSigmaOnly->SetFillColor(0);
   legendSigmaOnly->SetFillStyle(1001);
   legendSigmaOnly->SetTextFont(42);
   legendSigmaOnly->SetTextSize(0.0315);
-  TLegendEntry* ent_SigmaOnlyPbPb0100MB = legendSigmaOnly->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnlyPbPb0100MB = legendSigmaOnly->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
   ent_SigmaOnlyPbPb0100MB->SetTextFont(42);
   ent_SigmaOnlyPbPb0100MB->SetLineColor(2);
   ent_SigmaOnlyPbPb0100MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaOnlyPbPb010MB = legendSigmaOnly->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnlyPbPb010MB = legendSigmaOnly->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
   ent_SigmaOnlyPbPb010MB->SetTextFont(42);
   ent_SigmaOnlyPbPb010MB->SetLineColor(2);
   ent_SigmaOnlyPbPb010MB->SetMarkerColor(2);
 
-  TLegend* legendSigmaOnly2 = new TLegend(0.54,0.7655,0.87,0.881,"");// 727 -> 7655
+  TLegend* legendSigmaOnly2 = new TLegend(0.50,0.7655,0.85,0.881,"");// 727 -> 7655
   legendSigmaOnly2->SetBorderSize(0);
   legendSigmaOnly2->SetLineColor(0);
   legendSigmaOnly2->SetFillColor(0);
   legendSigmaOnly2->SetFillStyle(1001);
   legendSigmaOnly2->SetTextFont(42);
   legendSigmaOnly2->SetTextSize(0.0315);
-  TLegendEntry* ent_SigmaOnly2PPMB = legendSigmaOnly2->AddEntry(hSigmaPPStatMB,Form("pp, %.1f%s",systnormPP,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2PPMB = legendSigmaOnly2->AddEntry(hSigmaPPStatMB,Form("pp                    %.1f%s",systnormPP,texper.Data()),"pf");
   ent_SigmaOnly2PPMB->SetTextFont(42);
   ent_SigmaOnly2PPMB->SetLineColor(2);
   ent_SigmaOnly2PPMB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaOnly2PbPb0100MB = legendSigmaOnly2->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2PbPb0100MB = legendSigmaOnly2->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
   ent_SigmaOnly2PbPb0100MB->SetTextFont(42);
   ent_SigmaOnly2PbPb0100MB->SetLineColor(2);
   ent_SigmaOnly2PbPb0100MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaOnly2PbPb010MB = legendSigmaOnly2->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10), + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2PbPb010MB = legendSigmaOnly2->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
   ent_SigmaOnly2PbPb010MB->SetTextFont(42);
   ent_SigmaOnly2PbPb010MB->SetLineColor(2);
   ent_SigmaOnly2PbPb010MB->SetMarkerColor(2);
@@ -548,25 +551,28 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   cSigma->SaveAs("plotCrossSection/CrossSection_ComparisonPPnPbPb.pdf");
 }
 
-void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Double_t fscale, Int_t pcolor, Int_t pstyle)
+void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Double_t fscale, Int_t pcolor, Int_t pstyle, Bool_t verbose=false)
 {
   Int_t ngrbins = gaeCrossSyst->GetN();
   for(int i=0;i<ngrbins;i++)
     {
-      cout<<left<<"  "<<setw(5)<<i;
       Double_t x,y;
       gaeCrossSyst->GetPoint(i,x,y);
-      cout<<left<<setw(8)<<x<<setw(15)<<y<<setw(15)<<hSigmaStat->GetBinContent(i+1);
       gaeCrossSyst->SetPoint(i,x,y*fscale);
       Double_t exl = gaeCrossSyst->GetErrorXlow(i);
       Double_t exh = gaeCrossSyst->GetErrorXhigh(i);
       Double_t eyl = gaeCrossSyst->GetErrorYlow(i);
       Double_t eyh = gaeCrossSyst->GetErrorYhigh(i);
-      cout<<left<<setw(15)<<eyl<<setw(15)<<eyh<<endl;
       gaeCrossSyst->SetPointError(i,exl,exh,eyl*fscale,eyh*fscale);
+      if(verbose)
+        {
+          cout<<left<<"  "<<setw(5)<<i;
+          cout<<left<<setw(8)<<x<<setw(15)<<y<<setw(15)<<hSigmaStat->GetBinContent(i+1);
+          cout<<left<<setw(15)<<eyl<<setw(15)<<eyh<<endl;
+        }
     }
   hSigmaStat->Scale(fscale);
-  cout<<endl;
+  if(verbose) cout<<endl;
   
   hSigmaStat->SetLineWidth(2);
   hSigmaStat->SetMarkerSize(1);
