@@ -38,11 +38,13 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   gaeBplusReferenceMB->SetFillColor(kOrange+1);
   gaeBplusReferenceMB->SetFillColorAlpha(kOrange+1,0.2);
   gaeBplusReferenceMB->SetFillStyle(1001);
+  //gaeBplusReferenceMB->SetFillStyle(3003);
   gaeBplusReferenceMB->SetLineWidth(2);
   gaeBplusReferenceMB->SetLineColor(kOrange+7);
   gaeBplusReference->SetFillColor(kOrange+1);
   gaeBplusReference->SetFillColorAlpha(kOrange+1,0.2);
   gaeBplusReference->SetFillStyle(1001);
+  //gaeBplusReference->SetFillStyle(3003);
   gaeBplusReference->SetLineWidth(2);
   gaeBplusReference->SetLineColor(kOrange+7);
 
@@ -81,11 +83,13 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
 
   gaeRatioCrossFONLLunityMB->SetFillColor(kOrange+1); //kBlue-7
   gaeRatioCrossFONLLunityMB->SetFillColorAlpha(kOrange+1,0.2);
+  //gaeRatioCrossFONLLunityMB->SetFillStyle(3003);
   gaeRatioCrossFONLLunityMB->SetFillStyle(1001);
   gaeRatioCrossFONLLunityMB->SetLineWidth(2);
   gaeRatioCrossFONLLunityMB->SetLineColor(kOrange+7); //kBlue+2
   gaeRatioCrossFONLLunity->SetFillColor(kOrange+1);
   gaeRatioCrossFONLLunity->SetFillColorAlpha(kOrange+1,0.2);
+  //gaeRatioCrossFONLLunity->SetFillStyle(3003);
   gaeRatioCrossFONLLunity->SetFillStyle(1001);
   gaeRatioCrossFONLLunity->SetLineWidth(2);
   gaeRatioCrossFONLLunity->SetLineColor(kOrange+7);
@@ -293,7 +297,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   ent_SigmaPPMB->SetTextFont(42);
   ent_SigmaPPMB->SetLineColor(2);
   ent_SigmaPPMB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaFONLL = legendSigma->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
+  TLegendEntry* ent_SigmaFONLL = legendSigma->AddEntry(gaeBplusReferenceMB,"FONLL","f");
   ent_SigmaFONLL->SetTextFont(42);
   ent_SigmaFONLL->SetLineColor(5);
   ent_SigmaFONLL->SetMarkerColor(1);
@@ -308,7 +312,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   ent_SigmaOnlyPPMB->SetTextFont(42);
   ent_SigmaOnlyPPMB->SetLineColor(2);
   ent_SigmaOnlyPPMB->SetMarkerColor(2);
-  //TLegendEntry* ent_SigmaOnlyFONLL = legendSigmaOnly->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
+  //TLegendEntry* ent_SigmaOnlyFONLL = legendSigmaOnly->AddEntry(gaeBplusReferenceMB,"FONLL","f");
   //ent_SigmaOnlyFONLL->SetTextFont(42);
   //ent_SigmaOnlyFONLL->SetLineColor(5);
   //ent_SigmaOnlyFONLL->SetMarkerColor(1);
@@ -323,7 +327,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   ent_SigmaCalPPMB->SetTextFont(42);
   ent_SigmaCalPPMB->SetLineColor(2);
   ent_SigmaCalPPMB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaCalFONLL = legendSigmaCal->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
+  TLegendEntry* ent_SigmaCalFONLL = legendSigmaCal->AddEntry(gaeBplusReferenceMB,"FONLL","f");
   ent_SigmaCalFONLL->SetTextFont(42);
   ent_SigmaCalFONLL->SetLineColor(5);
   ent_SigmaCalFONLL->SetMarkerColor(1);

@@ -264,7 +264,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaPbPb010MB->SetTextFont(42);
   ent_SigmaPbPb010MB->SetLineColor(2);
   ent_SigmaPbPb010MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaFONLL = legendSigma->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
+  TLegendEntry* ent_SigmaFONLL = legendSigma->AddEntry(gaeBplusReferenceMB,"FONLL","f");
   ent_SigmaFONLL->SetTextFont(42);
   ent_SigmaFONLL->SetLineColor(5);
   ent_SigmaFONLL->SetMarkerColor(1);
@@ -304,7 +304,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaOnly2PbPb010MB->SetTextFont(42);
   ent_SigmaOnly2PbPb010MB->SetLineColor(2);
   ent_SigmaOnly2PbPb010MB->SetMarkerColor(2);
-  //TLegendEntry* ent_SigmaOnly2FONLL = legendSigmaOnly2->AddEntry(gaeBplusReferenceMB,"FONLL pp ref.","f");
+  //TLegendEntry* ent_SigmaOnly2FONLL = legendSigmaOnly2->AddEntry(gaeBplusReferenceMB,"FONLL","f");
   //ent_SigmaOnly2FONLL->SetTextFont(42);
   //ent_SigmaOnly2FONLL->SetLineColor(5);
   //ent_SigmaOnly2FONLL->SetMarkerColor(1);

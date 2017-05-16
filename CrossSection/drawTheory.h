@@ -266,7 +266,8 @@ void drawTheoryPP(Bool_t isRatio, TH1D* hSigmaStatMB=0, TH1D* hSigmaStat=0, TGra
   */
   gGMVFNSD5TeV->SetFillColor(kGreen-5);// kRed-7
   gGMVFNSD5TeV->SetFillColorAlpha(kGreen-5,0.1);
-  gGMVFNSD5TeV->SetFillStyle(1001);
+  //gGMVFNSD5TeV->SetFillStyle(1001);
+  gGMVFNSD5TeV->SetFillStyle(3001);
   gGMVFNSD5TeV->SetLineWidth(2);
   gGMVFNSD5TeV->SetLineColor(kGreen+3);// kRed+2
   if(!isRatio) gGMVFNSD5TeV->Draw("5same");
@@ -285,7 +286,8 @@ void drawTheoryPP(Bool_t isRatio, TH1D* hSigmaStatMB=0, TH1D* hSigmaStat=0, TGra
   */
   gGMVFNSD5TeVunity->SetFillColor(kGreen-5); // kRed-7
   gGMVFNSD5TeVunity->SetFillColorAlpha(kGreen-5,0.1);
-  gGMVFNSD5TeVunity->SetFillStyle(1001);
+  //gGMVFNSD5TeVunity->SetFillStyle(1001);
+  gGMVFNSD5TeVunity->SetFillStyle(3001);
   gGMVFNSD5TeVunity->SetLineWidth(2);
   gGMVFNSD5TeVunity->SetLineColor(kGreen+3);// kRed+2
   gGMVFNSD5TeVunity->Draw("5same");
