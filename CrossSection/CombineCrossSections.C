@@ -120,7 +120,8 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   gaeRatioCrossFONLLsyst->SetLineColor(1);//kGreen+4
 
   //
-  TString yaxistitle = (isPbPb==1)?"#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]":"#frac{d#sigma^{pp}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]";
+  TString yaxistitle = (isPbPb==1)?"#frac{1}{T_{AA}} #frac{dN^{D^{0}}_{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]":"#frac{d#sigma^{D^{0}}_{pp}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]";
+  //TString yaxistitle = (isPbPb==1)?"#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]":"#frac{d#sigma^{pp}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]";
 
   TH2F* hemptySigmaOnly = new TH2F("hemptySigmaOnly","",50,0.,110.,10.,0.1,1.e12);
   hemptySigmaOnly->GetXaxis()->CenterTitle();

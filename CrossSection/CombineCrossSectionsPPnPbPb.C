@@ -128,7 +128,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   hemptySigmaOnly->GetXaxis()->CenterTitle();
   hemptySigmaOnly->GetYaxis()->CenterTitle();
   hemptySigmaOnly->GetXaxis()->SetTitle("p_{T} [GeV/c]");
-  hemptySigmaOnly->GetYaxis()->SetTitle("#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  hemptySigmaOnly->GetYaxis()->SetTitle("#frac{1}{T_{AA}} #frac{dN^{D^{0}}_{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  //hemptySigmaOnly->GetYaxis()->SetTitle("#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
   //hemptySigmaOnly->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
   hemptySigmaOnly->GetXaxis()->SetTitleOffset(1.0);
   hemptySigmaOnly->GetYaxis()->SetTitleOffset(1.7861);// 1.286 before y title changes
@@ -148,7 +149,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   hemptySigmaOnly2->GetXaxis()->CenterTitle();
   hemptySigmaOnly2->GetYaxis()->CenterTitle();
   hemptySigmaOnly2->GetXaxis()->SetTitle("p_{T} [GeV/c]");
-  hemptySigmaOnly2->GetYaxis()->SetTitle("#frac{d#sigma^{pp}}{dp_{T}}  or  #frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  hemptySigmaOnly2->GetYaxis()->SetTitle("#frac{d#sigma^{D^{0}}_{pp}}{dp_{T}}  or  #frac{1}{T_{AA}} #frac{dN^{D^{0}}_{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  //hemptySigmaOnly2->GetYaxis()->SetTitle("#frac{d#sigma^{pp}}{dp_{T}}  or  #frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
   //hemptySigmaOnly2->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
   hemptySigmaOnly2->GetXaxis()->SetTitleOffset(1.0);
   hemptySigmaOnly2->GetYaxis()->SetTitleOffset(1.7861);// 1.286 before y title changes
@@ -167,7 +169,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   TH2F* hemptySigma = new TH2F("hemptySigma","",50,0.,110.,10.,0.11,1.e11); //1.1, 1.e10
   hemptySigma->GetXaxis()->CenterTitle();
   hemptySigma->GetYaxis()->CenterTitle();
-  hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma^{pp}}{dp_{T}}  or  #frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma^{D^{0}}_{pp}}{dp_{T}}  or  #frac{1}{T_{AA}} #frac{dN^{D^{0}}_{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
+  //hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma^{pp}}{dp_{T}}  or  #frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]");
   //hemptySigma->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
   hemptySigma->GetXaxis()->SetTitleOffset(0.7);
   hemptySigma->GetYaxis()->SetTitleOffset(1.25);// 0.9 before y title changes
