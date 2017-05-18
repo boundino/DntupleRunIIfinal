@@ -27,9 +27,10 @@ double ppLumiUncertainty 	= 2.3;			// 5% for the moment, to be updated (4/7/2016
 double ppTrackingEfficiency 	        = 4;   		// single track systematics from D* studies //4
 double PbPbTrackingEfficiency0100 	= 6;   		// single track systematics from D* studies //5
 double PbPbTrackingEfficiency010 	= 6.5;   	// single track systematics from D* studies //5
-TH1D*  ppSignalExtraction;				// (4/7/2016)
-TH1D*  ppMesonSelection;				// (4/7/2016)
-TH1D*  ppBFeedDownCorrection; 				// (4/7/2016)
+TH1D*  ppSignalExtraction;				// 
+TH1D*  ppMesonSelection;				// 
+TH1D*  ppBFeedDownCorrection; 				// 
+TH1D*  ppTriggerEfficiency; 				// 
 
 TF1* fPPPtShape = new TF1("fPPPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
 
@@ -45,7 +46,7 @@ double TAAUncertainty0to100HI	= 2.8;			// Updated number (4/7/2016)
 double TAAUncertainty0to100LO	= 3.4;			// Updated number (4/7/2016)
 double TAAUncertainty0to10HI	= 1.9;			// Updated number (4/7/2016)
 double TAAUncertainty0to10LO	= 3.0;			// Updated number (4/7/2016)
-double PbPbTrigger		= 2.0;			// Statistical uncertainty of the zero-coefficient of the linear fit
+//double PbPbTrigger		= 2.0;			// Statistical uncertainty of the zero-coefficient of the linear fit
 double PbPbLumiUncertainty	= 2;			// 10% for the moment, to be updated (from Daniel), NOT used
 
 // Point-to-point
@@ -53,6 +54,7 @@ double PbPbLumiUncertainty	= 2;			// 10% for the moment, to be updated (from Dan
 TH1D*  PbPbSignalExtraction;				// (4/7/2016)
 TH1D*  PbPbMesonSelection;				// (4/7/2016)
 TH1D*  PbPbBFeedDownCorrection;
+TH1D*  PbPbTriggerEfficiency;
 
 TF1 *fPbPbPtShape = new TF1("fPbPbPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
 
@@ -107,6 +109,21 @@ void initializationPP()
   ppSignalExtraction->SetBinContent(12,	        2.3);
   ppSignalExtraction->SetBinContent(13,	        2.8);
   ppSignalExtraction->SetBinContent(14,	        5.2); 
+
+  ppTriggerEfficiency->SetBinContent(1,		0.0);
+  ppTriggerEfficiency->SetBinContent(2,		0.0);
+  ppTriggerEfficiency->SetBinContent(3,		0.0);
+  ppTriggerEfficiency->SetBinContent(4,		0.0);
+  ppTriggerEfficiency->SetBinContent(5,		0.0);
+  ppTriggerEfficiency->SetBinContent(6,		0.0);
+  ppTriggerEfficiency->SetBinContent(7,		0.0);
+  ppTriggerEfficiency->SetBinContent(8,		0.0);
+  ppTriggerEfficiency->SetBinContent(9,		0.0);
+  ppTriggerEfficiency->SetBinContent(10,	1.0);
+  ppTriggerEfficiency->SetBinContent(11,	1.0);
+  ppTriggerEfficiency->SetBinContent(12,	1.0);
+  ppTriggerEfficiency->SetBinContent(13,	1.0);
+  ppTriggerEfficiency->SetBinContent(14,	1.0);
   
   fPPPtShape->SetParameters(0.999265,-0.0458006,-0.181359,0);
 }
@@ -158,7 +175,6 @@ void initializationPbPbCent0100()
   PbPbMesonSelection->SetBinContent(13,		2.7);
   PbPbMesonSelection->SetBinContent(14,		2.7);
   
-  
   PbPbSignalExtraction->SetBinContent(1,	4.8);
   PbPbSignalExtraction->SetBinContent(2,	2.0);
   PbPbSignalExtraction->SetBinContent(3,	3.0);
@@ -173,6 +189,21 @@ void initializationPbPbCent0100()
   PbPbSignalExtraction->SetBinContent(12,	7.5);
   PbPbSignalExtraction->SetBinContent(13,	6.0); //was 3.3% before smoothing
   PbPbSignalExtraction->SetBinContent(14,	7.0);
+
+  PbPbTriggerEfficiency->SetBinContent(1,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(2,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(3,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(4,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(5,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(6,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(7,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(8,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(9,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(10,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(11,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(12,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(13,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(14,	2.0);
   
   fPbPbPtShape->SetParameters(0.984161,0.0593406,-0.3992,0.000271564);
 }
@@ -239,6 +270,21 @@ void initializationPbPbCent010()
   PbPbSignalExtraction->SetBinContent(13,	10.1);    //was 6.5
   PbPbSignalExtraction->SetBinContent(14,	17.5); 
   
+  PbPbTriggerEfficiency->SetBinContent(1,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(2,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(3,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(4,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(5,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(6,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(7,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(8,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(9,	0.0);
+  PbPbTriggerEfficiency->SetBinContent(10,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(11,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(12,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(13,	2.0);
+  PbPbTriggerEfficiency->SetBinContent(14,	2.0);
+  
   fPbPbPtShape->SetParameters(1.00862,-0.277991,0.325087,0.);
 }
 
@@ -247,10 +293,13 @@ void initialization(double centL=0,double centH=0)
   ppBFeedDownCorrection = new TH1D("ppBFeedDownCorrection","",nPtBins,PtBins);
   ppMesonSelection = new TH1D("ppMesonSelection","",nPtBins,PtBins);
   ppSignalExtraction = new TH1D("ppSignalExtraction","",nPtBins,PtBins);
+  ppTriggerEfficiency = new TH1D("ppTriggerEfficiency","",nPtBins,PtBins);
 
   PbPbBFeedDownCorrection = new TH1D("PbPbBFeedDownCorrection","",nPtBins,PtBins);
   PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
   PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
+  PbPbTriggerEfficiency = new TH1D("PbPbTriggerEfficiency","",nPtBins,PtBins);
+
   RAABFeedDownCorrection = new TH1D("RAABFeedDownCorrection","",nPtBins,PtBins);
 
   initializationPP();
@@ -264,10 +313,13 @@ void deleteinitial()
   delete ppBFeedDownCorrection;
   delete ppMesonSelection;
   delete ppSignalExtraction;
+  delete ppTriggerEfficiency;
 
   delete PbPbBFeedDownCorrection;
   delete PbPbMesonSelection;
   delete PbPbSignalExtraction;
+  delete PbPbTriggerEfficiency;
+
   delete RAABFeedDownCorrection;
 }
 
@@ -340,6 +392,13 @@ float systematicsForRAA(double pt,double centL=0,double centH=100, double HLT=0,
   
   sys+=(RAABFeedDownCorrection->GetBinContent(RAABFeedDownCorrection->FindBin(pt)))*(RAABFeedDownCorrection->GetBinContent(RAABFeedDownCorrection->FindBin(pt)));
   //sys+=(PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))/2)*(PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))/2);
+
+  sys+= PbPbTriggerEfficiency->GetBinContent(PbPbTriggerEfficiency->FindBin(pt))*
+    PbPbTriggerEfficiency->GetBinContent(PbPbTriggerEfficiency->FindBin(pt));
+  sys+= ppTriggerEfficiency->GetBinContent(ppTriggerEfficiency->FindBin(pt))*
+    ppTriggerEfficiency->GetBinContent(ppTriggerEfficiency->FindBin(pt));
+
+
   deleteinitial();
 
   return sqrt(sys);
@@ -392,6 +451,9 @@ float systematicsPP(double pt, double HLT=0,int stage=0)
   
   sys+=ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt))* 
     ppBFeedDownCorrection->GetBinContent(ppBFeedDownCorrection->FindBin(pt));
+  
+  sys+=ppTriggerEfficiency->GetBinContent(ppTriggerEfficiency->FindBin(pt))* 
+    ppTriggerEfficiency->GetBinContent(ppTriggerEfficiency->FindBin(pt));
   
   deleteinitial();
   
@@ -448,6 +510,9 @@ float systematicsPbPb(double pt, double centL=0,double centH=100, double HLT=0, 
   if(stage==2) return sqrt(sys);
   sys+=PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt))* 
     PbPbBFeedDownCorrection->GetBinContent(PbPbBFeedDownCorrection->FindBin(pt));
+  
+  sys+= PbPbTriggerEfficiency->GetBinContent(PbPbTriggerEfficiency->FindBin(pt))* 
+    PbPbTriggerEfficiency->GetBinContent(PbPbTriggerEfficiency->FindBin(pt));
   
   deleteinitial();
 
