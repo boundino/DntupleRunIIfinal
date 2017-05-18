@@ -283,13 +283,13 @@ float normalizationUncertaintyForRAA(double centL=0,double centH=100,bool isuppe
   if(centL==0&&centH==10) 
     {
       // 0-10%
-      double TAAUncertainty0to10 = isupper?TAAUncertainty0to10LO:TAAUncertainty0to10HI;
+      double TAAUncertainty0to10 = isupper?TAAUncertainty0to10HI:TAAUncertainty0to10LO;
       sys+=TAAUncertainty0to10*TAAUncertainty0to10;
     } 
   else
     {
       // 0-100%
-      double TAAUncertainty0to100 = isupper?TAAUncertainty0to100LO:TAAUncertainty0to100HI;
+      double TAAUncertainty0to100 = isupper?TAAUncertainty0to100HI:TAAUncertainty0to100LO;
       sys+=TAAUncertainty0to100*TAAUncertainty0to100;
     }
   return sqrt(sys);
@@ -407,13 +407,13 @@ float normalizationUncertaintyForPbPb(double centL=0,double centH=100,bool isupp
   if(centL==0&&centH==10)
     {
       // 0-10%
-      double TAAUncertainty0to10 = isupper?TAAUncertainty0to10LO:TAAUncertainty0to10HI;
+      double TAAUncertainty0to10 = isupper?TAAUncertainty0to10HI:TAAUncertainty0to10LO;
       sys+=TAAUncertainty0to10*TAAUncertainty0to10;
     }
   else
     {
       // 0-100%
-      double TAAUncertainty0to100 = isupper?TAAUncertainty0to100LO:TAAUncertainty0to100HI;
+      double TAAUncertainty0to100 = isupper?TAAUncertainty0to100HI:TAAUncertainty0to100LO;
       sys+=TAAUncertainty0to100*TAAUncertainty0to100;
     }   
   return sqrt(sys);
