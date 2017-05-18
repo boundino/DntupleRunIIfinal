@@ -243,7 +243,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texYOnly2->SetTextFont(42);
   texYOnly2->SetTextSize(0.0315);
   texYOnly2->SetLineWidth(2);
-  TLatex* texYOnly2Long = new TLatex(0.51,0.91425,"|y| < 1.0                     Global uncert.");
+  TLatex* texYOnly2Long = new TLatex(0.48,0.91425,"|y| < 1.0                     Global uncert.");
   texYOnly2Long->SetNDC();
   texYOnly2Long->SetTextFont(42);
   texYOnly2Long->SetTextSize(0.03025);//
@@ -341,22 +341,22 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   //ent_SigmaOnly2FONLL->SetLineColor(5);
   //ent_SigmaOnly2FONLL->SetMarkerColor(1);
 
-  TLegend* legendSigmaOnly2Long = new TLegend(0.50,0.801667,0.85,0.897916,"");// 727 -> 7655
+  TLegend* legendSigmaOnly2Long = new TLegend(0.47,0.801667,0.82,0.897916,"");// 727 -> 7655
   legendSigmaOnly2Long->SetBorderSize(0);
   legendSigmaOnly2Long->SetLineColor(0);
   legendSigmaOnly2Long->SetFillColor(0);
   legendSigmaOnly2Long->SetFillStyle(1001);
   legendSigmaOnly2Long->SetTextFont(42);
   legendSigmaOnly2Long->SetTextSize(0.03025);// 0.02625
-  TLegendEntry* ent_SigmaOnly2LongPPMB = legendSigmaOnly2Long->AddEntry(hSigmaPPStatMB,Form("pp                    %.1f%s",systnormPP,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2LongPPMB = legendSigmaOnly2Long->AddEntry(hSigmaPPStatMB,Form("pp                     %.1f%s",systnormPP,texper.Data()),"pf");
   ent_SigmaOnly2LongPPMB->SetTextFont(42);
   ent_SigmaOnly2LongPPMB->SetLineColor(2);
   ent_SigmaOnly2LongPPMB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaOnly2LongPbPb0100MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2LongPbPb0100MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb0100StatMB,Form("0-100%s (/3)      + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
   ent_SigmaOnly2LongPbPb0100MB->SetTextFont(42);
   ent_SigmaOnly2LongPbPb0100MB->SetLineColor(2);
   ent_SigmaOnly2LongPbPb0100MB->SetMarkerColor(2);
-  TLegendEntry* ent_SigmaOnly2LongPbPb010MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10)     + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2LongPbPb010MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb010StatMB,Form("0-10%s (/10)      + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
   ent_SigmaOnly2LongPbPb010MB->SetTextFont(42);
   ent_SigmaOnly2LongPbPb010MB->SetLineColor(2);
   ent_SigmaOnly2LongPbPb010MB->SetMarkerColor(2);
