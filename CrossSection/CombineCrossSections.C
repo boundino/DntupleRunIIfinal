@@ -165,6 +165,24 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptySigma->SetMaximum(2);
   hemptySigma->SetMinimum(0.);
 
+  TH2F* hemptySigmaBor = new TH2F("hemptySigmaBor","",50,0.,110.,10.,0.11,1.e12);
+  hemptySigmaBor->GetXaxis()->CenterTitle();
+  hemptySigmaBor->GetYaxis()->CenterTitle();
+  hemptySigmaBor->GetYaxis()->SetTitle(yaxistitle);
+  hemptySigmaBor->GetXaxis()->SetTitleOffset(0.7);
+  hemptySigmaBor->GetYaxis()->SetTitleOffset(1.25);// 0.9 before y title changes
+  hemptySigmaBor->GetXaxis()->SetTitleSize(0.05);
+  hemptySigmaBor->GetYaxis()->SetTitleSize(0.05);// 0.04 before enlarge y-axis title size // 0.055 before y title changes
+  hemptySigmaBor->GetXaxis()->SetTitleFont(42);
+  hemptySigmaBor->GetYaxis()->SetTitleFont(42);
+  hemptySigmaBor->GetXaxis()->SetLabelFont(42);
+  hemptySigmaBor->GetYaxis()->SetLabelFont(42);
+  hemptySigmaBor->GetXaxis()->SetLabelSize(0.04);
+  hemptySigmaBor->GetYaxis()->SetLabelSize(0.04571);// 0.045 before y title changes // 0.04 before enlarge y-axis title size
+  hemptySigmaBor->SetMaximum(2);
+  hemptySigmaBor->SetMinimum(0.);
+
+  //
   TH2F* hemptyRatio = new TH2F("hemptyRatio","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
   hemptyRatio->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hemptyRatio->GetXaxis()->CenterTitle();
@@ -183,7 +201,6 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatio->GetXaxis()->SetLabelSize(0.1);
   hemptyRatio->GetYaxis()->SetLabelSize(0.08889);// 0.1 before y title changes -> 0.08889
 
-  //
   TH2F* hemptyRatioBor = new TH2F("hemptyRatioBor","",50,0.,110.,10.,-0.2 ,2.7);//50,0.,110.,10.,0.,4
   hemptyRatioBor->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hemptyRatioBor->GetXaxis()->CenterTitle();
@@ -193,14 +210,14 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatioBor->GetXaxis()->SetTitleOffset(1.0);
   hemptyRatioBor->GetYaxis()->SetTitleOffset(0.36367);
   hemptyRatioBor->GetXaxis()->SetTitleSize(0.13);
-  hemptyRatioBor->GetYaxis()->SetTitleSize(0.146);// 0.144
+  hemptyRatioBor->GetYaxis()->SetTitleSize(0.1825);// 0.146 before enlarge y-axis title size 
   hemptyRatioBor->GetXaxis()->SetTitleFont(42);
   hemptyRatioBor->GetYaxis()->SetTitleFont(42);
   hemptyRatioBor->GetXaxis()->SetLabelFont(42);
   hemptyRatioBor->GetYaxis()->SetLabelFont(42);
   hemptyRatioBor->GetYaxis()->SetLabelOffset(0.012);// 0.01
   hemptyRatioBor->GetXaxis()->SetLabelSize(0.1);
-  hemptyRatioBor->GetYaxis()->SetLabelSize(0.133335);
+  hemptyRatioBor->GetYaxis()->SetLabelSize(0.15238);// 0.133335 before enlarge y-axis title size
 
   TH2F* hemptyRatioBorGM = new TH2F("hemptyRatioBorGM","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
   hemptyRatioBorGM->GetXaxis()->SetTitle("p_{T} (GeV/c)");
@@ -211,14 +228,14 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatioBorGM->GetXaxis()->SetTitleOffset(1.0);
   hemptyRatioBorGM->GetYaxis()->SetTitleOffset(0.5455);// 0.4 before y title changes -> 0.5555
   hemptyRatioBorGM->GetXaxis()->SetTitleSize(0.13);
-  hemptyRatioBorGM->GetYaxis()->SetTitleSize(0.096);// 0.12 before y title changes -> 0.096
+  hemptyRatioBorGM->GetYaxis()->SetTitleSize(0.12);// 0.12 before y title changes -> 0.096 // 0.096 before enlarge y-axis title size
   hemptyRatioBorGM->GetXaxis()->SetTitleFont(42);
   hemptyRatioBorGM->GetYaxis()->SetTitleFont(42);
   hemptyRatioBorGM->GetXaxis()->SetLabelFont(42);
   hemptyRatioBorGM->GetYaxis()->SetLabelFont(42);
   hemptyRatioBorGM->GetYaxis()->SetLabelOffset(0.015);
   hemptyRatioBorGM->GetXaxis()->SetLabelSize(0.1);
-  hemptyRatioBorGM->GetYaxis()->SetLabelSize(0.08889);// 0.1 before y title changes -> 0.08889
+  hemptyRatioBorGM->GetYaxis()->SetLabelSize(0.10159);// 0.1 before y title changes -> 0.08889 // 0.08889 before enlarge y-axis title size
 
   //
   TString texper="%";
@@ -354,6 +371,12 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texcms->SetTextFont(62);//61
   texcms->SetTextSize(0.06);
   texcms->SetLineWidth(2);
+  TLatex* texcmsBor = new TLatex(0.18,0.90,"CMS");
+  texcmsBor->SetNDC();
+  texcmsBor->SetTextAlign(13);
+  texcmsBor->SetTextFont(62);//61
+  texcmsBor->SetTextSize(0.06);
+  texcmsBor->SetLineWidth(2);
   TLatex* texcmsOnly = new TLatex(0.15,0.93,"CMS");
   texcmsOnly->SetNDC();
   texcmsOnly->SetTextAlign(13);
@@ -368,6 +391,13 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texDzero->SetTextFont(62);//61
   texDzero->SetTextSize(0.06);
   texDzero->SetLineWidth(2);
+  TLatex* texDzeroBor = new TLatex(0.18,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  //TLatex* texDzeroBor = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  texDzeroBor->SetNDC();
+  texDzeroBor->SetTextAlign(13);
+  texDzeroBor->SetTextFont(62);//61
+  texDzeroBor->SetTextSize(0.06);
+  texDzeroBor->SetLineWidth(2);
   TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   texDzeroOnly->SetNDC();
   texDzeroOnly->SetTextAlign(13);
@@ -667,7 +697,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   cSigmaBor->SetFillColor(0);
   cSigmaBor->SetBorderMode(0);
   cSigmaBor->SetBorderSize(2);
-  cSigmaBor->SetLeftMargin(0.12);//0.1451613
+  cSigmaBor->SetLeftMargin(0.15);//0.12 before enlarge y-axis title size
   cSigmaBor->SetRightMargin(0.03);//0.05443548
   cSigmaBor->SetTopMargin(0.07);//0.08474576
   cSigmaBor->SetBottomMargin(0.15);//0.1165254
@@ -679,7 +709,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   pSigmaBor->SetFillColor(0);
   pSigmaBor->SetBorderMode(0);
   pSigmaBor->SetBorderSize(2);
-  pSigmaBor->SetLeftMargin(0.12);//0.1451613
+  pSigmaBor->SetLeftMargin(0.15);//0.12 before enlarge y-axis title size
   pSigmaBor->SetRightMargin(0.03);//0.05443548
   pSigmaBor->SetTopMargin(0.07);//0.08474576
   pSigmaBor->SetBottomMargin(0);
@@ -688,7 +718,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   pSigmaBor->Draw();
   pSigmaBor->cd();
 
-  hemptySigma->Draw();
+  hemptySigmaBor->Draw();
   gaeBplusReferenceMB->Draw("5same");
   gaeBplusReference->Draw("5same");
   drawTheoryPP(false,hSigmaPPStatMB,hSigmaPPStat,gaeCrossSystMB,gaeCrossSyst);
@@ -701,13 +731,13 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texSystnorm->Draw();
   legendSigmaCal->Draw("same");
   tlatex1->Draw();
-  texcms->Draw();
-  texDzero->Draw();
+  texcmsBor->Draw();
+  texDzeroBor->Draw();
   //texpre->Draw();
 
   cSigmaBor->cd();
   TPad* pRatioFOBor = new TPad("pRatioFOBor","",0,0.25,1,0.416666666667);
-  pRatioFOBor->SetLeftMargin(0.12);//0.1451613
+  pRatioFOBor->SetLeftMargin(0.15);//0.12 before enlarge y-axis title size
   pRatioFOBor->SetRightMargin(0.03);//0.05443548
   pRatioFOBor->SetTopMargin(0);
   pRatioFOBor->SetBottomMargin(0);//0.25
@@ -726,7 +756,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
 
   cSigmaBor->cd();
   TPad* pRatioGMBor = new TPad("pRatioGMBor","",0,0,1,0.25);
-  pRatioGMBor->SetLeftMargin(0.12);//0.1451613
+  pRatioGMBor->SetLeftMargin(0.15);//0.12 before enlarge y-axis title size
   pRatioGMBor->SetRightMargin(0.03);//0.05443548
   pRatioGMBor->SetTopMargin(0);
   pRatioGMBor->SetBottomMargin(0.33);//0.25

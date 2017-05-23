@@ -176,13 +176,13 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   hemptySigmaOnly2Long->GetXaxis()->SetTitleOffset(0.86);// 1.0
   hemptySigmaOnly2Long->GetYaxis()->SetTitleOffset(1.7861);
   hemptySigmaOnly2Long->GetXaxis()->SetTitleSize(0.037452);
-  hemptySigmaOnly2Long->GetYaxis()->SetTitleSize(0.028);
+  hemptySigmaOnly2Long->GetYaxis()->SetTitleSize(0.035);// 0.028 before enlarge y-axis title size
   hemptySigmaOnly2Long->GetXaxis()->SetTitleFont(42);
   hemptySigmaOnly2Long->GetYaxis()->SetTitleFont(42);
   hemptySigmaOnly2Long->GetXaxis()->SetLabelFont(42);
   hemptySigmaOnly2Long->GetYaxis()->SetLabelFont(42);
   hemptySigmaOnly2Long->GetXaxis()->SetLabelSize(0.02881);
-  hemptySigmaOnly2Long->GetYaxis()->SetLabelSize(0.028);
+  hemptySigmaOnly2Long->GetYaxis()->SetLabelSize(0.032);// 0.028 before enlarge y-axis title size
   hemptySigmaOnly2Long->GetXaxis()->SetLabelOffset(0.0);//0.001
   hemptySigmaOnly2Long->SetMaximum(2);
   hemptySigmaOnly2Long->SetMinimum(0.);
@@ -414,7 +414,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texcmsOnly2->SetTextFont(62);//61
   texcmsOnly2->SetTextSize(0.042);
   texcmsOnly2->SetLineWidth(2);
-  TLatex* texcmsOnly2Long = new TLatex(0.15,0.94166,"CMS");
+  TLatex* texcmsOnly2Long = new TLatex(0.18,0.94166,"CMS");
   texcmsOnly2Long->SetNDC();
   texcmsOnly2Long->SetTextAlign(13);
   texcmsOnly2Long->SetTextFont(62);//61
@@ -439,7 +439,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texDzeroOnly2->SetTextFont(62);//61
   texDzeroOnly2->SetTextSize(0.042);
   texDzeroOnly2->SetLineWidth(2);
-  TLatex* texDzeroOnly2Long = new TLatex(0.15,0.906667,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  TLatex* texDzeroOnly2Long = new TLatex(0.18,0.906667,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   //TLatex* texDzeroOnly2Long = new TLatex(0.15,0.906667,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzeroOnly2Long->SetNDC();
   texDzeroOnly2Long->SetTextAlign(13);
@@ -557,7 +557,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   cSigmaOnly2Long->SetFillColor(0);
   cSigmaOnly2Long->SetBorderMode(0);
   cSigmaOnly2Long->SetBorderSize(2);
-  cSigmaOnly2Long->SetLeftMargin(0.12);//0.1451613
+  cSigmaOnly2Long->SetLeftMargin(0.15);//0.12 before enlarge y-axis title size
   cSigmaOnly2Long->SetRightMargin(0.03);//0.05443548
   cSigmaOnly2Long->SetTopMargin(0.040833);//0.08474576
   cSigmaOnly2Long->SetBottomMargin(0.0825);//0.1165254
