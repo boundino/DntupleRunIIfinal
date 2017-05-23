@@ -133,7 +133,8 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   texcms->SetTextSize(0.06);
   texcms->SetLineWidth(2);
   texcms->Draw();
-  TLatex* texDzero = new TLatex(0.22,0.85,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  TLatex* texDzero = new TLatex(0.22,0.85,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  //TLatex* texDzero = new TLatex(0.22,0.85,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzero->SetNDC();
   texDzero->SetTextAlign(13);
   texDzero->SetTextFont(62);//61

@@ -361,13 +361,14 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texcmsOnly->SetTextSize(0.042);
   texcmsOnly->SetLineWidth(2);
 
-  TLatex* texDzero = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  TLatex* texDzero = new TLatex(0.15,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  //TLatex* texDzero = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzero->SetNDC();
   texDzero->SetTextAlign(13);
   texDzero->SetTextFont(62);//61
   texDzero->SetTextSize(0.06);
   texDzero->SetLineWidth(2);
-  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   texDzeroOnly->SetNDC();
   texDzeroOnly->SetTextAlign(13);
   texDzeroOnly->SetTextFont(62);//61

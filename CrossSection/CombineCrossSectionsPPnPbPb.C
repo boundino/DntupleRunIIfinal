@@ -421,25 +421,26 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texcmsOnly2Long->SetTextSize(0.040333);
   texcmsOnly2Long->SetLineWidth(2);
 
-  TLatex* texDzero = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  TLatex* texDzero = new TLatex(0.15,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   texDzero->SetNDC();
   texDzero->SetTextAlign(13);
   texDzero->SetTextFont(62);//61
   texDzero->SetTextSize(0.06);
   texDzero->SetLineWidth(2);
-  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   texDzeroOnly->SetNDC();
   texDzeroOnly->SetTextAlign(13);
   texDzeroOnly->SetTextFont(62);//61
   texDzeroOnly->SetTextSize(0.042);
   texDzeroOnly->SetLineWidth(2);
-  TLatex* texDzeroOnly2 = new TLatex(0.15,0.888,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  TLatex* texDzeroOnly2 = new TLatex(0.15,0.888,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   texDzeroOnly2->SetNDC();
   texDzeroOnly2->SetTextAlign(13);
   texDzeroOnly2->SetTextFont(62);//61
   texDzeroOnly2->SetTextSize(0.042);
   texDzeroOnly2->SetLineWidth(2);
-  TLatex* texDzeroOnly2Long = new TLatex(0.15,0.906667,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  TLatex* texDzeroOnly2Long = new TLatex(0.15,0.906667,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  //TLatex* texDzeroOnly2Long = new TLatex(0.15,0.906667,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzeroOnly2Long->SetNDC();
   texDzeroOnly2Long->SetTextAlign(13);
   texDzeroOnly2Long->SetTextFont(62);//61
