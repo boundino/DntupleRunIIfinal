@@ -16,6 +16,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
 
   TString texPbPb = "PbPb";
   if(isPbPb==0) texPbPb = "PP";
+  TString legPbPb = (isPbPb==0)?"pp":"PbPb";
 
   TFile* filePPMB = new TFile(fileMB.Data());  
   TGraphAsymmErrors* gaeRatioCrossFONLLstatMB = (TGraphAsymmErrors*)filePPMB->Get("gaeRatioCrossFONLLstat");
@@ -120,13 +121,13 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   gaeRatioCrossFONLLsyst->SetLineColor(1);//kGreen+4
 
   //
-  TString yaxistitle = (isPbPb==1)?"#frac{1}{T_{AA}} #frac{dN^{D^{0}}_{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]":"#frac{d#sigma^{D^{0}}_{pp}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]";
-  //TString yaxistitle = (isPbPb==1)?"#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]":"#frac{d#sigma^{pp}}{dp_{T}}  #left[#frac{pb}{GeV/c}#right]";
+  TString yaxistitle = (isPbPb==1)?"#frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)":"#frac{d#sigma_{pp}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)";
+  //TString yaxistitle = (isPbPb==1)?"#frac{1}{<T_{AA}> N_{evt}} #frac{dN^{PbPb}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)":"#frac{d#sigma^{pp}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)";
 
   TH2F* hemptySigmaOnly = new TH2F("hemptySigmaOnly","",50,0.,110.,10.,0.1,1.e12);
   hemptySigmaOnly->GetXaxis()->CenterTitle();
   hemptySigmaOnly->GetYaxis()->CenterTitle();
-  hemptySigmaOnly->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  hemptySigmaOnly->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hemptySigmaOnly->GetYaxis()->SetTitle(yaxistitle);
   //hemptySigmaOnly->GetYaxis()->SetTitle("d#sigma / dp_{T}( pb GeV^{-1}c)");
   //if(isPbPb==1) hemptySigmaOnly->GetYaxis()->SetTitle("1/T_{AA} * dN / dp_{T}( pb GeV^{-1}c)");
@@ -165,7 +166,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptySigma->SetMinimum(0.);
 
   TH2F* hemptyRatio = new TH2F("hemptyRatio","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
-  hemptyRatio->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  hemptyRatio->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hemptyRatio->GetXaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->CenterTitle();
   hemptyRatio->GetYaxis()->SetTitle("#frac{Data}{FONLL}");
@@ -184,7 +185,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
 
   //
   TH2F* hemptyRatioBor = new TH2F("hemptyRatioBor","",50,0.,110.,10.,-0.2 ,2.7);//50,0.,110.,10.,0.,4
-  hemptyRatioBor->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  hemptyRatioBor->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hemptyRatioBor->GetXaxis()->CenterTitle();
   hemptyRatioBor->GetYaxis()->CenterTitle();
   hemptyRatioBor->GetYaxis()->SetTitle("#frac{Data}{FONLL}");
@@ -202,7 +203,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatioBor->GetYaxis()->SetLabelSize(0.133335);
 
   TH2F* hemptyRatioBorGM = new TH2F("hemptyRatioBorGM","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
-  hemptyRatioBorGM->GetXaxis()->SetTitle("p_{T} [GeV/c]");
+  hemptyRatioBorGM->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hemptyRatioBorGM->GetXaxis()->CenterTitle();
   hemptyRatioBorGM->GetYaxis()->CenterTitle();
   hemptyRatioBorGM->GetYaxis()->SetTitle("#frac{Data}{GM-VFNS}");
@@ -294,7 +295,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigma->SetFillStyle(1001);
   legendSigma->SetTextFont(42);
   legendSigma->SetTextSize(0.045);
-  TLegendEntry* ent_SigmaPPMB = legendSigma->AddEntry(hSigmaPPStatMB,"data","pf");
+  TLegendEntry* ent_SigmaPPMB = legendSigma->AddEntry(hSigmaPPStatMB,Form("%s data",legPbPb.Data()),"pf");
   ent_SigmaPPMB->SetTextFont(42);
   ent_SigmaPPMB->SetLineColor(2);
   ent_SigmaPPMB->SetMarkerColor(2);
@@ -309,7 +310,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigmaOnly->SetFillStyle(1001);
   legendSigmaOnly->SetTextFont(42);
   legendSigmaOnly->SetTextSize(0.0315);
-  TLegendEntry* ent_SigmaOnlyPPMB = legendSigmaOnly->AddEntry(hSigmaPPStatMB,"data","pf");
+  TLegendEntry* ent_SigmaOnlyPPMB = legendSigmaOnly->AddEntry(hSigmaPPStatMB,Form("%s data",legPbPb.Data()),"pf");
   ent_SigmaOnlyPPMB->SetTextFont(42);
   ent_SigmaOnlyPPMB->SetLineColor(2);
   ent_SigmaOnlyPPMB->SetMarkerColor(2);
@@ -324,7 +325,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigmaCal->SetFillStyle(1001);
   legendSigmaCal->SetTextFont(42);
   legendSigmaCal->SetTextSize(0.045);
-  TLegendEntry* ent_SigmaCalPPMB = legendSigmaCal->AddEntry(hSigmaPPStatMB,"data","pf");
+  TLegendEntry* ent_SigmaCalPPMB = legendSigmaCal->AddEntry(hSigmaPPStatMB,Form("%s data",legPbPb.Data()),"pf");
   ent_SigmaCalPPMB->SetTextFont(42);
   ent_SigmaCalPPMB->SetLineColor(2);
   ent_SigmaCalPPMB->SetMarkerColor(2);
