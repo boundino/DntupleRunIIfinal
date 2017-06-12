@@ -1,7 +1,7 @@
 void canvasRAA_cent_0_10()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Wed Apr 19 18:36:28 2017) by ROOT version6.02/13
+//=========  (Mon Jun 12 16:50:43 2017) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -52,7 +52,7 @@ void canvasRAA_cent_0_10()
    line->SetLineStyle(2);
    line->SetLineWidth(2);
    line->Draw();
-   TBox *box = new TBox(1,0.9640834,1.2,1.042767);
+   TBox *box = new TBox(1,0.9572332,1.2,1.035917);
    box->SetFillColor(16);
    box->SetLineColor(16);
    box->Draw();
@@ -68,11 +68,10 @@ tex->SetNDC();
    tex->SetTextSize(0.06);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.22,0.84,"Preliminary");
+      tex = new TLatex(0.22,0.85,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
 tex->SetNDC();
    tex->SetTextAlign(13);
-   tex->SetTextFont(52);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.06);
    tex->SetLineWidth(2);
    tex->Draw();
       tex = new TLatex(0.95,0.2,"Centrality 0-10%");
@@ -102,11 +101,11 @@ tex->SetNDC();
    10,
    20};
    Double_t gNuclearModification_fely3001[5] = {
-   0.07094807,
-   0.1033567,
-   0.09865012,
-   0.1306108,
-   0.1681429};
+   0.07136701,
+   0.1039691,
+   0.09920814,
+   0.1314584,
+   0.1688335};
    Double_t gNuclearModification_fehx3001[5] = {
    2.5,
    2.5,
@@ -114,11 +113,11 @@ tex->SetNDC();
    10,
    20};
    Double_t gNuclearModification_fehy3001[5] = {
-   0.07094807,
-   0.1033567,
-   0.09865012,
-   0.1306108,
-   0.1681429};
+   0.07136701,
+   0.1039691,
+   0.09920814,
+   0.1314584,
+   0.1688335};
    TGraphAsymmErrors *grae = new TGraphAsymmErrors(5,gNuclearModification_fx3001,gNuclearModification_fy3001,gNuclearModification_felx3001,gNuclearModification_fehx3001,gNuclearModification_fely3001,gNuclearModification_fehy3001);
    grae->SetName("gNuclearModification");
    grae->SetTitle("Graph");
@@ -132,8 +131,8 @@ tex->SetNDC();
    grae->SetMarkerStyle(21);
    
    TH1F *Graph_gNuclearModification3001 = new TH1F("Graph_gNuclearModification3001","Graph",100,12,108);
-   Graph_gNuclearModification3001->SetMinimum(0.2167697);
-   Graph_gNuclearModification3001->SetMaximum(0.9079676);
+   Graph_gNuclearModification3001->SetMinimum(0.2162398);
+   Graph_gNuclearModification3001->SetMaximum(0.9087692);
    Graph_gNuclearModification3001->SetDirectory(0);
    Graph_gNuclearModification3001->SetStats(0);
 
