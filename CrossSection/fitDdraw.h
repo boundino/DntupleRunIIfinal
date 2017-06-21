@@ -248,18 +248,21 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   else if(collisionsystem=="PbPbMB") cyield->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
   else cyield->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
 
+  //
   TGaxis::SetMaxDigits(3);
+  if(h->GetMaximum()>1.e+5) TGaxis::SetMaxDigits(4);
   TCanvas* cpaper = new TCanvas(Form("cpaper%d",count),"",600,600);
-  h->GetXaxis()->SetTitleOffset(0.9);
-  h->GetYaxis()->SetTitleOffset(1.3);
-  h->GetXaxis()->SetTitleSize(0.07);
-  h->GetYaxis()->SetTitleSize(0.07);
+  h->GetXaxis()->SetTitleOffset(0.95); //0.9, 0.85
+  h->GetYaxis()->SetTitleOffset(1.3); //1.3, 1.2
+  h->GetXaxis()->SetTitleSize(0.062); //0.07
+  h->GetYaxis()->SetTitleSize(0.062); //0.07
   h->GetXaxis()->SetTitleFont(42);
   h->GetYaxis()->SetTitleFont(42);
   h->GetXaxis()->SetLabelFont(42);
   h->GetYaxis()->SetLabelFont(42);
-  h->GetXaxis()->SetLabelSize(0.06);
-  h->GetYaxis()->SetLabelSize(0.06);
+  h->GetXaxis()->SetLabelSize(0.045); //0.06
+  h->GetYaxis()->SetLabelSize(0.045); //0.06
+  h->GetXaxis()->SetLabelOffset(0.013);
   h->SetMarkerSize(1.55);
   h->SetMarkerStyle(20);
   h->SetLineColor(1);
@@ -289,7 +292,8 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   legpaper->SetFillStyle(0);
   legpaper->AddEntry(h,"Data","pl");
   legpaper->AddEntry(f,"Fit","l");
-  legpaper->AddEntry(mass,"D^{0} Signal","f");
+  legpaper->AddEntry(mass,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}","f");
+  //legpaper->AddEntry(mass,"D^{0} Signal","f");
   //legpaper->AddEntry(mass,"D^{0}+#bar{D^{#lower[0.2]{0}}} Signal","f");
   legpaper->AddEntry(background,"Combinatorial","l");
   legpaper->AddEntry(massSwap,"K-#pi swapped","f");
@@ -337,6 +341,14 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
       texpaper->SetLineWidth(2);
       texpaper->Draw();
     }
+
+  TPad* pzero = new TPad("pzero","",0.,0.,1.,1.); pzero->SetFillStyle(0); pzero->Draw(); pzero->cd();
+  TBox* bzero = new TBox(0.15,0.125,0.176,0.17);
+  bzero->SetFillStyle(1001);
+  bzero->SetFillColor(0);
+  bzero->SetLineWidth(0);
+  bzero->Draw();
+  cpaper->cd();
 
   if(!isPbPb) cpaper->SaveAs(Form("plotFitsPaper/DMass%s_%d.pdf",collisionsystem.Data(),count));
   else if(collisionsystem=="PbPbMB") cpaper->SaveAs(Form("plotFitsPaper/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
