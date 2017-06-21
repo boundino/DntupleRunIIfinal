@@ -269,6 +269,7 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   h->SetLineWidth(5);
   h->SetStats(0);
   h->GetXaxis()->SetNdivisions(-50205);
+  h->GetXaxis()->SetTickLength(0.04);
   h->Draw("e");
   background->SetLineStyle(7);
   background->SetLineWidth(9);

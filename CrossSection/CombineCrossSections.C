@@ -60,13 +60,13 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   */
 
   hSigmaPPStatMB->SetLineWidth(2);
-  hSigmaPPStatMB->SetMarkerSize(1.37);//1
+  hSigmaPPStatMB->SetMarkerSize(1.4);//1
   hSigmaPPStatMB->SetMarkerStyle(20);
   hSigmaPPStatMB->SetLineColor(1);//kGreen+4
   hSigmaPPStatMB->SetMarkerColor(1);//kGreen+4
 
   hSigmaPPStat->SetLineWidth(2);
-  hSigmaPPStat->SetMarkerSize(1.37);//1
+  hSigmaPPStat->SetMarkerSize(1.4);//1
   hSigmaPPStat->SetMarkerStyle(20);
   hSigmaPPStat->SetLineColor(1);//
   hSigmaPPStat->SetMarkerColor(1);//kGreen+4
@@ -105,11 +105,11 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   gaeRatioCrossFONLLunity->SetLineColor(4);
   */
 
-  gaeRatioCrossFONLLstatMB->SetMarkerSize(1.37);//1
+  gaeRatioCrossFONLLstatMB->SetMarkerSize(1.4);//1
   gaeRatioCrossFONLLstatMB->SetLineWidth(2);
   gaeRatioCrossFONLLstatMB->SetLineColor(1);//kGreen+4 
   gaeRatioCrossFONLLstatMB->SetMarkerColor(1);//kGreen+4
-  gaeRatioCrossFONLLstat->SetMarkerSize(1.37);//1
+  gaeRatioCrossFONLLstat->SetMarkerSize(1.4);//1
   gaeRatioCrossFONLLstat->SetLineWidth(2);
   gaeRatioCrossFONLLstat->SetLineColor(1);//kGreen+4
   gaeRatioCrossFONLLstat->SetMarkerColor(1);//kGreen+4
@@ -180,6 +180,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptySigmaBor->GetYaxis()->SetLabelSize(0.04571);// 0.045 before y title changes // 0.04 before enlarge y-axis title size
   hemptySigmaBor->SetMaximum(2);
   hemptySigmaBor->SetMinimum(0.);
+  hemptySigmaBor->GetXaxis()->SetTickLength(0.03);
 
   //
   TH2F* hemptyRatio = new TH2F("hemptyRatio","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
@@ -217,6 +218,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatioBor->GetYaxis()->SetLabelOffset(0.012);// 0.01
   hemptyRatioBor->GetXaxis()->SetLabelSize(0.1);
   hemptyRatioBor->GetYaxis()->SetLabelSize(0.15238);// 0.133335 before enlarge y-axis title size
+  hemptyRatioBor->GetXaxis()->SetTickLength(0.10);
 
   TH2F* hemptyRatioBorGM = new TH2F("hemptyRatioBorGM","",50,0.,110.,10.,0.,2.7);//50,0.,110.,10.,0.,4
   hemptyRatioBorGM->GetXaxis()->SetTitle("p_{T} (GeV/c)");
@@ -235,6 +237,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptyRatioBorGM->GetYaxis()->SetLabelOffset(0.015);
   hemptyRatioBorGM->GetXaxis()->SetLabelSize(0.1);
   hemptyRatioBorGM->GetYaxis()->SetLabelSize(0.10159);// 0.1 before y title changes -> 0.08889 // 0.08889 before enlarge y-axis title size
+  hemptyRatioBorGM->GetXaxis()->SetTickLength(0.07);
 
   //
   TString texper="%";
