@@ -7,7 +7,6 @@ using namespace std;
 
 void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root", TString file="ROOTfiles/CrossSectionFONLLPP.root", Int_t isPbPb=0, Float_t centMin=0., Float_t centMax=100.)
 {
-
   bool doComparisonLHC=false;
   gStyle->SetOptTitle(0);
   gStyle->SetOptStat(0);
@@ -61,15 +60,15 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   */
 
   hSigmaPPStatMB->SetLineWidth(2);
-  hSigmaPPStatMB->SetMarkerSize(1);//4
+  hSigmaPPStatMB->SetMarkerSize(1.37);//1
   hSigmaPPStatMB->SetMarkerStyle(20);
   hSigmaPPStatMB->SetLineColor(1);//kGreen+4
   hSigmaPPStatMB->SetMarkerColor(1);//kGreen+4
 
   hSigmaPPStat->SetLineWidth(2);
-  hSigmaPPStat->SetMarkerSize(1);//4
+  hSigmaPPStat->SetMarkerSize(1.37);//1
   hSigmaPPStat->SetMarkerStyle(20);
-  hSigmaPPStat->SetLineColor(1);//kGreen+4
+  hSigmaPPStat->SetLineColor(1);//
   hSigmaPPStat->SetMarkerColor(1);//kGreen+4
 
   gaeCrossSystMB->SetFillColor(1);
@@ -106,11 +105,11 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   gaeRatioCrossFONLLunity->SetLineColor(4);
   */
 
-  gaeRatioCrossFONLLstatMB->SetMarkerSize(1);
+  gaeRatioCrossFONLLstatMB->SetMarkerSize(1.37);//1
   gaeRatioCrossFONLLstatMB->SetLineWidth(2);
   gaeRatioCrossFONLLstatMB->SetLineColor(1);//kGreen+4 
   gaeRatioCrossFONLLstatMB->SetMarkerColor(1);//kGreen+4
-  gaeRatioCrossFONLLstat->SetMarkerSize(1);
+  gaeRatioCrossFONLLstat->SetMarkerSize(1.37);//1
   gaeRatioCrossFONLLstat->SetLineWidth(2);
   gaeRatioCrossFONLLstat->SetLineColor(1);//kGreen+4
   gaeRatioCrossFONLLstat->SetMarkerColor(1);//kGreen+4
@@ -384,21 +383,24 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texcmsOnly->SetTextSize(0.042);
   texcmsOnly->SetLineWidth(2);
 
-  TLatex* texDzero = new TLatex(0.15,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  TLatex* texDzero = new TLatex(0.15,0.84,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
+  //TLatex* texDzero = new TLatex(0.15,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   //TLatex* texDzero = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzero->SetNDC();
   texDzero->SetTextAlign(13);
   texDzero->SetTextFont(62);//61
   texDzero->SetTextSize(0.06);
   texDzero->SetLineWidth(2);
-  TLatex* texDzeroBor = new TLatex(0.18,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  TLatex* texDzeroBor = new TLatex(0.18,0.84,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
+  //TLatex* texDzeroBor = new TLatex(0.18,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   //TLatex* texDzeroBor = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzeroBor->SetNDC();
   texDzeroBor->SetTextAlign(13);
   texDzeroBor->SetTextFont(62);//61
   texDzeroBor->SetTextSize(0.06);
   texDzeroBor->SetLineWidth(2);
-  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  TLatex* texDzeroOnly = new TLatex(0.15,0.888,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
+  //TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   texDzeroOnly->SetNDC();
   texDzeroOnly->SetTextAlign(13);
   texDzeroOnly->SetTextFont(62);//61
