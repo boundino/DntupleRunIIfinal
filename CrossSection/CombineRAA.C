@@ -156,7 +156,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   if(isBnNjpsi==1||isHadDupl==1)
     {
       texY = new TLatex(0.222,0.815,"|y| < 1");//0.2612903,0.8425793
-      tlatexcent = new TLatex(0.222,0.77,Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+      tlatexcent = new TLatex(0.222,0.765,Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
     }
   else
     {
