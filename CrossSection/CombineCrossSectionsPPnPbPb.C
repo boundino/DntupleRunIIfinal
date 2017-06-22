@@ -175,7 +175,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   hemptySigmaOnly2->SetMinimum(0.);
 
   //TH2F* hemptySigmaOnly2Long = new TH2F("hemptySigmaOnly2Long","",50,0.,110.,10.,0.1,1.e11); //1.1, 1.e10
-  TH2F* hemptySigmaOnly2Long = new TH2F("hemptySigmaOnly2Long","",50,0.,110.,10.,1.e-2,1.e11); //1.1, 1.e10
+  TH2F* hemptySigmaOnly2Long = new TH2F("hemptySigmaOnly2Long","",50,0.,110.,10.,1.e-3,1.e11); //1.1, 1.e10
   hemptySigmaOnly2Long->GetXaxis()->CenterTitle();
   hemptySigmaOnly2Long->GetYaxis()->CenterTitle();
   hemptySigmaOnly2Long->GetXaxis()->SetTitle("p_{T} (GeV/c)");
@@ -252,13 +252,18 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texYOnly2->SetTextFont(42);
   texYOnly2->SetTextSize(0.0315);
   texYOnly2->SetLineWidth(2);
-  //TLatex* texYOnly2Long = new TLatex(0.48,0.91425,"|y| < 1.0                     Global uncert."); // before pp -> pp data
-  //TLatex* texYOnly2Long = new TLatex(0.37,0.91425,"|y| < 1.0                                       Global uncert."); 
+  /*
   TLatex* texYOnly2Long = new TLatex(0.39,0.91425,"|y| < 1.0                                      Global uncert."); // 0.37 -> 0.39
   texYOnly2Long->SetNDC();
   texYOnly2Long->SetTextFont(42);
   texYOnly2Long->SetTextSize(0.03025);//
   texYOnly2Long->SetLineWidth(2);
+  */
+  TLatex* texGuOnly2Long = new TLatex(0.608,0.24,"Global uncert.");
+  texGuOnly2Long->SetNDC();
+  texGuOnly2Long->SetTextFont(42);
+  texGuOnly2Long->SetTextSize(0.03025);
+  texGuOnly2Long->SetLineWidth(2);
 
   //
   Float_t systnormPP = normalizationUncertaintyForPP();
@@ -352,25 +357,25 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   //ent_SigmaOnly2FONLL->SetLineColor(5);
   //ent_SigmaOnly2FONLL->SetMarkerColor(1);
 
-  //TLegend* legendSigmaOnly2Long = new TLegend(0.47,0.801667,0.82,0.897916,"");// 727 -> 7655, before pp to pp data
-  TLegend* legendSigmaOnly2Long = new TLegend(0.38,0.801667,0.67,0.897916,"");// 0.36 -> 0.38, 0.70 -> 0.67
+  //TLegend* legendSigmaOnly2Long = new TLegend(0.38,0.801667,0.67,0.897916,"");// 0.36 -> 0.38, 0.70 -> 0.67
+  TLegend* legendSigmaOnly2Long = new TLegend(0.18,0.12,0.52,0.23,"");// 0.36 -> 0.38, 0.70 -> 0.67
   legendSigmaOnly2Long->SetBorderSize(0);
   legendSigmaOnly2Long->SetLineColor(0);
   legendSigmaOnly2Long->SetFillColor(0);
   legendSigmaOnly2Long->SetFillStyle(1001);
   legendSigmaOnly2Long->SetTextFont(42);
   legendSigmaOnly2Long->SetTextSize(0.03025);// 0.02625
-  TLegendEntry* ent_SigmaOnly2LongPPMB = legendSigmaOnly2Long->AddEntry(hSigmaPPStatMB,Form("pp data                               %.1f%s",systnormPP,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2LongPPMB = legendSigmaOnly2Long->AddEntry(hSigmaPPStatMB,Form("pp                                        %.1f%s",systnormPP,texper.Data()),"pf");
   ent_SigmaOnly2LongPPMB->SetTextFont(42);
   ent_SigmaOnly2LongPPMB->SetLineColor(2);
   ent_SigmaOnly2LongPPMB->SetMarkerColor(2);
   //TLegendEntry* ent_SigmaOnly2LongPbPb0100MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb0100StatMB,Form("PbPb data 0-100%s (/3)      + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
-  TLegendEntry* ent_SigmaOnly2LongPbPb0100MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb0100StatMB,Form("PbPb data 0-100%s (/10)    + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2LongPbPb0100MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb0100StatMB,Form("PbPb Cent. 0-100%s (/10)    + %.1f%s, - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
   ent_SigmaOnly2LongPbPb0100MB->SetTextFont(42);
   ent_SigmaOnly2LongPbPb0100MB->SetLineColor(2);
   ent_SigmaOnly2LongPbPb0100MB->SetMarkerColor(2);
   //TLegendEntry* ent_SigmaOnly2LongPbPb010MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb010StatMB,Form("PbPb data 0-10%s (/10)      + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
-  TLegendEntry* ent_SigmaOnly2LongPbPb010MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb010StatMB,Form("PbPb data 0-10%s (/100)    + %.1f%s - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  TLegendEntry* ent_SigmaOnly2LongPbPb010MB = legendSigmaOnly2Long->AddEntry(hSigmaPbPb010StatMB,Form("PbPb Cent. 0-10%s (/100)    + %.1f%s, - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
   ent_SigmaOnly2LongPbPb010MB->SetTextFont(42);
   ent_SigmaOnly2LongPbPb010MB->SetLineColor(2);
   ent_SigmaOnly2LongPbPb010MB->SetMarkerColor(2);
@@ -426,12 +431,20 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texcmsOnly2->SetTextFont(62);//61
   texcmsOnly2->SetTextSize(0.042);
   texcmsOnly2->SetLineWidth(2);
-  TLatex* texcmsOnly2Long = new TLatex(0.18,0.94166,"CMS");
+  TLatex* texcmsOnly2Long = new TLatex(0.19,0.928,"CMS");
   texcmsOnly2Long->SetNDC();
   texcmsOnly2Long->SetTextAlign(13);
   texcmsOnly2Long->SetTextFont(62);//61
-  texcmsOnly2Long->SetTextSize(0.040333);
+  //texcmsOnly2Long->SetTextSize(0.040333);
+  texcmsOnly2Long->SetTextSize(0.073);
   texcmsOnly2Long->SetLineWidth(2);
+
+  TLatex* texYOnly2Long = new TLatex(0.19,0.845,"|y| < 1.0");
+  texYOnly2Long->SetNDC();
+  texYOnly2Long->SetTextAlign(12);
+  texYOnly2Long->SetTextFont(42);
+  texYOnly2Long->SetTextSize(0.05);
+  texYOnly2Long->SetLineWidth(2);
 
   TLatex* texDzero = new TLatex(0.15,0.84,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
   texDzero->SetNDC();
@@ -451,12 +464,13 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texDzeroOnly2->SetTextFont(62);//61
   texDzeroOnly2->SetTextSize(0.042);
   texDzeroOnly2->SetLineWidth(2);
-  TLatex* texDzeroOnly2Long = new TLatex(0.18,0.906667,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
-  //TLatex* texDzeroOnly2Long = new TLatex(0.15,0.906667,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  //TLatex* texDzeroOnly2Long = new TLatex(0.18,0.906667,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
+  TLatex* texDzeroOnly2Long = new TLatex(0.94,0.95,"#frac{#scale[0.8]{1}}{#scale[0.8]{2}} (D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})");
   texDzeroOnly2Long->SetNDC();
-  texDzeroOnly2Long->SetTextAlign(13);
+  texDzeroOnly2Long->SetTextAlign(33);
   texDzeroOnly2Long->SetTextFont(62);//61
-  texDzeroOnly2Long->SetTextSize(0.04033);
+  //texDzeroOnly2Long->SetTextSize(0.04033);
+  texDzeroOnly2Long->SetTextSize(0.073);
   texDzeroOnly2Long->SetLineWidth(2);
 
   /*
@@ -598,6 +612,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   gaeCrossPbPb010Syst->Draw("5same");  
 
   texYOnly2Long->Draw();
+  texGuOnly2Long->Draw();
   legendSigmaOnly2Long->Draw("same");
   tlatex1Only2Long->Draw();
   texcmsOnly2Long->Draw();

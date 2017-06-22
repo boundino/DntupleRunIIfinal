@@ -7,7 +7,7 @@ using namespace std;
 
 void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root", TString file="ROOTfiles/CrossSectionFONLLPP.root", Int_t isPbPb=0, Float_t centMin=0., Float_t centMax=100.)
 {
-  bool doComparisonLHC=false;
+  bool doComparisonLHC = false;
   gStyle->SetOptTitle(0);
   gStyle->SetOptStat(0);
   gStyle->SetEndErrorSize(0);
@@ -164,7 +164,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hemptySigma->SetMaximum(2);
   hemptySigma->SetMinimum(0.);
 
-  TH2F* hemptySigmaBor = new TH2F("hemptySigmaBor","",50,0.,110.,10.,0.11,1.e12);
+  TH2F* hemptySigmaBor = new TH2F("hemptySigmaBor","",50,0.,110.,10.,0.11,1.e13);
   hemptySigmaBor->GetXaxis()->CenterTitle();
   hemptySigmaBor->GetYaxis()->CenterTitle();
   hemptySigmaBor->GetYaxis()->SetTitle(yaxistitle);
@@ -253,6 +253,10 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texCentCal->SetNDC();
   texCentCal->SetTextFont(42);
   texCentCal->SetTextSize(0.045);
+  TLatex* texCentBor = new TLatex(0.23,0.10,Form("Centrality %.0f - %.0f%s",centMin,centMax,texper.Data()));
+  texCentBor->SetNDC();
+  texCentBor->SetTextFont(42);
+  texCentBor->SetTextSize(0.045);
 
   TLatex* texY = new TLatex(0.55,0.79,"|y| < 1.0");
   texY->SetNDC();
@@ -269,6 +273,12 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texYCal->SetTextFont(42);
   texYCal->SetTextSize(0.045);
   texYCal->SetLineWidth(2);
+  TLatex* texYBor = new TLatex(0.19,0.73427,"|y| < 1.0");
+  texYBor->SetNDC();
+  texYBor->SetTextAlign(12);
+  texYBor->SetTextFont(42);
+  texYBor->SetTextSize(0.07328);
+  texYBor->SetLineWidth(2);
 
   Float_t systnormhigh,systnormlow;
   if(isPbPb==1) 
@@ -293,10 +303,23 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texSystnorm->SetTextFont(42);
   texSystnorm->SetTextSize(0.045);
   texSystnorm->SetLineWidth(2);
+  TLatex* texSystnormBor;
+  if(isPbPb==1)
+    {
+      texSystnormBor = new TLatex(0.23,0.16,Form("Global uncert. + %.1f%s, - %.1f%s",systnormhigh,texper.Data(),systnormlow,texper.Data()));
+    }
+  else
+    {
+      texSystnormBor = new TLatex(0.23,0.16,Form("Global uncert. %.1f%s",systnormhigh,texper.Data()));
+    }
+  texSystnormBor->SetNDC();
+  texSystnormBor->SetTextFont(42);
+  texSystnormBor->SetTextSize(0.045);
+  texSystnormBor->SetLineWidth(2);
   TLatex* texSystnormOnly;// = new TLatex(0.55,0.727,Form("Global uncert. %.1f%s",systnorm,texper.Data()));
   if(isPbPb==1)
     {
-      texSystnormOnly = new TLatex(0.55,0.727,Form("Global uncert. + %.1f%s - %.1f%s",systnormhigh,texper.Data(),systnormlow,texper.Data()));
+      texSystnormOnly = new TLatex(0.55,0.727,Form("Global uncert. + %.1f%s, - %.1f%s",systnormhigh,texper.Data(),systnormlow,texper.Data()));
     }
   else
     {
@@ -352,6 +375,22 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   ent_SigmaCalFONLL->SetTextFont(42);
   ent_SigmaCalFONLL->SetLineColor(5);
   ent_SigmaCalFONLL->SetMarkerColor(1);
+  //TLegend* legendSigmaBor = new TLegend(0.54,0.66,0.87,0.825,"");
+  TLegend* legendSigmaBor = new TLegend(0.22,0.20,0.55,0.39,"");
+  legendSigmaBor->SetBorderSize(0);
+  legendSigmaBor->SetLineColor(0);
+  legendSigmaBor->SetFillColor(0);
+  legendSigmaBor->SetFillStyle(1001);
+  legendSigmaBor->SetTextFont(42);
+  legendSigmaBor->SetTextSize(0.045);
+  TLegendEntry* ent_SigmaBorPPMB = legendSigmaBor->AddEntry(hSigmaPPStatMB,Form("%s data",legPbPb.Data()),"pf");
+  ent_SigmaBorPPMB->SetTextFont(42);
+  ent_SigmaBorPPMB->SetLineColor(2);
+  ent_SigmaBorPPMB->SetMarkerColor(2);
+  TLegendEntry* ent_SigmaBorFONLL = legendSigmaBor->AddEntry(gaeBplusReferenceMB,"FONLL","f");
+  ent_SigmaBorFONLL->SetTextFont(42);
+  ent_SigmaBorFONLL->SetLineColor(5);
+  ent_SigmaBorFONLL->SetMarkerColor(1);
   
   TString tlumi = isPbPb?"530 #mub^{-1} (5.02 TeV PbPb)":"27.4 pb^{-1} (5.02 TeV pp)";
   TLatex* tlatex1 = new TLatex(0.95,0.96,tlumi.Data());
@@ -373,11 +412,19 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texcms->SetTextFont(62);//61
   texcms->SetTextSize(0.06);
   texcms->SetLineWidth(2);
+  /*
   TLatex* texcmsBor = new TLatex(0.18,0.90,"CMS");
   texcmsBor->SetNDC();
   texcmsBor->SetTextAlign(13);
   texcmsBor->SetTextFont(62);//61
   texcmsBor->SetTextSize(0.06);
+  texcmsBor->SetLineWidth(2);
+  */
+  TLatex* texcmsBor = new TLatex(0.19,0.87656,"CMS");
+  texcmsBor->SetNDC();
+  texcmsBor->SetTextAlign(13);
+  texcmsBor->SetTextFont(62);//61
+  texcmsBor->SetTextSize(0.107);
   texcmsBor->SetLineWidth(2);
   TLatex* texcmsOnly = new TLatex(0.15,0.93,"CMS");
   texcmsOnly->SetNDC();
@@ -387,20 +434,24 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   texcmsOnly->SetLineWidth(2);
 
   TLatex* texDzero = new TLatex(0.15,0.84,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
-  //TLatex* texDzero = new TLatex(0.15,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
-  //TLatex* texDzero = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzero->SetNDC();
   texDzero->SetTextAlign(13);
   texDzero->SetTextFont(62);//61
   texDzero->SetTextSize(0.06);
   texDzero->SetLineWidth(2);
+  /*
   TLatex* texDzeroBor = new TLatex(0.18,0.84,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
-  //TLatex* texDzeroBor = new TLatex(0.18,0.84,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
-  //TLatex* texDzeroBor = new TLatex(0.15,0.84,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
   texDzeroBor->SetNDC();
   texDzeroBor->SetTextAlign(13);
   texDzeroBor->SetTextFont(62);//61
   texDzeroBor->SetTextSize(0.06);
+  texDzeroBor->SetLineWidth(2);
+  */
+  TLatex* texDzeroBor = new TLatex(0.939,0.915,"#frac{#scale[0.8]{1}}{#scale[0.8]{2}} (D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})");
+  texDzeroBor->SetNDC();
+  texDzeroBor->SetTextAlign(33);
+  texDzeroBor->SetTextFont(62);//61
+  texDzeroBor->SetTextSize(0.107);
   texDzeroBor->SetLineWidth(2);
   TLatex* texDzeroOnly = new TLatex(0.15,0.888,"(D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})/2");
   //TLatex* texDzeroOnly = new TLatex(0.15,0.888,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
@@ -731,10 +782,14 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   hSigmaPPStat->Draw("epsame"); 
   gaeCrossSystMB->Draw("5same");  
   gaeCrossSyst->Draw("5same");  
-  if(isPbPb==1) texCentCal->Draw();
-  texYCal->Draw();
-  texSystnorm->Draw();
-  legendSigmaCal->Draw("same");
+  if(isPbPb==1) texCentBor->Draw();
+  texYBor->Draw();
+  texSystnormBor->Draw();
+  TLegendEntry* ent_SigmaBorGMVFNS = legendSigmaBor->AddEntry(gGMVFNSD5TeV,"GM-VFNS","f");
+  ent_SigmaBorGMVFNS->SetTextFont(42);
+  ent_SigmaBorGMVFNS->SetLineColor(5);
+  ent_SigmaBorGMVFNS->SetMarkerColor(1);
+  legendSigmaBor->Draw("same");
   tlatex1->Draw();
   texcmsBor->Draw();
   texDzeroBor->Draw();

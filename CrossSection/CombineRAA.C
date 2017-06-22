@@ -133,8 +133,8 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   texcms->SetTextSize(0.06);
   texcms->SetLineWidth(2);
   texcms->Draw();
-  TLatex* texDzero = new TLatex(0.22,0.85,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
-  //TLatex* texDzero = new TLatex(0.22,0.85,"D^{0} + #bar{D^{#lower[0.2]{0}}}");
+  //TLatex* texDzero = new TLatex(0.22,0.85,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  TLatex* texDzero = new TLatex(0.22,0.86,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
   texDzero->SetNDC();
   texDzero->SetTextAlign(13);
   texDzero->SetTextFont(62);//61
@@ -150,32 +150,45 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   //texpre->Draw();
 
   TString texper="%";
-  //TLatex * tlatexeff2=new TLatex(0.65,0.20,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
-  TLatex * tlatexeff2 = new TLatex(0.95,0.20,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
-  tlatexeff2->SetTextAlign(32);
-  //TLatex * tlatexeff2 = new TLatex(0.41,0.58,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
-  tlatexeff2->SetNDC();
-  tlatexeff2->SetTextColor(1);
-  tlatexeff2->SetTextFont(42);
-  tlatexeff2->SetTextSize(0.045);
-  tlatexeff2->SetLineWidth(2);
-  tlatexeff2->Draw();
-  //TLatex * texY = new TLatex(0.41,0.53,"|y| < 1");//0.2612903,0.8425793
-  TLatex * texY = new TLatex(0.95,0.28,"|y| < 1");//0.2612903,0.8425793
-  texY->SetTextAlign(32);
+  //TLatex * tlatexcent = new TLatex(0.95,0.20,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+  TLatex* tlatexcent;
+  TLatex* texY;
+  if(isBnNjpsi==1||isHadDupl==1)
+    {
+      texY = new TLatex(0.222,0.815,"|y| < 1");//0.2612903,0.8425793
+      tlatexcent = new TLatex(0.222,0.77,Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+    }
+  else
+    {
+      texY = new TLatex(0.222,0.76,"|y| < 1");//0.2612903,0.8425793
+      tlatexcent = new TLatex(0.222,0.71,Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+    }
+  tlatexcent->SetTextAlign(12);
+  tlatexcent->SetNDC();
+  tlatexcent->SetTextColor(1);
+  tlatexcent->SetTextFont(42);
+  tlatexcent->SetTextSize(0.045);
+  tlatexcent->SetLineWidth(2);      
+  tlatexcent->Draw();
+  texY->SetTextAlign(12);
   texY->SetNDC();
   texY->SetTextColor(1);
   texY->SetTextFont(42);
   texY->SetTextSize(0.045);
   texY->SetLineWidth(2);
-  //texY->Draw();
+  texY->Draw();
 
   TLegend* legendSigma;
-  if(isHadDupl==0 && isTheoryComparison==0) legendSigma = new TLegend(0.5236242,0.7474695,0.942953,0.8457592,"");
-  if(isHadDupl==1 && isBnNjpsi==0) legendSigma = new TLegend(0.4536242,0.7274695,0.912953,0.8657592,"");
-  if(isHadDupl==1 && isBnNjpsi==1) legendSigma = new TLegend(0.4536242,0.6174695,0.912953,0.9057592,"");
-  if(isTheoryComparison==2||isTheoryComparison==3) legendSigma = new TLegend(0.5236242,0.6474695,0.912953,0.9057592,"");
-  if(isTheoryComparison==1) legendSigma = new TLegend(0.5236242,0.5974695,0.912953,0.9057592,"");
+  // D RAA only
+  if(isHadDupl==0 && isTheoryComparison==0) legendSigma = new TLegend(0.624,0.7474695,0.624+0.419,0.8457592,"");
+  // D and charged particles
+  if(isHadDupl==1 && isBnNjpsi==0) legendSigma = new TLegend(0.584,0.7274695,0.584+0.46,0.8657592,"");
+  // D, B, jpsi and charged particles
+  if(isHadDupl==1 && isBnNjpsi==1) legendSigma = new TLegend(0.554,0.6174695,0.554+0.46,0.9057592,"");
+  // separate theories
+  if(isTheoryComparison==2||isTheoryComparison==3) legendSigma = new TLegend(0.574,0.6474695,0.574+0.389,0.9057592,"");
+  // all theories
+  if(isTheoryComparison==1) legendSigma = new TLegend(0.574,0.5974695,0.574+0.389,0.9057592,"");
   legendSigma->SetBorderSize(0);
   legendSigma->SetLineColor(0);
   legendSigma->SetFillColor(0);
@@ -183,7 +196,9 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   legendSigma->SetTextFont(42);
   legendSigma->SetTextSize(0.030);
   
-  TLegendEntry *ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"D^{0} |y| < 1.0","pf");
+  TLegendEntry *ent_Dhighpt;
+  if(isHadDupl==1 || isBnNjpsi==1) ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"D^{0}","pf");
+  else ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"R_{AA}","pf");
   ent_Dhighpt->SetTextFont(42);
   ent_Dhighpt->SetLineColor(4);
   ent_Dhighpt->SetMarkerColor(4);
@@ -200,14 +215,14 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
       gTrackPt_leg->SetLineColor(0);
       Int_t cl = TColor::GetColor("#ffcc00");
       gTrackPt_leg->SetFillColor(cl);
-      TLegendEntry* ent_Charged = legendSigma->AddEntry(gTrackPt_leg,"charged hadrons |y| < 1.0","pf");
+      TLegendEntry* ent_Charged = legendSigma->AddEntry(gTrackPt_leg,"charged hadrons","pf");
       ent_Charged->SetTextFont(42); 
       ent_Charged->SetTextSize(0.035);
     } 
 
   if(isBnNjpsi==1 && centMin==0 && centMax==100)
     {
-      TLegendEntry* ent_BnNjpsi = legendSigma->AddEntry(grae,"B^{+} |y| < 2.4","pf");
+      TLegendEntry* ent_BnNjpsi = legendSigma->AddEntry(grae,"B^{#pm} |y| < 2.4","pf");
       ent_BnNjpsi->SetTextFont(42);
       ent_BnNjpsi->SetTextSize(0.043);
       if(isBnNjpsi>0) ent_BnNjpsi->SetTextSize(0.035);
@@ -223,7 +238,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
       ent_Njpsi2->SetTextFont(42);
       ent_Njpsi2->SetTextSize(0.043);
       if(isBnNjpsi>0) ent_Njpsi2->SetTextSize(0.035);
-      TLatex* texNJpsi = new TLatex(0.47,0.728,"nonprompt J/#psi (2.76 TeV)");
+      TLatex* texNJpsi = new TLatex(0.57,0.728,"nonprompt J/#psi (2.76 TeV)");
       texNJpsi->SetNDC();
       texNJpsi->SetTextColor(1);
       texNJpsi->SetTextFont(42);
@@ -237,8 +252,8 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   if(isTheoryComparison && centMin==0. && centMax==100.)
     {
       drawTheory0100();
-      legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al. 0-80%","l");
-      legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
+      legendSigma->AddEntry(gShanshanD5TeV,"Cao et al. 0-80%","l");
+      legendSigma->AddEntry(gMagdalenaD5TeV,"Djordjevic et al.","bf");
       legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");
       gADSCFT1D5TeV->SetLineColor(0);
       legendSigma->AddEntry(gADSCFT1D5TeV,"AdS/CFT HH D = const","f");
@@ -250,13 +265,13 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
       drawTheory010(isTheoryComparison);
       if(isTheoryComparison==1||isTheoryComparison==2)
         {
-          legendSigma->AddEntry(gMagdalenaD5TeV,"M. Djordjevic","bf");
+          legendSigma->AddEntry(gMagdalenaD5TeV,"Djordjevic et al.","bf");
           legendSigma->AddEntry(gCUJETD5TeV,"CUJET 3.0","f");//pf
-          legendSigma->AddEntry(gIvanD5TeV,"I. Vitev (g=1.8-2.0)","bf");
+          legendSigma->AddEntry(gIvanD5TeV,"Vitev et al. (g=1.8-2.0)","bf");
         }
       if (isTheoryComparison==1||isTheoryComparison==3)
         {
-          legendSigma->AddEntry(gShanshanD5TeV,"S. Cao et al.","l");
+          legendSigma->AddEntry(gShanshanD5TeV,"Cao et al.","l");
           legendSigma->AddEntry(gPHSDWShadowing,"PHSD w/ shadowing ","l");
           legendSigma->AddEntry(gPHSDWOShadowing,"PHSD w/o shadowing ","l");
           gADSCFT1D5TeV->SetLineColor(0);
@@ -291,16 +306,15 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
 
   legendSigma->Draw();  
   
-  TLatex* texSystnorm = new TLatex(0.23,0.66,"T_{AA} and lumi.");
-  //TLatex* texSystnorm = new TLatex(0.23,0.70,"T_{AA} and lumi.");
+  //TLatex* texSystnorm = new TLatex(0.23,0.66,"T_{AA} and lumi.");
+  TLatex* texSystnorm = new TLatex(0.23,0.64,"T_{AA} and lumi.");
   texSystnorm->SetNDC();
   texSystnorm->SetTextColor(1);
   texSystnorm->SetTextFont(42);
   texSystnorm->SetTextSize(0.04);
   texSystnorm->SetLineWidth(2);
   texSystnorm->Draw();
-  //texSystnorm = new TLatex(0.23,0.65,"uncertainty");
-  texSystnorm = new TLatex(0.23,0.61,"uncertainty");
+  texSystnorm = new TLatex(0.23,0.60,"uncertainty");
   texSystnorm->SetNDC();
   texSystnorm->SetTextColor(1);
   texSystnorm->SetTextFont(42);
