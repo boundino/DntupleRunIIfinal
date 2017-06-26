@@ -197,7 +197,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   legendSigma->SetTextSize(0.030);
   
   TLegendEntry *ent_Dhighpt;
-  if(isHadDupl==1 || isBnNjpsi==1) ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"D^{0}","pf");
+  if(isHadDupl==1 || isBnNjpsi==1) ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}","pf");
   else ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"R_{AA}","pf");
   ent_Dhighpt->SetTextFont(42);
   ent_Dhighpt->SetLineColor(4);
