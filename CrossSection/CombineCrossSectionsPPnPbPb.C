@@ -175,7 +175,7 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   hemptySigmaOnly2->SetMinimum(0.);
 
   //TH2F* hemptySigmaOnly2Long = new TH2F("hemptySigmaOnly2Long","",50,0.,110.,10.,0.1,1.e11); //1.1, 1.e10
-  TH2F* hemptySigmaOnly2Long = new TH2F("hemptySigmaOnly2Long","",50,0.,110.,10.,1.e-3,1.e11); //1.1, 1.e10
+  TH2F* hemptySigmaOnly2Long = new TH2F("hemptySigmaOnly2Long","",50,0.,110.,10.,1.e-5,1.e12); //1.1, 1.e10
   hemptySigmaOnly2Long->GetXaxis()->CenterTitle();
   hemptySigmaOnly2Long->GetYaxis()->CenterTitle();
   hemptySigmaOnly2Long->GetXaxis()->SetTitle("p_{T} (GeV/c)");
@@ -259,10 +259,11 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texYOnly2Long->SetTextSize(0.03025);//
   texYOnly2Long->SetLineWidth(2);
   */
-  TLatex* texGuOnly2Long = new TLatex(0.608,0.24,"Global uncert.");
+  //TLatex* texGuOnly2Long = new TLatex(0.608,0.24,"Global uncert.");
+  TLatex* texGuOnly2Long = new TLatex(0.685,0.24,"Global uncert.");
   texGuOnly2Long->SetNDC();
   texGuOnly2Long->SetTextFont(42);
-  texGuOnly2Long->SetTextSize(0.03025);
+  texGuOnly2Long->SetTextSize(0.037);// 0.03025
   texGuOnly2Long->SetLineWidth(2);
 
   //
@@ -352,19 +353,14 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaOnly2PbPb010MB->SetTextFont(42);
   ent_SigmaOnly2PbPb010MB->SetLineColor(2);
   ent_SigmaOnly2PbPb010MB->SetMarkerColor(2);
-  //TLegendEntry* ent_SigmaOnly2FONLL = legendSigmaOnly2->AddEntry(gaeBplusReferenceMB,"FONLL","f");
-  //ent_SigmaOnly2FONLL->SetTextFont(42);
-  //ent_SigmaOnly2FONLL->SetLineColor(5);
-  //ent_SigmaOnly2FONLL->SetMarkerColor(1);
 
-  //TLegend* legendSigmaOnly2Long = new TLegend(0.38,0.801667,0.67,0.897916,"");// 0.36 -> 0.38, 0.70 -> 0.67
   TLegend* legendSigmaOnly2Long = new TLegend(0.18,0.12,0.52,0.23,"");// 0.36 -> 0.38, 0.70 -> 0.67
   legendSigmaOnly2Long->SetBorderSize(0);
   legendSigmaOnly2Long->SetLineColor(0);
   legendSigmaOnly2Long->SetFillColor(0);
   legendSigmaOnly2Long->SetFillStyle(1001);
   legendSigmaOnly2Long->SetTextFont(42);
-  legendSigmaOnly2Long->SetTextSize(0.03025);// 0.02625
+  legendSigmaOnly2Long->SetTextSize(0.037);// 0.03025
   TLegendEntry* ent_SigmaOnly2LongPPMB = legendSigmaOnly2Long->AddEntry(hSigmaPPStatMB,Form("pp                                        %.1f%s",systnormPP,texper.Data()),"pf");
   ent_SigmaOnly2LongPPMB->SetTextFont(42);
   ent_SigmaOnly2LongPPMB->SetLineColor(2);
@@ -379,11 +375,6 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   ent_SigmaOnly2LongPbPb010MB->SetTextFont(42);
   ent_SigmaOnly2LongPbPb010MB->SetLineColor(2);
   ent_SigmaOnly2LongPbPb010MB->SetMarkerColor(2);
-  //TLegendEntry* ent_SigmaOnly2LongFONLL = legendSigmaOnly2Long->AddEntry(gaeBplusReferenceMB,"FONLL","f");
-  //ent_SigmaOnly2LongFONLL->SetTextFont(42);
-  //ent_SigmaOnly2LongFONLL->SetLineColor(5);
-  //ent_SigmaOnly2LongFONLL->SetMarkerColor(1);
-
 
   //
   TString tlumi = "27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)";
@@ -472,6 +463,12 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   //texDzeroOnly2Long->SetTextSize(0.04033);
   texDzeroOnly2Long->SetTextSize(0.073);
   texDzeroOnly2Long->SetLineWidth(2);
+  TLatex* texDzeroOnly2LongAlt = new TLatex(0.94,0.95,"#frac{D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}}{#scale[0.9]{2}}");
+  texDzeroOnly2LongAlt->SetNDC();
+  texDzeroOnly2LongAlt->SetTextAlign(33);
+  texDzeroOnly2LongAlt->SetTextFont(62);//61
+  texDzeroOnly2LongAlt->SetTextSize(0.073);
+  texDzeroOnly2LongAlt->SetLineWidth(2);
 
   /*
   TLatex* texpre = new TLatex(0.15,0.84,"Preliminary");
@@ -616,7 +613,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   legendSigmaOnly2Long->Draw("same");
   tlatex1Only2Long->Draw();
   texcmsOnly2Long->Draw();
-  texDzeroOnly2Long->Draw();
+  //texDzeroOnly2Long->Draw();
+  texDzeroOnly2LongAlt->Draw();
   //texpreOnly2Long->Draw();
   cSigmaOnly2Long->SaveAs("plotCrossSection/CrossSection_ComparisonPPnPbPb_noRatio_Long.pdf");
 

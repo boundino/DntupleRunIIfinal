@@ -38,7 +38,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   canvasRAA->SetLogx();
 
   TH2F* hemptyEff;
-  if(isHadDupl==1) hemptyEff = new TH2F("hemptyEff","",50,0.7,400.,10.,0,1.75); else hemptyEff=new TH2F("hemptyEff","",50,1.0,150.,10.,0,1.75);//50,-2,120.,10.,0,1.5
+  if(isHadDupl==1) hemptyEff = new TH2F("hemptyEff","",50,0.7,400.,10.,0,1.75); else hemptyEff = new TH2F("hemptyEff","",50,1.0,150.,10.,0,1.75);//50,-2,120.,10.,0,1.5
   hemptyEff->GetXaxis()->CenterTitle();
   hemptyEff->GetYaxis()->CenterTitle();
   hemptyEff->GetYaxis()->SetTitle("R_{AA}");
@@ -151,6 +151,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
 
   TString texper="%";
   //TLatex * tlatexcent = new TLatex(0.95,0.20,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+  /*
   TLatex* tlatexcent;
   TLatex* texY;
   if(isBnNjpsi==1||isHadDupl==1)
@@ -177,12 +178,30 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   texY->SetTextSize(0.045);
   texY->SetLineWidth(2);
   texY->Draw();
+  */
+  TLatex * texY = new TLatex(0.95,0.27,Form("|y| < 1",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+  texY->SetTextAlign(32);
+  texY->SetNDC();
+  texY->SetTextColor(1);
+  texY->SetTextFont(42);
+  texY->SetTextSize(0.045);
+  texY->SetLineWidth(2);      
+  texY->Draw();
+  TLatex * tlatexcent = new TLatex(0.955,0.22,Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
+  tlatexcent->SetTextAlign(32);
+  tlatexcent->SetNDC();
+  tlatexcent->SetTextColor(1);
+  tlatexcent->SetTextFont(42);
+  tlatexcent->SetTextSize(0.045);
+  tlatexcent->SetLineWidth(2);      
+  tlatexcent->Draw();
 
   TLegend* legendSigma;
   // D RAA only
-  if(isHadDupl==0 && isTheoryComparison==0) legendSigma = new TLegend(0.624,0.7474695,0.624+0.419,0.8457592,"");
+  //if(isHadDupl==0 && isTheoryComparison==0) legendSigma = new TLegend(0.624,0.7474695,0.624+0.419,0.8457592,"");
+  if(isHadDupl==0 && isTheoryComparison==0) legendSigma = new TLegend(0.654,0.80,0.654+0.419,0.89,"");
   // D and charged particles
-  if(isHadDupl==1 && isBnNjpsi==0) legendSigma = new TLegend(0.584,0.7274695,0.584+0.46,0.8657592,"");
+  if(isHadDupl==1 && isBnNjpsi==0) legendSigma = new TLegend(0.594,0.76,0.594+0.46,0.89,"");
   // D, B, jpsi and charged particles
   if(isHadDupl==1 && isBnNjpsi==1) legendSigma = new TLegend(0.554,0.6174695,0.554+0.46,0.9057592,"");
   // separate theories
