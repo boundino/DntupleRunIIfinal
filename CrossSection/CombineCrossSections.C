@@ -355,7 +355,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigmaOnly->SetFillStyle(1001);
   legendSigmaOnly->SetTextFont(42);
   legendSigmaOnly->SetTextSize(0.0315);
-  TLegendEntry* ent_SigmaOnlyPPMB = legendSigmaOnly->AddEntry(hSigmaPPStatMB,Form("%s data",legPbPb.Data()),"pf");
+  TLegendEntry* ent_SigmaOnlyPPMB = legendSigmaOnly->AddEntry(hSigmaPPStatMB,Form("%s",legPbPb.Data()),"pf");
   ent_SigmaOnlyPPMB->SetTextFont(42);
   ent_SigmaOnlyPPMB->SetLineColor(2);
   ent_SigmaOnlyPPMB->SetMarkerColor(2);
@@ -370,7 +370,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigmaCal->SetFillStyle(1001);
   legendSigmaCal->SetTextFont(42);
   legendSigmaCal->SetTextSize(0.045);
-  TLegendEntry* ent_SigmaCalPPMB = legendSigmaCal->AddEntry(hSigmaPPStatMB,Form("%s data",legPbPb.Data()),"pf");
+  TLegendEntry* ent_SigmaCalPPMB = legendSigmaCal->AddEntry(hSigmaPPStatMB,Form("%s",legPbPb.Data()),"pf");
   ent_SigmaCalPPMB->SetTextFont(42);
   ent_SigmaCalPPMB->SetLineColor(2);
   ent_SigmaCalPPMB->SetMarkerColor(2);
@@ -386,7 +386,7 @@ void CombineCrossSections(TString fileMB="ROOTfiles/CrossSectionFONLLPPMB.root",
   legendSigmaBor->SetFillStyle(1001);
   legendSigmaBor->SetTextFont(42);
   legendSigmaBor->SetTextSize(0.055);// 0.045
-  TLegendEntry* ent_SigmaBorPPMB = legendSigmaBor->AddEntry(hSigmaPPStatMB,Form("%s data",legPbPb.Data()),"pf");
+  TLegendEntry* ent_SigmaBorPPMB = legendSigmaBor->AddEntry(hSigmaPPStatMB,Form("%s",legPbPb.Data()),"pf");
   ent_SigmaBorPPMB->SetTextFont(42);
   ent_SigmaBorPPMB->SetLineColor(2);
   ent_SigmaBorPPMB->SetMarkerColor(2);
