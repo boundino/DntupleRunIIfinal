@@ -99,7 +99,8 @@ void drawTheory010(Int_t isTheoryComparison)
   gPHSDWShadowing->SetLineWidth(3);
   gPHSDWShadowing->SetLineStyle(1);
   // Ivan 
-  gIvanD5TeV = new TGraph("TheoryPredictions/R-PbPb_cen_cron1.5_eloss1.5.5100GeVD0.txt");
+  //gIvanD5TeV = new TGraph("TheoryPredictions/R-PbPb_cen_cron1.5_eloss1.5.5100GeVD0.txt");
+  gIvanD5TeV = new TGraph("TheoryPredictions/D0cmsCENTPbPb.txt");
   gIvanD5TeV->SetLineColor(kViolet+1);//kViolet
   gIvanD5TeV->SetFillColor(kViolet+1);//kViolet
   gIvanD5TeV->SetFillColorAlpha(kViolet+1,0.5);
