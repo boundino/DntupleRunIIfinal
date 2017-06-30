@@ -21,18 +21,26 @@ fi
 DOANALYSISPP_SAVEHIST=0
 DOANALYSISPP_DRAWFIT=0
 DOANALYSISPP_TOYMC=0
+DOANALYSISPP_SAVEHISTPICKEVT=0
+DOANALYSISPP_TOYMCPICKEVT=1
 
 DOANALYSISPbPb_SAVEHIST=0
 DOANALYSISPbPb_DRAWFIT=0
-DOANALYSISPbPb_TOYMC=1
+DOANALYSISPbPb_TOYMC=0
+DOANALYSISPbPb_SAVEHISTPICKEVT=0
+DOANALYSISPbPb_TOYMCPICKEVT=0
 
 DOANALYSISPPMB_SAVEHIST=0
 DOANALYSISPPMB_DRAWFIT=0
 DOANALYSISPPMB_TOYMC=0
+DOANALYSISPPMB_SAVEHISTPICKEVT=0
+DOANALYSISPPMB_TOYMCPICKEVT=0
 
 DOANALYSISPbPbMB_SAVEHIST=0
 DOANALYSISPbPbMB_DRAWFIT=0
-DOANALYSISPbPbMB_TOYMC=1
+DOANALYSISPbPbMB_TOYMC=0
+DOANALYSISPbPbMB_SAVEHISTPICKEVT=0
+DOANALYSISPbPbMB_TOYMCPICKEVT=0
 
 #
 
@@ -55,7 +63,7 @@ INPUTDATAPbPbMBSKIMMED="/data/wangj/Data2015/Dntuple/PbPb/ntDntuple_PbPb_Minimum
 
 #
 
-PLOTFOLDERS=("plotFits" "plotFitsMC" "plotFitsMCNoswap" "plotFitsMCNocomb" "plotFitsMCNocombNoswap" "ROOTfiles${FILEEND}" "plotStats" "plotToyMC")
+PLOTFOLDERS=("plotFits" "plotFitsMC" "plotFitsMCSignal" "ROOTfiles${FILEEND}" "plotToyMC" "plotToyMCpickevt")
 for ifolder in ${PLOTFOLDERS[@]}
 do
     if [ ! -d $ifolder ]
@@ -73,8 +81,11 @@ cp config/parametersHighpt.h parameters.h
 OUTPUTFILEFITMASSPP="ROOTfiles${FILEEND}/hMassFitPP"
 OUTPUTFILESTATPP="ROOTfiles${FILEEND}/hFitParPP"
 OUTPUTFILETOYMCPP="ROOTfiles${FILEEND}/hToyMCPP"
+OUTPUTFILEEFFPP="ROOTfiles${FILEEND}/hEffPP"
+OUTPUTFILETOYMCPICKEVTPP="ROOTfiles${FILEEND}/hToyMCpickevtPP"
 
 CUTPP="abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter&&Dy>-1.&&Dy<1.&&Dtrk1highPurity&&Dtrk2highPurity&&Dtrk1Pt>2.0&&Dtrk2Pt>2.0&&(DsvpvDistance/DsvpvDisErr)>3.5&&(DlxyBS/DlxyBSErr)>2.5&&Dchi2cl>0.05&&Dalpha<0.12&&abs(Dtrk1Eta)<1.5&&abs(Dtrk2Eta)<1.5&&Dtrk1PtErr/Dtrk1Pt<0.3&&Dtrk2PtErr/Dtrk2Pt<0.3"
+CUTGENPP="abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter&&(GisSignal==1||GisSignal==2)&&Gy>-1&&Gy<1"
 TRGPP="((HLT_DmesonPPTrackingGlobal_Dpt8_v1&&Dpt>10&&Dpt<20)||(HLT_DmesonPPTrackingGlobal_Dpt15_v1&&Dpt>20&&Dpt<40)||(HLT_DmesonPPTrackingGlobal_Dpt30_v1&&Dpt>40&&Dpt<60)||(HLT_DmesonPPTrackingGlobal_Dpt50_v1&&Dpt>60))"
 LABELPP="PP"
 
@@ -99,6 +110,22 @@ then
     rm fitDtoyMC.exe
 fi 
 
+if [ $DOANALYSISPP_SAVEHISTPICKEVT -eq 1 ]
+then
+    g++ fitDsavehistpickevt.C $(root-config --cflags --libs) -g -o fitDsavehistpickevt.exe 
+    ./fitDsavehistpickevt.exe "$INPUTMCPP" "$CUTPP" "$CUTGENPP" "$LABELPP" "$OUTPUTFILEEFFPP"
+    rm fitDsavehistpickevt.exe
+fi 
+
+if [ $DOANALYSISPP_TOYMCPICKEVT -eq 1 ]
+then
+    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
+    ./fitDtoyMCpickevt.exe "$INPUTMCPP" "$OUTPUTFILEEFFPP" "$OUTPUTFILETOYMCPICKEVTPP" "$LABELPP"
+    rm fitDtoyMCpickevt.exe
+fi 
+
+rm parameters.h
+
 ## ANALYSIS PbPb TRIGGERED
 
 cp config/parametersHighpt.h parameters.h
@@ -110,8 +137,11 @@ OUTPUTFILESTATPbPbGJ="ROOTfiles${FILEEND}/hFitParPbPbGJ"
 OUTPUTFILESTATPbPbTO="ROOTfiles${FILEEND}/hFitParPbPbTO"
 OUTPUTFILESTATPbPb="ROOTfiles${FILEEND}/hFitParPbPb"
 OUTPUTFILETOYMCPbPb="ROOTfiles${FILEEND}/hToyMCPbPb"
+OUTPUTFILEEFFPbPb="ROOTfiles${FILEEND}/hEffPbPb"
+OUTPUTFILETOYMCPICKEVTPbPb="ROOTfiles${FILEEND}/hToyMCpickevtPbPb"
 
 CUTPbPb="pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3&&abs(PVz)<15&&Dy>-1.&&Dy<1.&&Dtrk1highPurity&&Dtrk2highPurity&&Dtrk1Pt>8.5&&Dtrk2Pt>8.5&&abs(Dtrk1Eta)<1.5&&abs(Dtrk2Eta)<1.5&&Dtrk1PtErr/Dtrk1Pt<0.3&&Dtrk2PtErr/Dtrk2Pt<0.3&&((DlxyBS/DlxyBSErr)>2.5&&Dalpha<0.12&&((Dpt>2&&Dpt<4&&(DsvpvDistance/DsvpvDisErr)>5.86&&Dchi2cl>0.224)||(Dpt>4&&Dpt<5&&(DsvpvDistance/DsvpvDisErr)>5.46&&Dchi2cl>0.196)||(Dpt>5&&Dpt<6&&(DsvpvDistance/DsvpvDisErr)>4.86&&Dchi2cl>0.170)||(Dpt>6&&Dpt<8&&(DsvpvDistance/DsvpvDisErr)>4.54&&Dchi2cl>0.125)||(Dpt>8&&Dpt<10&&(DsvpvDistance/DsvpvDisErr)>4.42&&Dchi2cl>0.091)||(Dpt>10&&Dpt<15&&(DsvpvDistance/DsvpvDisErr)>4.06&&Dchi2cl>0.069)||(Dpt>15&&Dpt<20&&(DsvpvDistance/DsvpvDisErr)>3.71&&Dchi2cl>0.056)||(Dpt>20&&Dpt<25&&(DsvpvDistance/DsvpvDisErr)>3.25&&Dchi2cl>0.054)||(Dpt>25&&(DsvpvDistance/DsvpvDisErr)>2.97&&Dchi2cl>0.050)))"
+CUTGENPbPb="abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3&&(GisSignal==1||GisSignal==2)&&Gy>-1&&Gy<1"
 TRGPbPbGJ="((HLT_HIDmesonHITrackingGlobal_Dpt20_v1&&Dpt>20&&Dpt<40)||(HLT_HIDmesonHITrackingGlobal_Dpt40_v1&&Dpt>40&&Dpt<60)||(HLT_HIDmesonHITrackingGlobal_Dpt60_v1&&Dpt>60))"
 TRGPbPbTO="((HLT_HIDmesonHITrackingGlobal_Dpt20_v2&&Dpt>20&&Dpt<40)||(HLT_HIDmesonHITrackingGlobal_Dpt40_v1&&Dpt>40&&Dpt<60)||(HLT_HIDmesonHITrackingGlobal_Dpt60_v1&&Dpt>60))"
 LABELPbPb="PbPb"
@@ -131,8 +161,8 @@ fi
 if [ $DOANALYSISPbPb_DRAWFIT -eq 1 ]
 then
     g++ fitDfithist.C $(root-config --cflags --libs) -g -o fitDfithist.exe 
-    ./fitDfithist.exe "$OUTPUTFILEFITMASSPbPbGJ" "$OUTPUTFILESTATPbPbGJ" "${LABELPbPb}GJ" "$CENTPbPbMIN" "$CENTPbPbMAX"
-    ./fitDfithist.exe "$OUTPUTFILEFITMASSPbPbTO" "$OUTPUTFILESTATPbPbTO" "${LABELPbPb}TO" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    #./fitDfithist.exe "$OUTPUTFILEFITMASSPbPbGJ" "$OUTPUTFILESTATPbPbGJ" "${LABELPbPb}GJ" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    #./fitDfithist.exe "$OUTPUTFILEFITMASSPbPbTO" "$OUTPUTFILESTATPbPbTO" "${LABELPbPb}TO" "$CENTPbPbMIN" "$CENTPbPbMAX"
     ./fitDfithist.exe "$OUTPUTFILEFITMASSPbPb" "$OUTPUTFILESTATPbPb" "$LABELPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
     rm fitDfithist.exe
 fi 
@@ -144,6 +174,21 @@ then
     rm fitDtoyMC.exe
 fi 
 
+if [ $DOANALYSISPbPb_SAVEHISTPICKEVT -eq 1 ]
+then
+    g++ fitDsavehistpickevt.C $(root-config --cflags --libs) -g -o fitDsavehistpickevt.exe 
+    ./fitDsavehistpickevt.exe "$INPUTMCPbPb" "$CUTPbPb" "$CUTGENPbPb" "$LABELPbPb" "$OUTPUTFILEEFFPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    rm fitDsavehistpickevt.exe
+fi 
+
+if [ $DOANALYSISPbPb_TOYMCPICKEVT -eq 1 ]
+then
+    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
+    ./fitDtoyMCpickevt.exe "$INPUTMCPbPb" "$OUTPUTFILEEFFPbPb" "$OUTPUTFILETOYMCPICKEVTPbPb" "$LABELPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    rm fitDtoyMCpickevt.exe
+fi 
+
+rm parameters.h
 
 ## ANALYSIS PP MB
 
@@ -152,8 +197,11 @@ cp config/parametersLowpt.h parameters.h
 OUTPUTFILEFITMASSPPMB="ROOTfiles${FILEEND}/hMassFitPPMB"
 OUTPUTFILESTATPPMB="ROOTfiles${FILEEND}/hFitParPPMB"
 OUTPUTFILETOYMCPPMB="ROOTfiles${FILEEND}/hToyMCPPMB"
+OUTPUTFILEEFFPPMB="ROOTfiles${FILEEND}/hEffPPMB"
+OUTPUTFILETOYMCPICKEVTPPMB="ROOTfiles${FILEEND}/hToyMCpickevtPPMB"
 
 CUTPPMB="abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter&&Dy>-1.&&Dy<1.&&Dtrk1highPurity&&Dtrk2highPurity&&Dtrk1Pt>1.0&&Dtrk2Pt>1.0&&Dtrk1PtErr/Dtrk1Pt<0.3&&Dtrk2PtErr/Dtrk2Pt<0.3&&abs(Dtrk1Eta)<1.5&&abs(Dtrk2Eta)<1.5&&((DlxyBS/DlxyBSErr)>2.5&&Dalpha<0.12&&((Dpt>1&&Dpt<2&&(DsvpvDistance/DsvpvDisErr)>6.0&&Dchi2cl>0.25)||(Dpt>2&&Dpt<3&&(DsvpvDistance/DsvpvDisErr)>4.62&&Dchi2cl>0.161)||(Dpt>3&&Dpt<4&&(DsvpvDistance/DsvpvDisErr)>4.80&&Dchi2cl>0.197)||(Dpt>4&&Dpt<5&&(DsvpvDistance/DsvpvDisErr)>4.63&&Dchi2cl>0.141)||(Dpt>5&&Dpt<6&&(DsvpvDistance/DsvpvDisErr)>4.53&&Dchi2cl>0.172)||(Dpt>6&&Dpt<8&&(DsvpvDistance/DsvpvDisErr)>4.09&&Dchi2cl>0.120)||(Dpt>8&&Dpt<10&&(DsvpvDistance/DsvpvDisErr)>4.02&&Dchi2cl>0.098)||(Dpt>10&&Dpt<12.5&&(DsvpvDistance/DsvpvDisErr)>3.66&&Dchi2cl>0.099)||(Dpt>12.5&&Dpt<15&&(DsvpvDistance/DsvpvDisErr)>3.70&&Dchi2cl>0.084)||(Dpt>15&&Dpt<20&&(DsvpvDistance/DsvpvDisErr)>3.53&&Dchi2cl>0.047)||(Dpt>20&&Dpt<25&&(DsvpvDistance/DsvpvDisErr)>3.25&&Dchi2cl>0.054)||(Dpt>25&&(DsvpvDistance/DsvpvDisErr)>2.97&&Dchi2cl>0.050)))"
+CUTGENPPMB="abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter&&(GisSignal==1||GisSignal==2)&&Gy>-1&&Gy<1"
 TRGPPMB="(HLT_L1MinimumBiasHF1OR_part1_v1||HLT_L1MinimumBiasHF1OR_part2_v1||HLT_L1MinimumBiasHF1OR_part3_v1||HLT_L1MinimumBiasHF1OR_part4_v1||HLT_L1MinimumBiasHF1OR_part5_v1||HLT_L1MinimumBiasHF1OR_part6_v1||HLT_L1MinimumBiasHF1OR_part7_v1||HLT_L1MinimumBiasHF1OR_part8_v1||HLT_L1MinimumBiasHF1OR_part9_v1||HLT_L1MinimumBiasHF1OR_part10_v1||HLT_L1MinimumBiasHF1OR_part11_v1||HLT_L1MinimumBiasHF1OR_part12_v1||HLT_L1MinimumBiasHF1OR_part13_v1||HLT_L1MinimumBiasHF1OR_part14_v1||HLT_L1MinimumBiasHF1OR_part15_v1||HLT_L1MinimumBiasHF1OR_part16_v1||HLT_L1MinimumBiasHF1OR_part17_v1||HLT_L1MinimumBiasHF1OR_part18_v1||HLT_L1MinimumBiasHF1OR_part19_v1)"
 LABELPPMB="PPMB"
 
@@ -178,6 +226,22 @@ then
     rm fitDtoyMC.exe
 fi
 
+if [ $DOANALYSISPPMB_SAVEHISTPICKEVT -eq 1 ]
+then
+    g++ fitDsavehistpickevt.C $(root-config --cflags --libs) -g -o fitDsavehistpickevt.exe 
+    ./fitDsavehistpickevt.exe "$INPUTMCPP" "$CUTPPMB" "$CUTGENPPMB" "$LABELPPMB" "$OUTPUTFILEEFFPPMB"
+    rm fitDsavehistpickevt.exe
+fi 
+
+if [ $DOANALYSISPPMB_TOYMCPICKEVT -eq 1 ]
+then
+    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
+    ./fitDtoyMCpickevt.exe "$INPUTMCPPMB" "$OUTPUTFILEEFFPPMB" "$OUTPUTFILETOYMCPICKEVTPPMB" "$LABELPPMB"
+    rm fitDtoyMCpickevt.exe
+fi 
+
+rm parameters.h
+
 ## ANALYSIS PbPb MB
 
 cp config/parametersLowpt.h parameters.h
@@ -185,8 +249,11 @@ cp config/parametersLowpt.h parameters.h
 OUTPUTFILEFITMASSPbPbMB="ROOTfiles${FILEEND}/hMassFitPbPbMB"
 OUTPUTFILESTATPbPbMB="ROOTfiles${FILEEND}/hFitParPbPbMB"
 OUTPUTFILETOYMCPbPbMB="ROOTfiles${FILEEND}/hToyMCPbPbMB"
+OUTPUTFILEEFFPbPbMB="ROOTfiles${FILEEND}/hEffPbPbMB"
+OUTPUTFILETOYMCPICKEVTPbPbMB="ROOTfiles${FILEEND}/hToyMCpickevtPbPbMB"
 
 CUTPbPbMB="pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3&&abs(PVz)<15&&Dy>-1.&&Dy<1.&&Dtrk1highPurity&&Dtrk2highPurity&&Dtrk1Pt>1.0&&Dtrk2Pt>1.0&&Dtrk1PtErr/Dtrk1Pt<0.3&&Dtrk2PtErr/Dtrk2Pt<0.3&&abs(Dtrk1Eta)<1.5&&abs(Dtrk2Eta)<1.5&&((DlxyBS/DlxyBSErr)>2.5&&Dalpha<0.12&&((Dpt>1&&Dpt<2&&(DsvpvDistance/DsvpvDisErr)>6.0&&Dchi2cl>0.25)||(Dpt>2&&Dpt<3&&(DsvpvDistance/DsvpvDisErr)>4.62&&Dchi2cl>0.161)||(Dpt>3&&Dpt<4&&(DsvpvDistance/DsvpvDisErr)>4.80&&Dchi2cl>0.197)||(Dpt>4&&Dpt<5&&(DsvpvDistance/DsvpvDisErr)>4.63&&Dchi2cl>0.141)||(Dpt>5&&Dpt<6&&(DsvpvDistance/DsvpvDisErr)>4.53&&Dchi2cl>0.172)||(Dpt>6&&Dpt<8&&(DsvpvDistance/DsvpvDisErr)>4.09&&Dchi2cl>0.120)||(Dpt>8&&Dpt<10&&(DsvpvDistance/DsvpvDisErr)>4.02&&Dchi2cl>0.098)||(Dpt>10&&Dpt<12.5&&(DsvpvDistance/DsvpvDisErr)>3.66&&Dchi2cl>0.099)||(Dpt>12.5&&Dpt<15&&(DsvpvDistance/DsvpvDisErr)>3.70&&Dchi2cl>0.084)||(Dpt>15&&Dpt<20&&(DsvpvDistance/DsvpvDisErr)>3.53&&Dchi2cl>0.047)||(Dpt>20&&Dpt<25&&(DsvpvDistance/DsvpvDisErr)>3.25&&Dchi2cl>0.054)||(Dpt>25&&(DsvpvDistance/DsvpvDisErr)>2.97&&Dchi2cl>0.050)))"
+CUTGENPbPbMB="abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3&&(GisSignal==1||GisSignal==2)&&Gy>-1&&Gy<1"
 TRGPbPbMB="1"
 LABELPbPbMB="PbPbMB"
 
@@ -210,6 +277,22 @@ then
     ./fitDtoyMC.exe "$OUTPUTFILEFITMASSPbPbMB" "$OUTPUTFILETOYMCPbPbMB" "$LABELPbPbMB" "$CENTPbPbMIN" "$CENTPbPbMAX"
     rm fitDtoyMC.exe
 fi
+
+if [ $DOANALYSISPbPbMB_SAVEHISTPICKEVT -eq 1 ]
+then
+    g++ fitDsavehistpickevt.C $(root-config --cflags --libs) -g -o fitDsavehistpickevt.exe 
+    ./fitDsavehistpickevt.exe "$INPUTMCPbPb" "$CUTPbPbMB" "$CUTGENPbPbMB" "$LABELPbPbMB" "$OUTPUTFILEEFFPbPbMB" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    rm fitDsavehistpickevt.exe
+fi 
+
+if [ $DOANALYSISPbPbMB_TOYMCPICKEVT -eq 1 ]
+then
+    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
+    ./fitDtoyMCpickevt.exe "$INPUTMCPbPbMB" "$OUTPUTFILEEFFPbPbMB" "$OUTPUTFILETOYMCPICKEVTPbPbMB" "$LABELPbPbMB" "$CENTPbPbMIN" "$CENTPbPbMAX"
+    rm fitDtoyMCpickevt.exe
+fi 
+
+rm parameters.h
 
 ## COMBINE
 
