@@ -96,7 +96,7 @@ void fitDtoyMCpickevt(TString inputMC, TString inputEff, TString output, TString
   hSmear->SetLineColor(kBlack);
   hSmear->SetStats(0);
   
-  TH1D* hSmearTruth = new TH1D("hSmearTruth",";(#truth-#gen-matched)/#sigma(gen-matched);counts",100,-5,5);
+  TH1D* hSmearTruth = new TH1D("hSmearTruth",";(#truth-#gen-matched)/#sigma(fit);counts",100,-5,5);
   setth1d(hSmearTruth);
   hSmearTruth->GetXaxis()->SetNdivisions(-50205);
   hSmearTruth->SetMarkerStyle(20);
@@ -104,6 +104,15 @@ void fitDtoyMCpickevt(TString inputMC, TString inputEff, TString output, TString
   hSmearTruth->SetMarkerColor(kBlack);
   hSmearTruth->SetLineColor(kBlack);
   hSmearTruth->SetStats(0);
+  
+  TH1D* hSmearTruthConst = new TH1D("hSmearTruthConst",";(#truth-#gen-matched)/#sigma(gen-matched);counts",100,-5,5);
+  setth1d(hSmearTruthConst);
+  hSmearTruthConst->GetXaxis()->SetNdivisions(-50205);
+  hSmearTruthConst->SetMarkerStyle(20);
+  hSmearTruthConst->SetMarkerSize(1.3);
+  hSmearTruthConst->SetMarkerColor(kBlack);
+  hSmearTruthConst->SetLineColor(kBlack);
+  hSmearTruthConst->SetStats(0);
   
   TH1D* hGen = new TH1D("hGen",";#gen number variation;counts",100,-5,5);
   setth1d(hGen);
@@ -127,7 +136,8 @@ void fitDtoyMCpickevt(TString inputMC, TString inputEff, TString output, TString
       TH1D* hMCSwappedsmear = new TH1D("hMCSwappedsmear", "",nbinsmasshisto,minhisto,maxhisto);
       
       gRandom->SetSeed(0);
-      Int_t Ngensmear = gRandom->Gaus(Ngen, NgenErr);
+      //Int_t Ngensmear = gRandom->Gaus(Ngen, NgenErr);
+      Int_t Ngensmear = Ngen; // Ngen does not fluctuate
       hGen->Fill((Ngensmear-Ngen)*1.0/NgenErr);
       Int_t ctgen = 0;
       Int_t cttruth = 0;
@@ -192,7 +202,8 @@ void fitDtoyMCpickevt(TString inputMC, TString inputEff, TString output, TString
       Float_t Yield = fMCSignalsmear->Integral(minhisto,maxhisto)/binwidthmass;
       Float_t YieldErr = fMCSignalsmear->Integral(minhisto,maxhisto)/binwidthmass*fMCSignalsmear->GetParError(0)/fMCSignalsmear->GetParameter(0);
       hSmear->Fill((Yield-Nmatched)/YieldErr);
-      hSmearTruth->Fill((cttruth-Nmatched)*1./(NgenErr*1.*nSignal/effGen));
+      hSmearTruth->Fill((cttruth-Nmatched)/YieldErr);
+      hSmearTruthConst->Fill((cttruth-Nmatched)*1./(NgenErr*1.*nSignal/effGen));
       cout<<Nmatched<<endl;
       if(n%Nsmearshow==0) cout<<"\033[0m     "<<Ngensmear*hPtMCEff->GetBinContent(i+1)<<"  "<<hMCSignalsmear->Integral()<<"  "<<Yield<<endl;
       
@@ -221,6 +232,7 @@ void fitDtoyMCpickevt(TString inputMC, TString inputEff, TString output, TString
   outf->cd();
   hSmear->Write();
   hSmearTruth->Write();
+  hSmearTruthConst->Write();
   hGen->Write();
   outf->Write();
   outf->Close();

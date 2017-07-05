@@ -25,9 +25,22 @@ void drawtoyMCpickevt(TString output, TString collsyst, Float_t ptmin, Float_t p
   hSmear->SetLineColor(kBlack);
   hSmear->SetStats(0);
   
+  TH1D* hSmearTruth = (TH1D*)inf->Get("hSmearTruth");
+  hSmearTruth->SetTitle(";(#yield-#gen-matched) / #sigma(fit);count");
+  setth1d(hSmearTruth);
+  hSmearTruth->SetMaximum(hSmearTruth->GetMaximum()*3);
+  hSmearTruth->GetXaxis()->SetNdivisions(-50205);
+  hSmearTruth->SetMarkerStyle(20);
+  hSmearTruth->SetMarkerSize(1.3);
+  hSmearTruth->SetMarkerColor(kBlue);
+  hSmearTruth->SetLineColor(kBlue);
+  hSmearTruth->SetStats(0);
+  
   TCanvas* csmear = new TCanvas("csmear","",600,600);
   csmear->SetLogy();
-  hSmear->Draw("pe");
+  hSmearTruth->Draw("pe");
+  hSmear->Draw("pe same");
+  hSmearTruth->Fit("gaus","q");
   hSmear->Fit("gaus","q");
   TLatex* texGaussMean = new TLatex(0.92,0.86,Form("#mu: %.3f",hSmear->GetFunction("gaus")->GetParameter(1)));
   settex(texGaussMean,0.045,32);

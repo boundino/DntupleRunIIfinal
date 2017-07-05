@@ -91,29 +91,29 @@ then
     rm fitDsavehistpickevt.exe
 fi 
 
-if [ $DOANALYSISPP_TOYMCPICKEVT -eq 1 ]
-then
-    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
+i=0
+while ((i<$nPTBINS))
+do
+    if [ $DOANALYSISPP_TOYMCPICKEVT -eq 1 ]
+    then
+        g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
         ./fitDtoyMCpickevt.exe "$INPUTMCPP" "$OUTPUTFILEEFFPP" "${OUTPUTFILETOYMCPICKEVTPP}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPP" "${PTMIN[i]}" "${PTMAX[i]}" "$NSMEAR" "$NGEN"
-        i=$((i+1))
-    done
-    rm fitDtoyMCpickevt.exe
-fi 
+        rm fitDtoyMCpickevt.exe
+    fi 
 
-if [ $DOANALYSISPP_DRAWTOYMCPICKEVT -eq 1 ]
-then
-    g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
-        ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPP}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPP" "${PTMIN[i]}" "${PTMAX[i]}"
-        i=$((i+1))
-    done
-    rm drawtoyMCpickevt.exe
-fi 
+    if [ $DOANALYSISPP_DRAWTOYMCPICKEVT -eq 1 ]
+    then
+        g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
+        if [ -f "${OUTPUTFILETOYMCPICKEVTPP}_pt_${PTMIN[i]}_${PTMAX[i]}.root" ]
+        then
+            ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPP}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPP" "${PTMIN[i]}" "${PTMAX[i]}"
+        else
+            echo -e "\033[1;31merror:\033[0m ${OUTPUTFILETOYMCPICKEVTPP}_pt_${PTMIN[i]}_${PTMAX[i]}.root does not exist."
+        fi
+        rm drawtoyMCpickevt.exe
+    fi 
+    i=$((i+1))
+done
 
 rm parameters.h
 
@@ -140,29 +140,29 @@ then
     rm fitDsavehistpickevt.exe
 fi 
 
-if [ $DOANALYSISPPMB_TOYMCPICKEVT -eq 1 ]
-then
-    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
+i=0
+while ((i<$nPTBINS))
+do
+    if [ $DOANALYSISPPMB_TOYMCPICKEVT -eq 1 ]
+    then
+        g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
         ./fitDtoyMCpickevt.exe "$INPUTMCPP" "$OUTPUTFILEEFFPPMB" "${OUTPUTFILETOYMCPICKEVTPPMB}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPPMB" "${PTMIN[i]}" "${PTMAX[i]}" "$NSMEAR" "$NGEN" 
-        i=$((i+1))
-    done
-    rm fitDtoyMCpickevt.exe
-fi 
-
-if [ $DOANALYSISPPMB_DRAWTOYMCPICKEVT -eq 1 ]
-then
-    g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
-        ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPPMB}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPPMB" "${PTMIN[i]}" "${PTMAX[i]}"
-        i=$((i+1))
-    done
-    rm drawtoyMCpickevt.exe
-fi 
+        rm fitDtoyMCpickevt.exe
+    fi 
+    
+    if [ $DOANALYSISPPMB_DRAWTOYMCPICKEVT -eq 1 ]
+    then
+        g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
+        if [ -f "${OUTPUTFILETOYMCPICKEVTPPMB}_pt_${PTMIN[i]}_${PTMAX[i]}.root" ]
+        then
+            ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPPMB}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPPMB" "${PTMIN[i]}" "${PTMAX[i]}"
+        else
+            echo -e "\033[1;31merror:\033[0m ${OUTPUTFILETOYMCPICKEVTPPMB}_pt_${PTMIN[i]}_${PTMAX[i]}.root does not exist."
+        fi
+        rm drawtoyMCpickevt.exe
+    fi 
+    i=$((i+1))
+done
 
 rm parameters.h
 
@@ -188,29 +188,29 @@ then
     rm fitDsavehistpickevt.exe
 fi 
 
-if [ $DOANALYSISPbPb_TOYMCPICKEVT -eq 1 ]
-then
-    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
+i=0
+while ((i<$nPTBINS))
+do
+    if [ $DOANALYSISPbPb_TOYMCPICKEVT -eq 1 ]
+    then
+        g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
         ./fitDtoyMCpickevt.exe "$INPUTMCPbPb" "$OUTPUTFILEEFFPbPb" "${OUTPUTFILETOYMCPICKEVTPbPb}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPbPb" "${PTMIN[i]}" "${PTMAX[i]}" "$NSMEAR" "$NGEN" "$CENTPbPbMIN" "$CENTPbPbMAX"
-        i=$((i+1))
-    done
-    rm fitDtoyMCpickevt.exe
-fi 
-
-if [ $DOANALYSISPbPb_DRAWTOYMCPICKEVT -eq 1 ]
-then
-    g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
-        ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPbPb}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPbPb" "${PTMIN[i]}" "${PTMAX[i]}" "$CENTPbPbMIN" "$CENTPbPbMAX"
-        i=$((i+1))
-    done
-    rm drawtoyMCpickevt.exe
-fi 
+        rm fitDtoyMCpickevt.exe
+    fi 
+    
+    if [ $DOANALYSISPbPb_DRAWTOYMCPICKEVT -eq 1 ]
+    then
+        g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
+        if [ -f "${OUTPUTFILETOYMCPICKEVTPbPb}_pt_${PTMIN[i]}_${PTMAX[i]}.root" ]
+        then
+            ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPbPb}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPbPb" "${PTMIN[i]}" "${PTMAX[i]}" "$CENTPbPbMIN" "$CENTPbPbMAX"
+        else
+            echo -e "\033[1;31merror:\033[0m ${OUTPUTFILETOYMCPICKEVTPbPb}_pt_${PTMIN[i]}_${PTMAX[i]}.root does not exist."
+        fi
+        rm drawtoyMCpickevt.exe
+    fi 
+    i=$((i+1))
+done
 
 rm parameters.h
 
@@ -236,29 +236,29 @@ then
     rm fitDsavehistpickevt.exe
 fi 
 
-if [ $DOANALYSISPbPbMB_TOYMCPICKEVT -eq 1 ]
-then
-    g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
+i=0
+while ((i<$nPTBINS))
+do
+    if [ $DOANALYSISPbPbMB_TOYMCPICKEVT -eq 1 ]
+    then
+        g++ fitDtoyMCpickevt.C $(root-config --cflags --libs) -g -o fitDtoyMCpickevt.exe 
         ./fitDtoyMCpickevt.exe "$INPUTMCPbPb" "$OUTPUTFILEEFFPbPbMB" "${OUTPUTFILETOYMCPICKEVTPbPbMB}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPbPbMB" "${PTMIN[i]}" "${PTMAX[i]}" "$NSMEAR" "$NGEN" "$CENTPbPbMIN" "$CENTPbPbMAX"
-        i=$((i+1))
-    done
-    rm fitDtoyMCpickevt.exe
-fi 
-
-if [ $DOANALYSISPbPbMB_DRAWTOYMCPICKEVT -eq 1 ]
-then
-    g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
-    i=0
-    while ((i<$nPTBINS))
-    do
-        ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPbPbMB}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPbPbMB" "${PTMIN[i]}" "${PTMAX[i]}" "$CENTPbPbMIN" "$CENTPbPbMAX"
-        i=$((i+1))
-    done
-    rm drawtoyMCpickevt.exe
-fi 
+        rm fitDtoyMCpickevt.exe
+    fi 
+    
+    if [ $DOANALYSISPbPbMB_DRAWTOYMCPICKEVT -eq 1 ]
+    then
+        g++ drawtoyMCpickevt.C $(root-config --cflags --libs) -g -o drawtoyMCpickevt.exe 
+        if [ -f "${OUTPUTFILETOYMCPICKEVTPbPbMB}_pt_${PTMIN[i]}_${PTMAX[i]}.root" ]
+        then
+            ./drawtoyMCpickevt.exe "${OUTPUTFILETOYMCPICKEVTPbPbMB}_pt_${PTMIN[i]}_${PTMAX[i]}" "$LABELPbPbMB" "${PTMIN[i]}" "${PTMAX[i]}" "$CENTPbPbMIN" "$CENTPbPbMAX"
+        else
+            echo -e "\033[1;31merror:\033[0m ${OUTPUTFILETOYMCPICKEVTPbPbMB}_pt_${PTMIN[i]}_${PTMAX[i]}.root does not exist."
+        fi
+        rm drawtoyMCpickevt.exe
+    fi 
+    i=$((i+1))
+done
 
 rm parameters.h
 
