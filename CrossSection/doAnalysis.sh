@@ -32,7 +32,7 @@ DOANALYSISPbPb_FIT=0
 DOANALYSISPbPb_DRAWFIT=0
 DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
-DOANALYSISPbPb_COMBGJTO=1
+DOANALYSISPbPb_COMBGJTO=0
 
 DOANALYSISPPMB_FONLL=0
 DOANALYSISPPMB_FIT=0
@@ -52,12 +52,12 @@ DOANALYSISPbPb_MCSTUDYCombine=0
 DORAA=0
 DORAAMB=0
 
-DOCombineCrossSectionPP=1
-DOCombineCrossSectionPbPb=1
-DOCombineRAA=0
+DOCombineCrossSectionPP=0
+DOCombineCrossSectionPbPb=0
+DOCombineRAA=1
 
 #
-DOCombineCrossSectionPPnPbPb=1
+DOCombineCrossSectionPPnPbPb=0
 
 #
 
@@ -422,14 +422,15 @@ fi
 
 if [ $DOCombineRAA -eq 1 ]; then      
     g++ CombineRAA.C $(root-config --cflags --libs) -g -o CombineRAA.exe 
-    ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 0 0 0 
+    ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 0 0 0 0
     if [ $CENTPbPbMAX -eq 100 ];then
-        ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 1 1 0 
+        ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 1 1 0 0 
     fi
     if [ $CENTPbPbMAX -eq 10 ];then
-        ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 1 0 0 
+        ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 1 0 0 0
+        ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 0 0 0 1
     fi
-    ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 0 0 1
+    ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 0 0 1 0
 
     #if [ $CENTPbPbMAX -eq 10 ];then
     #    ./CombineRAA.exe "$OUTPUTFILERAAMB" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX" 0 2
