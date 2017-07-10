@@ -16,7 +16,7 @@ void fitDtoyMCpickevt(TString inputMC, TString inputEff, TString output, TString
 
   collisionsystem = collsyst;
   Bool_t isPbPb = (collsyst=="PP" || collsyst=="PPMB")?false:true;
-  Int_t Nsmearshow = Nsmear/10;
+  Int_t Nsmearshow = Nsmear/4;
   Float_t NgenErr = TMath::Sqrt(Ngen);
 
   TFile* infEff = new TFile(Form("%s.root",inputEff.Data()));

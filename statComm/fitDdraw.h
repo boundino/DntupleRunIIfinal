@@ -194,7 +194,7 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   tex->SetTextSize(0.04);
   tex->SetLineWidth(2);
   TString texper="%";
-  TLatex* texyield = new TLatex(0.22,0.72,Form("N = %.0f #pm %.0f",yield,yieldErr));
+  TLatex* texyield = new TLatex(0.22,0.72,Form("N = %.0f (%.0f) #pm %.0f",yield,hMCSignal->Integral(),yieldErr));
   texyield->SetNDC();
   texyield->SetTextFont(42);
   texyield->SetTextSize(0.04);
@@ -462,7 +462,7 @@ TF1* fit3gaus(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double
   tex->SetTextSize(0.04);
   tex->SetLineWidth(2);
   TString texper="%";
-  TLatex* texyield = new TLatex(0.22,0.72,Form("N = %.0f #pm %.0f",yield,yieldErr));
+  TLatex* texyield = new TLatex(0.22,0.72,Form("N = %.0f (%.0f) #pm %.0f",yield,hMCSignal->Integral(),yieldErr));
   texyield->SetNDC();
   texyield->SetTextFont(42);
   texyield->SetTextSize(0.04);

@@ -38,9 +38,9 @@ void drawtoyMCpickevt(TString output, TString collsyst, Float_t ptmin, Float_t p
   
   TCanvas* csmear = new TCanvas("csmear","",600,600);
   csmear->SetLogy();
-  hSmearTruth->Draw("pe");
+  //hSmearTruth->Draw("pe");
   hSmear->Draw("pe same");
-  hSmearTruth->Fit("gaus","q");
+  //hSmearTruth->Fit("gaus","q");
   hSmear->Fit("gaus","q");
   TLatex* texGaussMean = new TLatex(0.92,0.86,Form("#mu: %.3f",hSmear->GetFunction("gaus")->GetParameter(1)));
   settex(texGaussMean,0.045,32);
