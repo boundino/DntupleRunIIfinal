@@ -22,27 +22,27 @@ fi
 DOANALYSISPP_FONLL=0
 DOANALYSISPP_TRGCOMBINATION=0
 DOANALYSISPP_FIT=0
-DOANALYSISPP_DRAWFIT=0
+DOANALYSISPP_DRAWFIT=1
 DOANALYSISPP_MCSTUDY=0
 DOANALYSISPP_CROSS=0
 
 DOANALYSISPbPb_FONLL=0
 DOANALYSISPbPb_TRGCOMBINATION=0
 DOANALYSISPbPb_FIT=0
-DOANALYSISPbPb_DRAWFIT=0
+DOANALYSISPbPb_DRAWFIT=1
 DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
 DOANALYSISPbPb_COMBGJTO=0
 
 DOANALYSISPPMB_FONLL=0
 DOANALYSISPPMB_FIT=0
-DOANALYSISPPMB_DRAWFIT=0
+DOANALYSISPPMB_DRAWFIT=1
 DOANALYSISPPMB_MCSTUDY=0
 DOANALYSISPPMB_CROSS=0
 
 DOANALYSISPbPbMB_FONLL=0
 DOANALYSISPbPbMB_FIT=0
-DOANALYSISPbPbMB_DRAWFIT=0
+DOANALYSISPbPbMB_DRAWFIT=1
 DOANALYSISPbPbMB_MCSTUDY=0
 DOANALYSISPbPbMB_CROSS=0
 
@@ -94,10 +94,11 @@ INPUTDATAPbPbMBSKIMMED="/data/wangj/Data2015/Dntuple/PbPb/ntDntuple_PbPb_Minimum
 
 #
 
-PLOTFOLDERS=("plotCrossSection" "plotEff" "plotFONLL" "plotFits" "plotFitsYield" "plotFitsPaper" "plotOthers" "plotRAA" "ROOTfiles${FILEEND}")
+PLOTFOLDERS=("plotCrossSection" "plotEff" "plotFONLL" "plotFits" "plotFitsYield" "plotFitsPaper" "plotOthers" "plotRAA" "ROOTfiles${FILEEND}" "plotPaper")
 for ifolder in ${PLOTFOLDERS[@]}
 do
-    if [ ! -d $ifolder ]; then
+    if [ ! -d $ifolder ]
+    then
         mkdir $ifolder
     fi
 done
@@ -444,3 +445,13 @@ if [ $DOCombineCrossSectionPPnPbPb -eq 1 ]; then
     ./CombineCrossSectionsPPnPbPb.exe "ROOTfiles/CrossSectionFONLLPPMB.root" "ROOTfiles/CrossSectionFONLLPP.root" "ROOTfiles/CrossSectionFONLLPbPbMB.root" "ROOTfiles/CrossSectionFONLLPbPb.root" "ROOTfilesCent10/CrossSectionFONLLPbPbMB.root" "ROOTfilesCent10/CrossSectionFONLLPbPb.root"
     rm CombineCrossSectionsPPnPbPb.exe
 fi
+
+PAPERFILES=("plotFitsPaper/DMassPPMB_4.pdf" "plotFitsPaper/DMassPbPbMB_0_100_4.pdf" "plotFitsPaper/DMassPP_2.pdf" "plotFitsPaper/DMassPbPb_0_100_2_.pdf" "plotCrossSection/CrossSectionComparison_Calculation_BothRatio_PP.pdf" "plotCrossSection/CrossSection_ComparisonPPnPbPb_noRatio_Long.pdf" "plotRAA/canvasRAA_charged_cent_0_10.pdf" "plotRAA/canvasRAA_charged_BnNjpsi_cent_0_100.pdf" "plotRAA/canvasRAA_theoryAll_cent_0_10.pdf" "plotRAA/canvasRAA_theoryAll_cent_0_100.pdf")
+
+for i in ${PAPERFILES[@]}
+{
+    if [ -f $i ]
+    then
+        cp $i plotPaper/
+    fi
+}
