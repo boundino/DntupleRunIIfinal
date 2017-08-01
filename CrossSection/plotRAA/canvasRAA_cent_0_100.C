@@ -1,7 +1,7 @@
 void canvasRAA_cent_0_100()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Mon Jun 12 16:49:38 2017) by ROOT version6.02/13
+//=========  (Fri Jul 28 04:01:56 2017) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -52,35 +52,6 @@ void canvasRAA_cent_0_100()
    line->SetLineStyle(2);
    line->SetLineWidth(2);
    line->Draw();
-   TBox *box = new TBox(1,0.9543382,1.2,1.041388);
-   box->SetFillColor(16);
-   box->SetLineColor(16);
-   box->Draw();
-   TLatex *   tex = new TLatex(0.19,0.936,"27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)");
-tex->SetNDC();
-   tex->SetTextFont(42);
-   tex->SetTextSize(0.038);
-   tex->SetLineWidth(2);
-   tex->Draw();
-      tex = new TLatex(0.22,0.9,"CMS");
-tex->SetNDC();
-   tex->SetTextAlign(13);
-   tex->SetTextSize(0.06);
-   tex->SetLineWidth(2);
-   tex->Draw();
-      tex = new TLatex(0.22,0.85,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
-tex->SetNDC();
-   tex->SetTextAlign(13);
-   tex->SetTextSize(0.06);
-   tex->SetLineWidth(2);
-   tex->Draw();
-      tex = new TLatex(0.95,0.2,"Centrality 0-100%");
-tex->SetNDC();
-   tex->SetTextAlign(32);
-   tex->SetTextFont(42);
-   tex->SetTextSize(0.045);
-   tex->SetLineWidth(2);
-   tex->Draw();
    
    Double_t gNuclearModification_fx3001[5] = {
    22.5,
@@ -251,6 +222,10 @@ tex->SetNDC();
    grae->SetHistogram(Graph_gNuclearModification3002);
    
    grae->Draw("5");
+   TBox *box = new TBox(1,0.9543382,1.2,1.041388);
+   box->SetFillColor(16);
+   box->SetLineColor(16);
+   box->Draw();
    Double_t xAxis1[6] = {20, 25, 30, 40, 60, 100}; 
    
    TH1D *hNuclearModification2 = new TH1D("hNuclearModification2","",5, xAxis1);
@@ -327,8 +302,40 @@ tex->SetNDC();
    hNuclearModification3->GetZaxis()->SetTitleSize(0.035);
    hNuclearModification3->GetZaxis()->SetTitleFont(42);
    hNuclearModification3->Draw("psame");
+   TLatex *   tex = new TLatex(0.19,0.936,"27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)");
+tex->SetNDC();
+   tex->SetTextFont(42);
+   tex->SetTextSize(0.038);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.22,0.9,"CMS");
+tex->SetNDC();
+   tex->SetTextAlign(13);
+   tex->SetTextSize(0.06);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.22,0.86,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+tex->SetNDC();
+   tex->SetTextAlign(13);
+   tex->SetTextSize(0.06);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.95,0.27,"|y| < 1");
+tex->SetNDC();
+   tex->SetTextAlign(32);
+   tex->SetTextFont(42);
+   tex->SetTextSize(0.045);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.955,0.22,"Cent. 0-100%");
+tex->SetNDC();
+   tex->SetTextAlign(32);
+   tex->SetTextFont(42);
+   tex->SetTextSize(0.045);
+   tex->SetLineWidth(2);
+   tex->Draw();
    
-   TLegend *leg = new TLegend(0.5236242,0.7474695,0.942953,0.8457592,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.654,0.8,1.073,0.89,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.03);
    leg->SetLineColor(0);
@@ -336,7 +343,7 @@ tex->SetNDC();
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(0);
-   TLegendEntry *entry=leg->AddEntry("gNuclearModification","D^{0} |y| < 1.0","pf");
+   TLegendEntry *entry=leg->AddEntry("gNuclearModification","R_{AA}","pf");
 
    ci = 924;
    color = new TColor(ci, 0.6, 1, 0.6, " ", 0.7);
@@ -353,13 +360,13 @@ tex->SetNDC();
    entry->SetTextFont(42);
    entry->SetTextSize(0.043);
    leg->Draw();
-      tex = new TLatex(0.23,0.66,"T_{AA} and lumi.");
+      tex = new TLatex(0.23,0.64,"T_{AA} and lumi.");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.23,0.61,"uncertainty");
+      tex = new TLatex(0.23,0.6,"uncertainty");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetTextSize(0.04);

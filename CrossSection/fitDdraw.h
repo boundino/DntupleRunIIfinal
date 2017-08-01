@@ -55,6 +55,9 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   hMCSignal->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
   hMCSignal->Fit(Form("f%d",count),"L m","",minhisto,maxhisto);
 
+  // float fixparam7 = f->GetParameter(0);
+  float fixparam7 = hMCSignal->Integral(0,1000)/(hMCSwapped->Integral(0,1000)+hMCSignal->Integral(0,1000));
+
   f->FixParameter(1,f->GetParameter(1));
   f->FixParameter(2,f->GetParameter(2));
   f->FixParameter(10,f->GetParameter(10));
@@ -68,7 +71,9 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   hMCSwapped->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
   hMCSwapped->Fit(Form("f%d",count),"L m","",minhisto,maxhisto);
 
-  f->FixParameter(7,hMCSignal->Integral(0,1000)/(hMCSwapped->Integral(0,1000)+hMCSignal->Integral(0,1000)));
+  // fixparam7 = fixparam7/(f->GetParameter(0) + fixparam7);
+  
+  f->FixParameter(7,fixparam7);
   f->FixParameter(8,f->GetParameter(8));
   f->ReleaseParameter(3);
   f->ReleaseParameter(4);
@@ -242,6 +247,39 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   texyield->SetTextSize(0.04);
   texyield->SetLineWidth(2);
   texyield->Draw();
+  TLine* lsigregl = new TLine(1.8649-0.025, 0, 1.8649-0.025, background->Eval(1.8649-0.025));
+  lsigregl->SetLineWidth(2);
+  lsigregl->SetLineStyle(2);
+  lsigregl->SetLineColor(kGray+1);
+  lsigregl->Draw();
+  TLine* lsigregh = new TLine(1.8649+0.025, 0, 1.8649+0.025, background->Eval(1.8649+0.025));
+  lsigregh->SetLineWidth(2);
+  lsigregh->SetLineStyle(2);
+  lsigregh->SetLineColor(kGray+1);
+  lsigregh->Draw();
+
+  Float_t Ssig = mass->Integral(1.8649-0.025, 1.8649+0.025)/binwidthmass;
+  Float_t Bsig = background->Integral(1.8649-0.025, 1.8649+0.025)/binwidthmass + massSwap->Integral(1.8649-0.025, 1.8649+0.025)/binwidthmass;
+  Float_t sig = Ssig/TMath::Sqrt(Ssig+Bsig);
+  TLatex* texsig = new TLatex(0.22,0.59,Form("S/#sqrt{S+B} = %.1f",sig));
+  texsig->SetNDC();
+  texsig->SetTextFont(42);
+  texsig->SetTextSize(0.04);
+  texsig->SetLineWidth(2);
+  texsig->Draw();
+  TLatex* texbkg = new TLatex(0.22,0.53,Form("S = %.0f, B = %.0f",Ssig,Bsig));
+  texbkg->SetNDC();
+  texbkg->SetTextFont(42);
+  texbkg->SetTextSize(0.04);
+  texbkg->SetLineWidth(2);
+  texbkg->Draw();
+  TLatex* texswap = new TLatex(0.22,0.47,Form("sgl/(sgl+swap) = %.2f",fixparam7));
+  texswap->SetNDC();
+  texswap->SetTextFont(42);
+  texswap->SetTextSize(0.04);
+  texswap->SetLineWidth(2);
+  texswap->Draw();
+
   histo_copy_nofitfun->Draw("esame");
 
   if(!isPbPb) cyield->SaveAs(Form("plotFitsYield/DMass%s_%d.pdf",collisionsystem.Data(),count));
