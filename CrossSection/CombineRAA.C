@@ -5,6 +5,7 @@ using namespace std;
 #include "BmesonRaa/canvasRAAPbPb_0_100_ThmRAA.C"
 #include "NonpromptJpsi/nonPrompt_276raa_20170201.h"
 #include "AliceRaa/drawAliceD0Raa.h"
+#include "StarRaa/drawStarD0Raa.h"
 #include "TLegendEntry.h"
 #include "TGraphErrors.h"
 #include "systematics.h"
@@ -135,6 +136,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   if(isAlice==1 && centMax==10)
     {
       drawAliceD0Raa();
+      drawStarD0Raa();
     }
 
   /*
@@ -254,7 +256,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   legendSigma->SetTextFont(42);
   legendSigma->SetTextSize(0.030);
   
-  TLegendEntry *ent_Dhighpt;
+  TLegendEntry* ent_Dhighpt;
   if(isHadDupl==1 || isBnNjpsi==1) ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}","pf");
   else ent_Dhighpt = legendSigma->AddEntry(gNuclearModification,"R_{AA}","pf");
   ent_Dhighpt->SetTextFont(42);
