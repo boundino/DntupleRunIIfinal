@@ -146,8 +146,8 @@ TGraphErrors* fillgadscft(TString datfile)
   const int n = 1000;
   Float_t bCx[n],bCy[n],bCye[n],bDummy[n];
   Int_t nbin=0;
-  ifstream getadscft(datfile);
-  if(!getadscft.is_open()) cout<<"Opening the file fails: ADS/CFT DiffusionConstant"<<endl;
+  std::ifstream getadscft(datfile);
+  if(!getadscft.is_open()) std::cout<<"Opening the file fails: ADS/CFT DiffusionConstant"<<std::endl;
   nbin=0;
   while(!getadscft.eof())
     {
@@ -184,8 +184,8 @@ void drawTheoryPP(Bool_t isRatio, TH1D* hSigmaStatMB=0, TH1D* hSigmaStat=0, TGra
   const int n = 1000;
   Float_t ptmin[n],ptmax[n];
   Int_t nbin=0;
-  ifstream getgmvfns_init(Form("%s_%s.dat",suffix.Data(),postfix[0].Data()));
-  if(!getgmvfns_init.is_open()) cout<<"Opening the file fails: "<<Form("%s_%s.dat",suffix.Data(),postfix[0].Data())<<endl;
+  std::ifstream getgmvfns_init(Form("%s_%s.dat",suffix.Data(),postfix[0].Data()));
+  if(!getgmvfns_init.is_open()) std::cout<<"Opening the file fails: "<<Form("%s_%s.dat",suffix.Data(),postfix[0].Data())<<std::endl;
   nbin=0;
   while(!getgmvfns_init.eof())
     {
@@ -203,8 +203,8 @@ void drawTheoryPP(Bool_t isRatio, TH1D* hSigmaStatMB=0, TH1D* hSigmaStat=0, TGra
   Int_t xmin[nbin],xmax[nbin];
   for(int j=0;j<npost;j++)
     {
-      ifstream getgmvfns(Form("%s_%s.dat",suffix.Data(),postfix[j].Data()));
-      if(!getgmvfns.is_open()) cout<<"Opening the file fails: "<<Form("%s_%s.dat",suffix.Data(),postfix[j].Data())<<endl;
+      std::ifstream getgmvfns(Form("%s_%s.dat",suffix.Data(),postfix[j].Data()));
+      if(!getgmvfns.is_open()) std::cout<<"Opening the file fails: "<<Form("%s_%s.dat",suffix.Data(),postfix[j].Data())<<std::endl;
       for(int i=0;i<nbin;i++)
         {
           Float_t temp;
@@ -250,8 +250,8 @@ void drawTheoryPP(Bool_t isRatio, TH1D* hSigmaStatMB=0, TH1D* hSigmaStat=0, TGra
       aGMVFNSD5TeVyeh[i] = ymax[i] - yall[0][i];
       if(verbose)
         {
-          if(i==0) cout<<left<<"  "<<setw(8)<<"pT min"<<setw(8)<<"pT max"<<setw(10)<<"xsec min"<<setw(10)<<"xsec max"<<setw(10)<<"xsec"<<endl;
-          cout<<left<<"  "<<setw(8)<<ptmin[i]<<setw(8)<<ptmax[i]<<setw(10)<<postfix[xmin[i]]<<setw(10)<<postfix[xmax[i]]<<setw(10)<<yall[0][i]<<endl;
+          if(i==0) std::cout<<std::setiosflags(std::ios::left)<<"  "<<std::setw(8)<<"pT min"<<std::setw(8)<<"pT max"<<std::setw(10)<<"xsec min"<<std::setw(10)<<"xsec max"<<std::setw(10)<<"xsec"<<std::endl;
+          std::cout<<std::setiosflags(std::ios::left)<<"  "<<std::setw(8)<<ptmin[i]<<std::setw(8)<<ptmax[i]<<std::setw(10)<<postfix[xmin[i]]<<std::setw(10)<<postfix[xmax[i]]<<std::setw(10)<<yall[0][i]<<std::endl;
         }
       aGMVFNSD5TeVuy[i] = 1;
       aGMVFNSD5TeVuyel[i] = aGMVFNSD5TeVyel[i]/aGMVFNSD5TeVy[i];
@@ -343,6 +343,6 @@ Int_t findbin(Float_t bincenter, Float_t* ptmin, Float_t* ptmax, Int_t nbin)
     {
       if(bincenter>=ptmin[i] && bincenter<ptmax[i]) return i;
     }
-  cout<<"  Error: findbin error."<<endl;
+  std::cout<<"  Error: findbin error."<<std::endl;
   return -1;
 }
