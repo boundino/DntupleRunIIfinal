@@ -1,7 +1,7 @@
 #include "uti.h"
 #include "systematics.h"
 #include "drawTheory.h"
-#include "CombineCrossSections.h"
+#include "PaperDraw.h"
 
 void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString filePbPb0100MB, TString filePbPb0100, TString filePbPb010MB, TString filePbPb010)
 {

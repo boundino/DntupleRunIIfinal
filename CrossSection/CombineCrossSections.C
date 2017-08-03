@@ -1,7 +1,7 @@
 #include "uti.h"
 #include "systematics.h"
 #include "drawTheory.h"
-#include "CombineCrossSections.h"
+#include "PaperDraw.h"
 
 void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.root", TString filename="ROOTfiles/CrossSectionFONLLPP.root", Int_t isPbPb=0, Float_t centmin=0., Float_t centmax=100.)
 {
