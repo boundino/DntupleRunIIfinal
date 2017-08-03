@@ -7,7 +7,7 @@ void drawStarD0Raa()
 {
   const int BIN_NUM = 7;
   Float_t apt[BIN_NUM], aptl[BIN_NUM], apth[BIN_NUM], acentral[BIN_NUM], astat[BIN_NUM], asystl[BIN_NUM], asysth[BIN_NUM], azero[BIN_NUM], aptlnarrow[BIN_NUM], apthnarrow[BIN_NUM];
-  ifstream getdata("StarRaa/StarD0Raa_0_10.dat"); 
+  std::ifstream getdata("StarRaa/StarD0Raa_0_10.dat"); 
   for(int i=0;i<BIN_NUM;i++)
     {
       Float_t tem;
