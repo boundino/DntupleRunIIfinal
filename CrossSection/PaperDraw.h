@@ -1,5 +1,5 @@
-#ifndef _COMBINECROSSSECTIONS_H_
-#define _COMBINECROSSSECTIONS_H_
+#ifndef _PAPERDRAW_H_
+#define _PAPERDRAW_H_
 
 Float_t dxp = 10./12;
 Float_t dypSigma = 7./12;
