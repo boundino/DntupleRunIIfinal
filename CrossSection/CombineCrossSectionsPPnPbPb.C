@@ -64,23 +64,37 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   setthgrstyle(gaeRatioCrossFONLLstat,    1,  20, 1.4, 1,         -1, 2,      -1,        -1,  -1);
   setthgrstyle(gaeRatioCrossFONLLsystMB,  -1, -1, -1,  1,         -1, 2/*3*/, 1,         -1,  0);
   setthgrstyle(gaeRatioCrossFONLLsyst,    -1, -1, -1,  1,         -1, 2/*3*/, 1,         -1,  0);
-
-  scaleNsetCrossSection(hSigmaPPStat, gaeCrossPPSyst, 1, 1, 20);
-  scaleNsetCrossSection(hSigmaPPStatMB, gaeCrossPPSystMB, 1, 1, 20);
-  scaleNsetCrossSection(hSigmaPbPb0100Stat, gaeCrossPbPb0100Syst, 1/10., kRed+2, 21);
-  scaleNsetCrossSection(hSigmaPbPb0100StatMB, gaeCrossPbPb0100SystMB, 1/10., kRed+2, 21);
-  scaleNsetCrossSection(hSigmaPbPb010Stat, gaeCrossPbPb010Syst, 1/100., kAzure+3, 22);
-  scaleNsetCrossSection(hSigmaPbPb010StatMB, gaeCrossPbPb010SystMB, 1/100., kAzure+3, 22);
+  // data
+ scaleNsetCrossSection(hSigmaPPStat,         gaeCrossPPSyst,         1,      1,        20);
+ scaleNsetCrossSection(hSigmaPPStatMB,       gaeCrossPPSystMB,       1,      1,        20);
+ scaleNsetCrossSection(hSigmaPbPb0100Stat,   gaeCrossPbPb0100Syst,   1/10.,  kRed+2,   21);
+ scaleNsetCrossSection(hSigmaPbPb0100StatMB, gaeCrossPbPb0100SystMB, 1/10.,  kRed+2,   21);
+ scaleNsetCrossSection(hSigmaPbPb010Stat,    gaeCrossPbPb010Syst,    1/100., kAzure+3, 22);
+ scaleNsetCrossSection(hSigmaPbPb010StatMB,  gaeCrossPbPb010SystMB,  1/100., kAzure+3, 22);
 
   //
   TString str_hemptySigmaOnlyLong = "#frac{d#sigma_{pp}}{dp_{T}}  or  #frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)";
-  TH2F* hemptySigmaOnlyLong = new TH2F("hemptySigmaOnlyLong",Form(";p_{T} (GeV/c);%s",str_hemptySigmaOnlyLong.Data()),50,0.,110.,10.,1.e-5,1.e12);
-  sethemptystyle(hemptySigmaOnlyLong, 0.86, 1.7861, 0.037452, 0.035, 0.02881, 0.032);
+  TH2F* hemptySigmaOnlyLong = new TH2F("hemptySigmaOnlyLong", Form(";p_{T} (GeV/c);%s",str_hemptySigmaOnlyLong.Data()), 50,0., 110., 10., 1.e-5, 1.e12);
+  sethemptystyle(hemptySigmaOnlyLong, xtitleoffsetpLong, ytitleoffsetpLong, xtitlesizepLong, ytitlesizepLong, xlabelsizepLong, ylabelsizepLong);
   hemptySigmaOnlyLong->GetXaxis()->SetLabelOffset(0.0);
 
   //
   TLatex* texGuOnlyLong = new TLatex(0.685,0.24,"Global uncert.");
   settex(texGuOnlyLong, 0.037);
+
+  //
+  TString str_texLumi = "27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)";
+  TLatex* texLumiOnlyLong = new TLatex(LumixposLong, LumiyposLong, str_texLumi.Data());
+  settex(texLumiOnlyLong, LumisizeLong, 32);
+  //
+  TLatex* texCMSOnlyLong = new TLatex(CMSxposLong, CMSyposLong, str_texCMS.Data());
+  settex(texCMSOnlyLong, CMSsizeLong, 13, 62);
+  //
+  TLatex* texYOnlyLong = new TLatex(YxposLong, YyposLong, str_texY.Data());
+  settex(texYOnlyLong, YsizeLong, 12);
+  //
+  TLatex* texDzeroOnlyLong = new TLatex(DZEROxposLong, DZEROyposLong, str_texDzero.Data());
+  settex(texDzeroOnlyLong, DZEROsizeLong, 33, 62);
 
   //
   Float_t systnormPP = normalizationUncertaintyForPP();
@@ -96,40 +110,16 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   legendSigmaOnlyLong->AddEntry(hSigmaPbPb010StatMB,Form("PbPb Cent. 0-10%s (/100)    + %.1f%s, - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
 
   //
-  TString str_texlumi = "27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)";
-  TLatex* texlumiOnlyLong = new TLatex(0.95,0.976667,str_texlumi.Data());
-  settex(texlumiOnlyLong, 0.03025, 32);
-
-  //
-  TLatex* texcmsOnlyLong = new TLatex(0.19,0.928,"CMS");
-  settex(texcmsOnlyLong, 0.073, 13, 62);
-
-  //
-  TLatex* texYOnlyLong = new TLatex(0.19,0.845,"|y| < 1.0");
-  settex(texYOnlyLong, 0.05, 12);
-
-  //
-  TLatex* texDzeroOnlyLong = new TLatex(0.94,0.95,"#frac{D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}}{#scale[0.9]{2}}");
-  settex(texDzeroOnlyLong, 0.073, 33, 62);
-
-  //
-  TLine* l = new TLine(2.2,1,110,1);//10,1,105,1
-  l->SetLineWidth(1);
-  l->SetLineStyle(2);
-
   TCanvas* cSigmaOnlyLong = new TCanvas("cSigmaOnlyLong","",750,900);
   cSigmaOnlyLong->SetFrameBorderMode(0);
-  cSigmaOnlyLong->SetFrameBorderMode(0);
-  cSigmaOnlyLong->Range(-1.989924,-0.2917772,25.49622,2.212202);
   cSigmaOnlyLong->SetFillColor(0);
   cSigmaOnlyLong->SetBorderMode(0);
   cSigmaOnlyLong->SetBorderSize(2);
-  cSigmaOnlyLong->SetLeftMargin(0.15);
-  cSigmaOnlyLong->SetRightMargin(0.03);
-  cSigmaOnlyLong->SetTopMargin(0.040833);
-  cSigmaOnlyLong->SetBottomMargin(0.0825);
-  cSigmaOnlyLong->SetFrameBorderMode(0);
-  cSigmaOnlyLong->SetFrameBorderMode(0);
+
+  cSigmaOnlyLong->SetLeftMargin(leftmarginp);
+  cSigmaOnlyLong->SetRightMargin(rightmarginp);
+  cSigmaOnlyLong->SetTopMargin(topmarginpLong);
+  cSigmaOnlyLong->SetBottomMargin(bottommarginpLong);
   cSigmaOnlyLong->SetLogx();
   cSigmaOnlyLong->SetLogy();
   cSigmaOnlyLong->cd();
@@ -151,8 +141,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   texYOnlyLong->Draw();
   texGuOnlyLong->Draw();
   legendSigmaOnlyLong->Draw("same");
-  texlumiOnlyLong->Draw();
-  texcmsOnlyLong->Draw();
+  texLumiOnlyLong->Draw();
+  texCMSOnlyLong->Draw();
   texDzeroOnlyLong->Draw();
 
   cSigmaOnlyLong->SaveAs("plotCrossSection/CrossSection_ComparisonPPnPbPb_noRatio_Long.pdf");

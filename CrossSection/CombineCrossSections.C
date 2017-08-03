@@ -43,92 +43,73 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
   setthgrstyle(gaeRatioCrossFONLLstatMB,  1,  20, 1.4, 1,         -1, 2,      -1,        -1,  -1);
   setthgrstyle(gaeRatioCrossFONLLstat,    1,  20, 1.4, 1,         -1, 2,      -1,        -1,  -1);
   setthgrstyle(gaeRatioCrossFONLLsystMB,  -1, -1, -1,  1,         -1, 2/*3*/, 1,         -1,  0);
-  setthgrstyle(gaeRatioCrossFONLLsyst,    -1, -1, -1,  1,         -1, 2/*3*/, 1,         -1,  0);
-  
+  setthgrstyle(gaeRatioCrossFONLLsyst,    -1, -1, -1,  1,         -1, 2/*3*/, 1,         -1,  0);  
   
   //
   TString str_hemptySigma = (isPbPb==1)?"#frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)":"#frac{d#sigma_{pp}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)";  
-  //
   Float_t xminSigma = 0, xmaxSigma = 110., yminSigma = 0.11, ymaxSigma = 1.e13;
   TH2F* hemptySigmaBor = new TH2F("hemptySigmaBor", Form(";;%s", str_hemptySigma.Data()), 50, xminSigma, xmaxSigma, 10, yminSigma, ymaxSigma);
-  sethemptystyle(hemptySigmaBor, -1, 1.25, -1, 0.05, -1, 0.04571);
+  sethemptystyle(hemptySigmaBor, -1, ytitleoffsetpSigma, -1, ytitlesizepSigma, -1, ylabelsizepSigma);
   hemptySigmaBor->GetXaxis()->SetTickLength(0.03);
-
-  //
-  Float_t xminRatio = xminSigma, xmaxRatio = xmaxSigma, yminRatio = 0, yminRatioBor = -0.2, ymaxRatio = 2.7;  
-  TH2F* hemptyRatioBor = new TH2F("hemptyRatioBor", ";p_{T} (GeV/c);#frac{Data}{FONLL}", 50, xminRatio, xmaxRatio, 10, yminRatioBor, ymaxRatio);
-  sethemptystyle(hemptyRatioBor, -1, 0.36367, -1, 0.1825, -1, 0.15238);
+  Float_t xminRatio = xminSigma, xmaxRatio = xmaxSigma, yminRatio = 0, yminRatioBor = -0.3, ymaxRatio = 2.7, ymaxRatioBor = 2.7;  
+  TH2F* hemptyRatioBor = new TH2F("hemptyRatioBor", ";p_{T} (GeV/c);#frac{Data}{FONLL}", 50, xminRatio, xmaxRatio, 10, yminRatioBor, ymaxRatioBor);
+  sethemptystyle(hemptyRatioBor, -1, ytitleoffsetpFOBor, -1, ytitlesizepFOBor, -1, ylabelsizepFOBor);
   hemptyRatioBor->GetYaxis()->SetLabelOffset(0.012);
   hemptyRatioBor->GetXaxis()->SetTickLength(0.10);
   TH2F* hemptyRatioBorGM = new TH2F("hemptyRatioBorGM", ";p_{T} (GeV/c);#frac{Data}{GM-VFNS}", 50, xminRatio, xmaxRatio, 10, yminRatio, ymaxRatio);
-  sethemptystyle(hemptyRatioBorGM, 1.0, 0.5455, 0.13, 0.12, 0.1, 0.10159);
+  sethemptystyle(hemptyRatioBorGM, xtitleoffsetpGMBor, ytitleoffsetpGMBor, xtitlesizepGMBor, ytitlesizepGMBor, xlabelsizepGMBor, ylabelsizepGMBor);
   hemptyRatioBorGM->GetYaxis()->SetLabelOffset(0.015);
   hemptyRatioBorGM->GetXaxis()->SetTickLength(0.07);
 
+  //  
+  TString str_texLumi = isPbPb?"530 #mub^{-1} (5.02 TeV PbPb)":"27.4 pb^{-1} (5.02 TeV pp)";
+  TLatex* texLumi = new TLatex(LumixposBor, LumiyposBor, str_texLumi.Data());
+  settex(texLumi, LumisizeBor, 32);
   //
-  TLatex* texCentBor = new TLatex(0.23,0.07,Form("Centrality %.0f - %.0f%s",centmin,centmax,texper.Data()));
-  settex(texCentBor, 0.055);
-
-  TLatex* texYBor = new TLatex(0.19,0.73427,"|y| < 1.0");
-  settex(texYBor, 0.07328);
+  TLatex* texCMSBor = new TLatex(CMSxposBor, CMSyposBor, str_texCMS.Data());
+  settex(texCMSBor, CMSsizeBor, 13, 62);
+  //
+  TLatex* texYBor = new TLatex(YxposBor, YyposBor, str_texY.Data());
+  settex(texYBor, YsizeBor, 12);
+  //
+  TLatex* texDzeroBor = new TLatex(DZEROxposBor, DZEROyposBor, str_texDzero.Data());
+  settex(texDzeroBor, DZEROsizeBor, 33, 62);
 
   //
-  Float_t systnormhigh = isPbPb?normalizationUncertaintyForPbPb(centmin,centmax):normalizationUncertaintyForPP();
-  Float_t systnormlow = isPbPb?normalizationUncertaintyForPbPb(centmin,centmax,false):0;
-
-  TString str_texSystnorm = isPbPb?Form("Global uncert. + %.1f%s - %.1f%s",systnormhigh,texper.Data(),systnormlow,texper.Data()):Form("Global uncert. %.1f%s",systnormhigh,texper.Data());
-  TLatex* texSystnormBor = new TLatex(0.23, 0.13, str_texSystnorm.Data());
-  settex(texSystnormBor, 0.055);
-
   TString str_legendSigma = legPbPb;
   TLegend* legendSigmaBor = new TLegend(0.22,0.18,0.55,0.39,"");
   setleg(legendSigmaBor, 0.055);
   legendSigmaBor->AddEntry(hSigmaStatMB, str_legendSigma.Data(), "pf");
   legendSigmaBor->AddEntry(gaeDzeroReferenceMB,"FONLL","f");
 
-  //  
-  TString str_texlumi = isPbPb?"530 #mub^{-1} (5.02 TeV PbPb)":"27.4 pb^{-1} (5.02 TeV pp)";
-  TLatex* texlumi = new TLatex(0.95,0.96,str_texlumi.Data());
-  settex(texlumi, 0.045, 32);
+  Float_t systnormhigh = isPbPb?normalizationUncertaintyForPbPb(centmin,centmax):normalizationUncertaintyForPP();
+  Float_t systnormlow = isPbPb?normalizationUncertaintyForPbPb(centmin,centmax,false):0;
+  TString str_texSystnorm = isPbPb?Form("Global uncert. + %.1f%s - %.1f%s",systnormhigh,texper.Data(),systnormlow,texper.Data()):Form("Global uncert. %.1f%s",systnormhigh,texper.Data());
+  TLatex* texSystnormBor = new TLatex(0.23, 0.13, str_texSystnorm.Data());
+  settex(texSystnormBor, 0.055);
+
+  TLatex* texCentBor = new TLatex(0.23,0.07,Form("Centrality %.0f - %.0f%s",centmin,centmax,texper.Data()));
+  settex(texCentBor, 0.055);
 
   //
-  TLatex* texcmsBor = new TLatex(0.19,0.87656,"CMS");
-  settex(texcmsBor, 0.107, 13, 62);
-
-  //
-  // TString str_texDzero = "#frac{#scale[0.8]{1}}{#scale[0.8]{2}} (D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}})";
-  TString str_texDzero = "#frac{D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}}{#scale[0.9]{2}}";
-  TLatex* texDzeroBor = new TLatex(0.939,0.915,str_texDzero.Data());
-  settex(texDzeroBor, 0.107, 33, 62);
-
-  //
-  TLine* l = new TLine(2.2,1,110,1);
+  TLine* l = new TLine(xminRatio, 1, xmaxRatio, 1);
   l->SetLineWidth(1);
   l->SetLineStyle(2);
 
   //
   TCanvas* cSigmaBor = new TCanvas("cSigmaBor","",750,900);
   cSigmaBor->SetFrameBorderMode(0);
-  cSigmaBor->SetFrameBorderMode(0);
-  cSigmaBor->Range(-1.989924,-0.2917772,25.49622,2.212202);
   cSigmaBor->SetFillColor(0);
   cSigmaBor->SetBorderMode(0);
   cSigmaBor->SetBorderSize(2);
-  cSigmaBor->SetLeftMargin(0.15);
-  cSigmaBor->SetRightMargin(0.03);
-  cSigmaBor->SetTopMargin(0.07);
-  cSigmaBor->SetBottomMargin(0.15);
-  cSigmaBor->SetFrameBorderMode(0);
-  cSigmaBor->SetFrameBorderMode(0);
-  cSigmaBor->SetLogx();
   cSigmaBor->cd();
-  TPad* pSigmaBor = new TPad("pSigmaBor","",0,0.416666666667,1,1);
+  TPad* pSigmaBor = new TPad("pSigmaBor", "", 0, ypadh, 1, 1);
   pSigmaBor->SetFillColor(0);
   pSigmaBor->SetBorderMode(0);
   pSigmaBor->SetBorderSize(2);
-  pSigmaBor->SetLeftMargin(0.15);
-  pSigmaBor->SetRightMargin(0.03);
-  pSigmaBor->SetTopMargin(0.07);
+  pSigmaBor->SetLeftMargin(leftmarginp);
+  pSigmaBor->SetRightMargin(rightmarginp);
+  pSigmaBor->SetTopMargin(topmarginpSigma);
   pSigmaBor->SetBottomMargin(0);
   pSigmaBor->SetLogy();
   pSigmaBor->SetLogx();
@@ -148,14 +129,14 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
   texSystnormBor->Draw();
   legendSigmaBor->AddEntry(gGMVFNSD5TeV,"GM-VFNS","f");
   legendSigmaBor->Draw("same");
-  texlumi->Draw();
-  texcmsBor->Draw();
+  texLumi->Draw();
+  texCMSBor->Draw();
   texDzeroBor->Draw();
 
   cSigmaBor->cd();
-  TPad* pRatioFOBor = new TPad("pRatioFOBor","",0,0.25,1,0.416666666667);
-  pRatioFOBor->SetLeftMargin(0.15);
-  pRatioFOBor->SetRightMargin(0.03);
+  TPad* pRatioFOBor = new TPad("pRatioFOBor", "", 0, ypadl, 1, ypadh);
+  pRatioFOBor->SetLeftMargin(leftmarginp);
+  pRatioFOBor->SetRightMargin(rightmarginp);
   pRatioFOBor->SetTopMargin(0);
   pRatioFOBor->SetBottomMargin(0);
   pRatioFOBor->SetLogx();
@@ -172,11 +153,11 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
   l->Draw("same");  
 
   cSigmaBor->cd();
-  TPad* pRatioGMBor = new TPad("pRatioGMBor","",0,0,1,0.25);
-  pRatioGMBor->SetLeftMargin(0.15);
-  pRatioGMBor->SetRightMargin(0.03);
+  TPad* pRatioGMBor = new TPad("pRatioGMBor", "", 0, 0, 1, ypadl);
+  pRatioGMBor->SetLeftMargin(leftmarginp);
+  pRatioGMBor->SetRightMargin(rightmarginp);
   pRatioGMBor->SetTopMargin(0);
-  pRatioGMBor->SetBottomMargin(0.33);
+  pRatioGMBor->SetBottomMargin(bottommarginpGMBor);
   pRatioGMBor->SetLogx();
   pRatioGMBor->Draw();
   pRatioGMBor->cd();
