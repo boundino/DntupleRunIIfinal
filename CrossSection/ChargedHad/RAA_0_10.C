@@ -11,32 +11,12 @@ void RAA_0_10()
 {
   //=========Macro generated from canvas: RAA/RAA
   //=========  (Sat Oct 22 16:16:38 2016) by ROOT version6.02/10
-  /*
-    TCanvas *RAA = new TCanvas("RAA", "RAA",1,1,800,676);
-    gStyle->SetOptFit(1);
-    gStyle->SetOptStat(0);
-    gStyle->SetOptTitle(0);
-    RAA->Range(-0.6654505,-0.24,2.738206,1.76);
-    RAA->SetFillColor(0);
-    RAA->SetBorderMode(0);
-    RAA->SetBorderSize(2);
-    RAA->SetLogx();
-    RAA->SetTickx(1);
-    RAA->SetTicky(1);
-    RAA->SetLeftMargin(0.15);
-    RAA->SetRightMargin(0.04);
-    RAA->SetTopMargin(0.08);
-    RAA->SetBottomMargin(0.12);
-    RAA->SetFrameFillStyle(0);
-    RAA->SetFrameBorderMode(0);
-    RAA->SetFrameFillStyle(0);
-    RAA->SetFrameBorderMode(0);
-  */
+
   Int_t ci = TColor::GetColor("#ffcc00");
 
   gTrackPt_leg = new TGraphAsymmErrors(1);
   gTrackPt_leg->SetMarkerStyle(20);
-  gTrackPt_leg->SetMarkerSize(0.8);
+  gTrackPt_leg->SetMarkerSize(1.0); // 0.8
   gTrackPt_leg->SetMarkerColor(kRed);
   gTrackPt_leg->SetLineColor(0);
   gTrackPt_leg->SetFillColor(ci);
@@ -129,49 +109,8 @@ void RAA_0_10()
   RAA_0_10652->SetLineWidth(2);
   RAA_0_10652->SetLineColor(kRed);
   RAA_0_10652->SetMarkerStyle(20);
-  RAA_0_10652->SetMarkerSize(0.8);
+  RAA_0_10652->SetMarkerSize(1.0); // 0.8
   RAA_0_10652->SetMarkerColor(kRed);
-
-  /*
-    RAA_0_10652->SetMinimum(0);
-    RAA_0_10652->SetMaximum(1.6);
-    RAA_0_10652->SetEntries(4784.022);
-    RAA_0_10652->SetDirectory(0);
-    RAA_0_10652->SetLineWidth(2);
-    RAA_0_10652->SetMarkerStyle(20);
-    RAA_0_10652->SetMarkerSize(1.3);
-    RAA_0_10652->GetXaxis()->SetTitle("p_{T} (GeV)");
-    RAA_0_10652->GetXaxis()->SetRange(3,37);
-    RAA_0_10652->GetXaxis()->CenterTitle(true);
-    RAA_0_10652->GetXaxis()->SetLabelFont(42);
-    RAA_0_10652->GetXaxis()->SetLabelOffset(-0.005);
-    RAA_0_10652->GetXaxis()->SetTitleSize(0.05);
-    RAA_0_10652->GetXaxis()->SetTitleFont(42);
-    RAA_0_10652->GetYaxis()->SetTitle("R_{AA}");
-    RAA_0_10652->GetYaxis()->CenterTitle(true);
-    RAA_0_10652->GetYaxis()->SetNdivisions(508);
-    RAA_0_10652->GetYaxis()->SetLabelFont(42);
-    RAA_0_10652->GetYaxis()->SetTitleOffset(1.6);
-    RAA_0_10652->GetYaxis()->SetTitleFont(42);
-    RAA_0_10652->GetZaxis()->SetLabelFont(42);
-    RAA_0_10652->GetZaxis()->SetLabelSize(0.05);
-    RAA_0_10652->GetZaxis()->SetTitleSize(0.05);
-    RAA_0_10652->GetZaxis()->SetTitleFont(42);
-    RAA_0_10652->Draw("same");
-  */
-
-  /*
-    TLatex *   tex = new TLatex(1.8,1.03,"T_{AA} and lumi. uncertainty");
-    tex->SetTextFont(42);
-    tex->SetTextSize(0.04);
-    tex->SetLineWidth(2);
-    tex->Draw();
-    tex = new TLatex(1.8,0.93,"|#eta|<1");
-    tex->SetTextFont(42);
-    tex->SetTextSize(0.04);
-    tex->SetLineWidth(2);
-    tex->Draw();
-  */
 
   TBox *box = new TBox(0.7,0.2877726,0.8,0.3366802);
   ci = TColor::GetColor("#ffcc00");

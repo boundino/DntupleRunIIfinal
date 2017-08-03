@@ -37,7 +37,7 @@ void RAA_0_100()
 
   gTrackPt_leg = new TGraphAsymmErrors(1);
   gTrackPt_leg->SetMarkerStyle(20);
-  gTrackPt_leg->SetMarkerSize(0.8);
+  gTrackPt_leg->SetMarkerSize(1.0); // 0.8
   gTrackPt_leg->SetMarkerColor(kRed);
   gTrackPt_leg->SetLineColor(0);
   gTrackPt_leg->SetFillColor(ci);
@@ -132,7 +132,7 @@ void RAA_0_100()
   RAA_0_100584__1__1__1->SetLineWidth(2);
   RAA_0_100584__1__1__1->SetLineColor(kRed);
   RAA_0_100584__1__1__1->SetMarkerStyle(20);
-  RAA_0_100584__1__1__1->SetMarkerSize(0.8);
+  RAA_0_100584__1__1__1->SetMarkerSize(1.0); // 0.8
   RAA_0_100584__1__1__1->SetMarkerColor(kRed);
 
   /*
