@@ -69,18 +69,14 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
  scaleNsetCrossSection(hSigmaPPStatMB,       gaeCrossPPSystMB,       1,      1,        20);
  scaleNsetCrossSection(hSigmaPbPb0100Stat,   gaeCrossPbPb0100Syst,   1/10.,  kRed+2,   21);
  scaleNsetCrossSection(hSigmaPbPb0100StatMB, gaeCrossPbPb0100SystMB, 1/10.,  kRed+2,   21);
- scaleNsetCrossSection(hSigmaPbPb010Stat,    gaeCrossPbPb010Syst,    1/100., kAzure+3, 22);
- scaleNsetCrossSection(hSigmaPbPb010StatMB,  gaeCrossPbPb010SystMB,  1/100., kAzure+3, 22);
+ scaleNsetCrossSection(hSigmaPbPb010Stat,    gaeCrossPbPb010Syst,    1/100., kAzure+3, 33);
+ scaleNsetCrossSection(hSigmaPbPb010StatMB,  gaeCrossPbPb010SystMB,  1/100., kAzure+3, 33);
 
   //
   TString str_hemptySigmaOnlyLong = "#frac{d#sigma_{pp}}{dp_{T}}  or  #frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)";
-  TH2F* hemptySigmaOnlyLong = new TH2F("hemptySigmaOnlyLong", Form(";p_{T} (GeV/c);%s",str_hemptySigmaOnlyLong.Data()), 50,0., 110., 10., 1.e-5, 1.e12);
+  TH2F* hemptySigmaOnlyLong = new TH2F("hemptySigmaOnlyLong", Form(";p_{T} (GeV/c);%s",str_hemptySigmaOnlyLong.Data()), 50, 0., 100., 10., 1.e-5, 1.e12);
   sethemptystyle(hemptySigmaOnlyLong, xtitleoffsetpLong, ytitleoffsetpLong, xtitlesizepLong, ytitlesizepLong, xlabelsizepLong, ylabelsizepLong);
-  hemptySigmaOnlyLong->GetXaxis()->SetLabelOffset(0.0);
-
-  //
-  TLatex* texGuOnlyLong = new TLatex(0.685,0.24,"Global uncert.");
-  settex(texGuOnlyLong, 0.037);
+  hemptySigmaOnlyLong->GetXaxis()->SetLabelOffset(-0.015);
 
   //
   TString str_texLumi = "27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)";
@@ -103,11 +99,21 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   Float_t systnormPbPbhigh010 = normalizationUncertaintyForPbPb(0,10);
   Float_t systnormPbPblow010 = normalizationUncertaintyForPbPb(0,10,false);
 
-  TLegend* legendSigmaOnlyLong = new TLegend(0.18,0.12,0.52,0.23,"");
+  TLegend* legendSigmaOnlyLong = new TLegend(0.215, 0.11, 0.56, 0.23, "");
   setleg(legendSigmaOnlyLong, 0.037);
-  legendSigmaOnlyLong->AddEntry(hSigmaPPStatMB,Form("pp                                        %.1f%s",systnormPP,texper.Data()),"pf");
-  legendSigmaOnlyLong->AddEntry(hSigmaPbPb0100StatMB,Form("PbPb Cent. 0-100%s (/10)    + %.1f%s, - %.1f%s",texper.Data(),systnormPbPbhigh0100,texper.Data(),systnormPbPblow0100,texper.Data()),"pf");
-  legendSigmaOnlyLong->AddEntry(hSigmaPbPb010StatMB,Form("PbPb Cent. 0-10%s (/100)    + %.1f%s, - %.1f%s",texper.Data(),systnormPbPbhigh010,texper.Data(),systnormPbPblow010,texper.Data()),"pf");
+  legendSigmaOnlyLong->AddEntry(hSigmaPPStatMB, "pp", "pf");
+  legendSigmaOnlyLong->AddEntry(hSigmaPbPb0100StatMB, "PbPb Cent. 0-100 (/10)", "pf");
+  legendSigmaOnlyLong->AddEntry(hSigmaPbPb010StatMB, "PbPb Cent. 0-10 (/100)", "pf");
+  //
+  Float_t xpostexGuOnlyLong = 0.73, ypostexGuOnlyLong = 0.20, dypostexGuOnlyLong = 0.0401;
+  TLatex* texGuOnlyLong = new TLatex(xpostexGuOnlyLong, ypostexGuOnlyLong+dypostexGuOnlyLong, "Global uncert.");
+  settex(texGuOnlyLong, 0.037);
+  TLatex* texGuOnlyLongPP = new TLatex(xpostexGuOnlyLong, ypostexGuOnlyLong, Form("%.1f%s", systnormPP, texper.Data()));
+  settex(texGuOnlyLongPP, 0.037);
+  TLatex* texGuOnlyLongPbPb0100 = new TLatex(xpostexGuOnlyLong, ypostexGuOnlyLong = (ypostexGuOnlyLong-dypostexGuOnlyLong), Form("+ %.1f%s, - %.1f%s", texper.Data(), systnormPbPbhigh0100, texper.Data(), systnormPbPblow0100,texper.Data()));
+  settex(texGuOnlyLongPbPb0100, 0.037);
+  TLatex* texGuOnlyLongPbPb010 = new TLatex(xpostexGuOnlyLong, ypostexGuOnlyLong = (ypostexGuOnlyLong-dypostexGuOnlyLong), Form("+ %.1f%s, - %.1f%s", texper.Data(), systnormPbPbhigh010, texper.Data(), systnormPbPblow010,texper.Data()));
+  settex(texGuOnlyLongPbPb010, 0.037);
 
   //
   TCanvas* cSigmaOnlyLong = new TCanvas("cSigmaOnlyLong","",750,900);
@@ -140,6 +146,9 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
 
   texYOnlyLong->Draw();
   texGuOnlyLong->Draw();
+  texGuOnlyLongPP->Draw();
+  texGuOnlyLongPbPb0100->Draw();
+  texGuOnlyLongPbPb010->Draw();
   legendSigmaOnlyLong->Draw("same");
   texLumiOnlyLong->Draw();
   texCMSOnlyLong->Draw();

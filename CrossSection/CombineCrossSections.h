@@ -12,34 +12,34 @@ Float_t TEXsizeratio = 0.073/0.107; // dypSigma/dxp?
 
 
 Float_t leftmarginp        = 0.19;						   // 0.15
-Float_t rightmarginp       = 0.02;						   // 0.03
+Float_t rightmarginp       = 0.025;						   // 0.03
 Float_t bottommarginpGMBor = 0.33;						   // 0.33
 Float_t topmarginpSigma    = 0.10;						   // 0.07
 Float_t bottommarginpLong  = bottommarginpGMBor*dypGMBor;                          // 0.0825
 Float_t topmarginpLong     = 1-((1-topmarginpSigma)*dypSigma+dypGMBor+dypFOBor);   //0.040833
 
-Float_t xtitlesizepGMBor   = 0.13;						   // 0.13
-Float_t xlabelsizepGMBor   = 0.1;						   // 0.1
-Float_t xlabelsizepLong    = xlabelsizepGMBor*dypGMBor/dxp;                        // 0.02881
-Float_t xtitlesizepLong    = xtitlesizepGMBor*dypGMBor/dxp;                        // 0.037452
-
-Float_t ytitlesizepSigma   = 0.068;						   // 0.05
+Float_t ytitlesizepSigma   = 0.067;						   // 0.05
 Float_t ytitlesizepFOBor   = ytitlesizepSigma*dypSigma/dypFOBor;                   // 0.1825
 Float_t ytitlesizepGMBor   = ytitlesizepSigma*dypSigma/dypGMBor;                   // 0.12
 Float_t ytitlesizepLong    = ytitlesizepSigma*dypSigma/dxp;                        // 0.035
 
-Float_t ylabelsizepSigma   = 0.060;                                                // 0.04571
+Float_t ylabelsizepSigma   = 0.058;                                                // 0.04571
 Float_t ylabelsizepFOBor   = ylabelsizepSigma*dypSigma/dypFOBor;                   // 0.15238
 Float_t ylabelsizepGMBor   = ylabelsizepSigma*dypSigma/dypGMBor;                   // 0.10159
 Float_t ylabelsizepLong    = ylabelsizepSigma*dypSigma/dxp;                        // 0.032
 
-Float_t xtitleoffsetpGMBor = 0.5455;                                               // 0.5455
-Float_t xtitleoffsetpLong  = xtitleoffsetpGMBor*(dypGMBor/dypLong)/(dypGMBor/dxp); // 0.86
+Float_t xtitlesizepGMBor   = ytitlesizepGMBor;					   // 0.13
+Float_t xlabelsizepGMBor   = 0.13;						   // 0.1
+Float_t xtitlesizepLong    = xtitlesizepGMBor*dypGMBor/dxp;                        // 0.037452
+Float_t xlabelsizepLong    = xlabelsizepGMBor*dypGMBor/dxp;                        // 0.02881
 
 Float_t ytitleoffsetpSigma = 1.17;                                                 // 1.25
 Float_t ytitleoffsetpFOBor = ytitleoffsetpSigma/(dypSigma/dypFOBor);               // 0.36367
 Float_t ytitleoffsetpGMBor = ytitleoffsetpSigma/(dypSigma/dypGMBor);               // 0.5455
 Float_t ytitleoffsetpLong  = ytitleoffsetpSigma/(dypSigma/dxp);                    // 1.7861
+
+Float_t xtitleoffsetpGMBor = 0.85;                                                 // 0.5455
+Float_t xtitleoffsetpLong  = xtitleoffsetpGMBor*(dypGMBor/dypLong)/(dypGMBor/dxp); // 0.86
 
 Float_t CMSxposBor         = 0.23;                                                 // 0.19
 Float_t CMSyposBor         = 0.865;                                                // 0.87656
@@ -99,13 +99,16 @@ void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Do
   hSigmaStat->Scale(fscale);
   if(verbose) std::cout<<std::endl;
 
+  Size_t msize = 1.5;
+  if(pstyle==33) msize*=1.6;
+
   hSigmaStat->SetLineWidth(2);
-  hSigmaStat->SetMarkerSize(1.5); //1
+  hSigmaStat->SetMarkerSize(msize); // 1.5
   hSigmaStat->SetMarkerStyle(pstyle);
   hSigmaStat->SetLineColor(pcolor);
   hSigmaStat->SetMarkerColor(pcolor);
 
-  gaeCrossSyst->SetMarkerSize(1.5); //1
+  gaeCrossSyst->SetMarkerSize(msize); // 1.5
   gaeCrossSyst->SetMarkerStyle(pstyle);
   gaeCrossSyst->SetFillColor(1);
   gaeCrossSyst->SetFillStyle(0);

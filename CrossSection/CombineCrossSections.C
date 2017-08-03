@@ -47,7 +47,7 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
   
   //
   TString str_hemptySigma = (isPbPb==1)?"#frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)":"#frac{d#sigma_{pp}}{dp_{T}}  #left(#frac{pb}{GeV/c}#right)";  
-  Float_t xminSigma = 0, xmaxSigma = 110., yminSigma = 0.11, ymaxSigma = 1.e13;
+  Float_t xminSigma = 0, xmaxSigma = 100., yminSigma = 0.11, ymaxSigma = 1.e13;
   TH2F* hemptySigmaBor = new TH2F("hemptySigmaBor", Form(";;%s", str_hemptySigma.Data()), 50, xminSigma, xmaxSigma, 10, yminSigma, ymaxSigma);
   sethemptystyle(hemptySigmaBor, -1, ytitleoffsetpSigma, -1, ytitlesizepSigma, -1, ylabelsizepSigma);
   hemptySigmaBor->GetXaxis()->SetTickLength(0.03);
@@ -56,8 +56,10 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
   sethemptystyle(hemptyRatioBor, -1, ytitleoffsetpFOBor, -1, ytitlesizepFOBor, -1, ylabelsizepFOBor);
   hemptyRatioBor->GetYaxis()->SetLabelOffset(0.012);
   hemptyRatioBor->GetXaxis()->SetTickLength(0.10);
+  hemptyRatioBor->GetYaxis()->SetTickLength(0.026);
   TH2F* hemptyRatioBorGM = new TH2F("hemptyRatioBorGM", ";p_{T} (GeV/c);#frac{Data}{GM-VFNS}", 50, xminRatio, xmaxRatio, 10, yminRatio, ymaxRatio);
   sethemptystyle(hemptyRatioBorGM, xtitleoffsetpGMBor, ytitleoffsetpGMBor, xtitlesizepGMBor, ytitlesizepGMBor, xlabelsizepGMBor, ylabelsizepGMBor);
+  hemptyRatioBorGM->GetXaxis()->SetLabelOffset(-0.03);
   hemptyRatioBorGM->GetYaxis()->SetLabelOffset(0.015);
   hemptyRatioBorGM->GetXaxis()->SetTickLength(0.07);
 
@@ -77,7 +79,7 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
 
   //
   TString str_legendSigma = legPbPb;
-  TLegend* legendSigmaBor = new TLegend(0.22,0.18,0.55,0.39,"");
+  TLegend* legendSigmaBor = new TLegend(0.25, 0.18, 0.58, 0.39,"");
   setleg(legendSigmaBor, 0.055);
   legendSigmaBor->AddEntry(hSigmaStatMB, str_legendSigma.Data(), "pf");
   legendSigmaBor->AddEntry(gaeDzeroReferenceMB,"FONLL","f");
@@ -85,10 +87,10 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
   Float_t systnormhigh = isPbPb?normalizationUncertaintyForPbPb(centmin,centmax):normalizationUncertaintyForPP();
   Float_t systnormlow = isPbPb?normalizationUncertaintyForPbPb(centmin,centmax,false):0;
   TString str_texSystnorm = isPbPb?Form("Global uncert. + %.1f%s - %.1f%s",systnormhigh,texper.Data(),systnormlow,texper.Data()):Form("Global uncert. %.1f%s",systnormhigh,texper.Data());
-  TLatex* texSystnormBor = new TLatex(0.23, 0.13, str_texSystnorm.Data());
+  TLatex* texSystnormBor = new TLatex(0.26, 0.13, str_texSystnorm.Data());
   settex(texSystnormBor, 0.055);
 
-  TLatex* texCentBor = new TLatex(0.23,0.07,Form("Centrality %.0f - %.0f%s",centmin,centmax,texper.Data()));
+  TLatex* texCentBor = new TLatex(0.26,0.07,Form("Centrality %.0f - %.0f%s",centmin,centmax,texper.Data()));
   settex(texCentBor, 0.055);
 
   //
