@@ -1,4 +1,3 @@
-using namespace std;
 #include "uti.h"
 #include "ChargedHad/RAA_0_10.C"
 #include "ChargedHad/RAA_0_100.C"
@@ -8,6 +7,7 @@ using namespace std;
 #include "StarRaa/drawStarD0Raa.h"
 #include "systematics.h"
 #include "drawTheory.h"
+#include "PaperDraw.h"
 
 void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file="ROOTfilesCent10/outputRAA.root", Float_t centmin=0., Float_t centmax=10., Int_t isHadDupl=1, Int_t isBnNjpsi=1, Int_t isTheoryComparison=2, Int_t isAlice=0, Bool_t verbose=false)
 {
@@ -67,24 +67,9 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
 
   Float_t xaxismin = (isHadDupl==1 || isAlice==1)?0.7:1.0;
   Float_t xaxismax = isHadDupl==1?400:150;
-  TH2F* hemptyRAA = new TH2F("hemptyRAA","",50,xaxismin,xaxismax,10,0,1.75);
-  hemptyRAA->GetXaxis()->CenterTitle();
-  hemptyRAA->GetYaxis()->CenterTitle();
-  hemptyRAA->GetYaxis()->SetTitle("R_{AA}");
-  hemptyRAA->GetXaxis()->SetTitle("p_{T} (GeV/c)");
-  hemptyRAA->GetXaxis()->SetTitleOffset(1.10);//1.15
-  hemptyRAA->GetYaxis()->SetTitleOffset(1.15);
-  hemptyRAA->GetXaxis()->SetTitleSize(0.060);
-  hemptyRAA->GetYaxis()->SetTitleSize(0.060);
-  hemptyRAA->GetXaxis()->SetTitleFont(42);
-  hemptyRAA->GetYaxis()->SetTitleFont(42);
-  hemptyRAA->GetXaxis()->SetLabelFont(42);
-  hemptyRAA->GetYaxis()->SetLabelFont(42);
-  hemptyRAA->GetXaxis()->SetLabelSize(0.045);//0.05
-  hemptyRAA->GetYaxis()->SetLabelSize(0.045);//0.05
+  TH2F* hemptyRAA = new TH2F("hemptyRAA",";p_{T} (GeV/c);R_{AA}", 50, xaxismin, xaxismax, 10, 0, 1.75);
+  sethemptystyle(hemptyRAA, xtitleoffsetpRAA, ytitleoffsetpRAA, xtitlesizepRAA, ytitlesizepRAA, xlabelsizepRAA, ylabelsizepRAA);
   hemptyRAA->GetXaxis()->SetLabelOffset(0.0);
-  hemptyRAA->SetMaximum(2);
-  hemptyRAA->SetMinimum(0.);
   hemptyRAA->Draw();
 
   TLine* line = new TLine(xaxismin, 1, xaxismax, 1);
@@ -127,42 +112,21 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
       drawStarD0Raa();
     }
 
-  TLatex* texlumi = new TLatex(0.19,0.936,"27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)");
-  texlumi->SetNDC();
-  texlumi->SetTextFont(42);
-  texlumi->SetTextSize(0.038);
-  texlumi->SetLineWidth(2);
+  TLatex* texlumi = new TLatex(LumixposRAA, LumiyposRAA, "27.4 pb^{-1} (5.02 TeV pp) + 530 #mub^{-1} (5.02 TeV PbPb)");
+  settex(texlumi, LumisizeRAA, 31);
   texlumi->Draw();
-  TLatex* texcms = new TLatex(0.22,0.90,"CMS");
-  texcms->SetNDC();
-  texcms->SetTextAlign(13);
-  texcms->SetTextFont(62);
-  texcms->SetTextSize(0.06);
-  texcms->SetLineWidth(2);
+  TLatex* texcms = new TLatex(CMSxposRAA, CMSyposRAA, "CMS");
+  settex(texcms, CMSsizeRAA, 13, 62);
   texcms->Draw();
-  TLatex* texDzero = new TLatex(0.22,0.86,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
-  texDzero->SetNDC();
-  texDzero->SetTextAlign(13);
-  texDzero->SetTextFont(62);
-  texDzero->SetTextSize(0.06);
-  texDzero->SetLineWidth(2);
+  TLatex* texDzero = new TLatex(DZEROxposRAA, DZEROyposRAA, "D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  settex(texDzero, DZEROsizeRAA, 13, 62);
   if(!(isBnNjpsi==1||isHadDupl==1)) texDzero->Draw();
   TString texper="%";
-  TLatex * texY = new TLatex(0.95,0.27,Form("|y| < 1",centmin,centmax,texper.Data()));
-  texY->SetTextAlign(32);
-  texY->SetNDC();
-  texY->SetTextColor(1);
-  texY->SetTextFont(42);
-  texY->SetTextSize(0.045);
-  texY->SetLineWidth(2);      
+  TLatex * texY = new TLatex(0.95, 0.27, Form("|y| < 1",centmin,centmax,texper.Data()));
+  settex(texY, 0.045, 32);
   texY->Draw();
-  TLatex * tlatexcent = new TLatex(0.955,0.22,Form("Cent. %.0f-%.0f%s",centmin,centmax,texper.Data()));
-  tlatexcent->SetTextAlign(32);
-  tlatexcent->SetNDC();
-  tlatexcent->SetTextColor(1);
-  tlatexcent->SetTextFont(42);
-  tlatexcent->SetTextSize(0.045);
-  tlatexcent->SetLineWidth(2);      
+  TLatex * tlatexcent = new TLatex(0.955, 0.22, Form("Cent. %.0f-%.0f%s",centmin,centmax,texper.Data()));
+  settex(tlatexcent, 0.045, 32);
   tlatexcent->Draw();
 
   Double_t legx1[]      = {0.654,          0.594,          0.554,          0.574,          0.574};
@@ -185,12 +149,7 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
   if(pindx<0) return;
 
   TLegend* legendRAA = new TLegend(legx1[pindx], legy1[pindx], legx2[pindx], legy2[pindx], "");
-  legendRAA->SetBorderSize(0);
-  legendRAA->SetLineColor(0);
-  legendRAA->SetFillColor(0);
-  legendRAA->SetFillStyle(0);
-  legendRAA->SetTextFont(42);
-  legendRAA->SetTextSize(legtexsize[pindx]);
+  setleg(legendRAA, legtexsize[pindx]);
   
   TString str_ent_Dzero = (isHadDupl==1 || isBnNjpsi==1)?"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}":"R_{AA}";
   legendRAA->AddEntry(gNuclearModification, str_ent_Dzero, "pf");
@@ -273,15 +232,25 @@ void CombineRAA(TString fileMB="ROOTfilesCent10/outputRAAMB.root", TString file=
 
   if(verbose)
     {
-      Int_t nbinsRaaMB = hNuclearModificationMB->GetSize()-2;
-      Int_t nbinsRaa = hNuclearModification->GetSize()-2;
-      for(int i=0;i<nbinsRaaMB;i++) 
+      for(int i=0;i<(hNuclearModificationMB->GetSize()-2);i++) 
         {
-          cout<<hNuclearModificationMB->GetBinCenter(i+1)-hNuclearModificationMB->GetBinWidth(i+1)/2.<<" "<<hNuclearModificationMB->GetBinCenter(i+1)+hNuclearModificationMB->GetBinWidth(i+1)/2.<<" "<<hNuclearModificationMB->GetBinCenter(i+1)<<" "<<hNuclearModificationMB->GetBinContent(i+1)<<" "<<hNuclearModificationMB->GetBinError(i+1)<<" "<<gNuclearModificationMB->GetErrorYhigh(i)<<" "<<gNuclearModificationMB->GetErrorYlow(i)<<endl;
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModificationMB->GetBinCenter(i+1)-hNuclearModificationMB->GetBinWidth(i+1)/2.;
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModificationMB->GetBinCenter(i+1)+hNuclearModificationMB->GetBinWidth(i+1)/2.;
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModificationMB->GetBinCenter(i+1);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModificationMB->GetBinContent(i+1);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModificationMB->GetBinError(i+1);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<gNuclearModificationMB->GetErrorYhigh(i);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<gNuclearModificationMB->GetErrorYlow(i)<<std::endl;
         }
-      for(int i=0;i<nbinsRaa;i++)
+      for(int i=0;i<(hNuclearModification->GetSize()-2);i++)
         {
-          cout<<hNuclearModification->GetBinCenter(i+1)-hNuclearModification->GetBinWidth(i+1)/2.<<" "<<hNuclearModification->GetBinCenter(i+1)+hNuclearModification->GetBinWidth(i+1)/2.<<" "<<hNuclearModification->GetBinCenter(i+1)<<" "<<hNuclearModification->GetBinContent(i+1)<<" "<<hNuclearModification->GetBinError(i+1)<<" "<<gNuclearModification->GetErrorYhigh(i)<<" "<<gNuclearModification->GetErrorYlow(i)<<endl;
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModification->GetBinCenter(i+1)-hNuclearModification->GetBinWidth(i+1)/2.;
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModification->GetBinCenter(i+1)+hNuclearModification->GetBinWidth(i+1)/2.;
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModification->GetBinCenter(i+1);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModification->GetBinContent(i+1);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hNuclearModification->GetBinError(i+1);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<gNuclearModification->GetErrorYhigh(i);
+          std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<gNuclearModification->GetErrorYlow(i)<<std::endl;
         }
     }
 }
@@ -299,6 +268,3 @@ int main(int argc, char *argv[])
       return 1;
     }
 }
-
-
-

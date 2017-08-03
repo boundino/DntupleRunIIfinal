@@ -1,5 +1,5 @@
-using namespace std;
 #include "uti.h"
+#include "PaperDraw.h"
 
 Double_t setparam0=100.;
 Double_t setparam1=1.865;
@@ -22,8 +22,8 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   static int count=0;
   count++;
 
-  TCanvas* c = new TCanvas(Form("c%d",count),"",600,600);
-  TF1* f = new TF1(Form("f%d",count),"[0]*([7]*([9]*Gaus(x,[1],[2]*(1+[11]))/(sqrt(2*3.14159)*[2]*(1+[11]))+(1-[9])*Gaus(x,[1],[10]*(1+[11]))/(sqrt(2*3.14159)*[10]*(1+[11])))+(1-[7])*Gaus(x,[1],[8]*(1+[11]))/(sqrt(2*3.14159)*[8]*(1+[11])))+[3]+[4]*x+[5]*x*x+[6]*x*x*x",1.7, 2.0);
+  TCanvas* c = new TCanvas(Form("c%d",count), "", 600, 600);
+  TF1* f = new TF1(Form("f%d",count),"[0]*([7]*([9]*Gaus(x,[1],[2]*(1+[11]))/(sqrt(2*3.14159)*[2]*(1+[11]))+(1-[9])*Gaus(x,[1],[10]*(1+[11]))/(sqrt(2*3.14159)*[10]*(1+[11])))+(1-[7])*Gaus(x,[1],[8]*(1+[11]))/(sqrt(2*3.14159)*[8]*(1+[11])))+[3]+[4]*x+[5]*x*x+[6]*x*x*x", 1.7, 2.0);
 
   f->SetParLimits(4,-1000,1000);
   f->SetParLimits(10,0.001,0.05);
@@ -55,7 +55,6 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   hMCSignal->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
   hMCSignal->Fit(Form("f%d",count),"L m","",minhisto,maxhisto);
 
-  // float fixparam7 = f->GetParameter(0);
   float fixparam7 = hMCSignal->Integral(0,1000)/(hMCSwapped->Integral(0,1000)+hMCSignal->Integral(0,1000));
 
   f->FixParameter(1,f->GetParameter(1));
@@ -71,8 +70,6 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   hMCSwapped->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
   hMCSwapped->Fit(Form("f%d",count),"L m","",minhisto,maxhisto);
 
-  // fixparam7 = fixparam7/(f->GetParameter(0) + fixparam7);
-  
   f->FixParameter(7,fixparam7);
   f->FixParameter(8,f->GetParameter(8));
   f->ReleaseParameter(3);
@@ -160,11 +157,8 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   Double_t yield = mass->Integral(minhisto,maxhisto)/binwidthmass;
   Double_t yieldErr = mass->Integral(minhisto,maxhisto)/binwidthmass*mass->GetParError(0)/mass->GetParameter(0);
 
-  TLegend* leg = new TLegend(0.65,0.58,0.82,0.88,NULL,"brNDC");
-  leg->SetBorderSize(0);
-  leg->SetTextSize(0.04);
-  leg->SetTextFont(42);
-  leg->SetFillStyle(0);
+  TLegend* leg = new TLegend(0.65, 0.58, 0.82, 0.88,NULL,"brNDC");
+  setleg(leg, 0.04);
   leg->AddEntry(h,"Data","pl");
   leg->AddEntry(f,"Fit","l");
   leg->AddEntry(mass,"D^{0}+#bar{D^{#lower[0.2]{0}}} Signal","f");
@@ -172,59 +166,38 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   leg->AddEntry(background,"Combinatorial","l");
   leg->Draw("same");
 
-  TLatex* texCms = new TLatex(0.18,0.93, "#scale[1.25]{CMS} Preliminary");
-  texCms->SetNDC();
-  texCms->SetTextAlign(12);
-  texCms->SetTextSize(0.04);
-  texCms->SetTextFont(42);
-  texCms->Draw();
+  TLatex* texcms = new TLatex(0.18, 0.93, "#scale[1.25]{CMS} Preliminary");
+  settex(texcms, 0.04, 12);
+  texcms->Draw();
 
-  TLatex* texCol;
-  if(collisionsystem=="PP"||collisionsystem=="PPMB") texCol= new TLatex(0.96,0.93, Form("%s #sqrt{s_{NN}} = 5.02 TeV","pp"));
-  else texCol= new TLatex(0.96,0.93, Form("%s #sqrt{s_{NN}} = 5.02 TeV","PbPb"));
-  texCol->SetNDC();
-  texCol->SetTextAlign(32);
-  texCol->SetTextSize(0.04);
-  texCol->SetTextFont(42);
-  texCol->Draw();
+  TString ttexcol = (collisionsystem=="PP"||collisionsystem=="PPMB")?Form("%s #sqrt{s_{NN}} = 5.02 TeV","pp"):Form("%s #sqrt{s_{NN}} = 5.02 TeV","PbPb");
+  TLatex* texlumi = new TLatex(0.96, 0.93, ttexcol.Data());
+  settex(texlumi, 0.04, 32);
+  texlumi->Draw();
 
-  TLatex* tex = new TLatex(0.22,0.78,Form("%.1f < p_{T} < %.1f GeV/c",ptmin,ptmax));
-  tex->SetNDC();
-  tex->SetTextFont(42);
-  tex->SetTextSize(0.04);
-  tex->SetLineWidth(2);
-  tex->Draw();
-  TLatex* texcent;
-  if(isPbPb)
-    {
-      TString texper="%";
-      texcent = new TLatex(0.22,0.71,Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));//0.2612903,0.8425793
-      texcent->SetNDC();
-      texcent->SetTextColor(1);
-      texcent->SetTextFont(42);
-      texcent->SetTextSize(0.045);
-      texcent->SetLineWidth(2);
-      texcent->Draw();
-    }
-  TLatex* texrap = new TLatex(0.22,0.83,"|y| < 1.0");
-  texrap->SetNDC();
-  texrap->SetTextFont(42);
-  texrap->SetTextSize(0.04);
-  texrap->SetLineWidth(2);
-  texrap->Draw();
+  TLatex* texPt = new TLatex(0.22, 0.78, Form("%.1f < p_{T} < %.1f GeV/c",ptmin,ptmax));
+  settex(texPt, 0.04);
+  texPt->Draw();
+  TLatex* texcent = new TLatex(0.22, 0.71, Form("Centrality %.0f-%.0f%s",centMin,centMax,texper.Data()));
+  settex(texcent, 0.045);
+  if(isPbPb) texcent->Draw();
+  TLatex* texY = new TLatex(0.22, 0.83, "|y| < 1.0");
+  settex(texY, 0.04);
+  texY->Draw();
 
-  total=f;
+  total = f;
 
   h->GetFunction(Form("f%d",count))->Delete();
   TH1F* histo_copy_nofitfun = (TH1F*)h->Clone("histo_copy_nofitfun");
   histo_copy_nofitfun->Draw("esame");
 
-  //
   if(!isPbPb) c->SaveAs(Form("plotFits/DMass%s_%d.pdf",collisionsystem.Data(),count));
   else if(collisionsystem=="PbPbMB") c->SaveAs(Form("plotFits/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
   else c->SaveAs(Form("plotFits/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
 
-  TCanvas* cyield = new TCanvas(Form("cyield%d",count),"",600,600);
+  //
+
+  TCanvas* c_yield = new TCanvas(Form("c_yield%d",count), "", 600, 600);
   h->Draw("e");
   background->Draw("same");
   mass->SetRange(minhisto,maxhisto);
@@ -233,19 +206,13 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   massSwap->Draw("same");
   f->Draw("same");
   leg->Draw("same");
-  texCms->Draw();
-  texCol->Draw();
-  tex->Draw();
-  if(isPbPb)
-    {
-      texcent->Draw();
-    }
-  texrap->Draw();
-  TLatex* texyield = new TLatex(0.22,0.65,Form("N = %.0f #pm %.0f",yield,yieldErr));
-  texyield->SetNDC();
-  texyield->SetTextFont(42);
-  texyield->SetTextSize(0.04);
-  texyield->SetLineWidth(2);
+  texcms->Draw();
+  texlumi->Draw();
+  texPt->Draw();
+  if(isPbPb) texcent->Draw();
+  texY->Draw();
+  TLatex* texyield = new TLatex(0.22, 0.65, Form("N = %.0f #pm %.0f", yield, yieldErr));
+  settex(texyield, 0.04);
   texyield->Draw();
   TLine* lsigregl = new TLine(1.8649-0.025, 0, 1.8649-0.025, background->Eval(1.8649-0.025));
   lsigregl->SetLineWidth(2);
@@ -261,155 +228,106 @@ TF1* fit(TH1D* h, TH1D* hMCSignal, TH1D* hMCSwapped, Double_t ptmin, Double_t pt
   Float_t Ssig = mass->Integral(1.8649-0.025, 1.8649+0.025)/binwidthmass;
   Float_t Bsig = background->Integral(1.8649-0.025, 1.8649+0.025)/binwidthmass + massSwap->Integral(1.8649-0.025, 1.8649+0.025)/binwidthmass;
   Float_t sig = Ssig/TMath::Sqrt(Ssig+Bsig);
-  TLatex* texsig = new TLatex(0.22,0.59,Form("S/#sqrt{S+B} = %.1f",sig));
-  texsig->SetNDC();
-  texsig->SetTextFont(42);
-  texsig->SetTextSize(0.04);
-  texsig->SetLineWidth(2);
+  TLatex* texsig = new TLatex(0.22, 0.59, Form("S/#sqrt{S+B} = %.1f", sig));
+  settex(texsig, 0.04);
   texsig->Draw();
-  TLatex* texbkg = new TLatex(0.22,0.53,Form("S = %.0f, B = %.0f",Ssig,Bsig));
-  texbkg->SetNDC();
-  texbkg->SetTextFont(42);
-  texbkg->SetTextSize(0.04);
-  texbkg->SetLineWidth(2);
+  TLatex* texbkg = new TLatex(0.22, 0.53, Form("S = %.0f, B = %.0f", Ssig, Bsig));
+  settex(texbkg, 0.04);
   texbkg->Draw();
-  TLatex* texswap = new TLatex(0.22,0.47,Form("sgl/(sgl+swap) = %.2f",fixparam7));
-  texswap->SetNDC();
-  texswap->SetTextFont(42);
-  texswap->SetTextSize(0.04);
-  texswap->SetLineWidth(2);
+  TLatex* texswap = new TLatex(0.22, 0.47, Form("sgl/(sgl+swap) = %.2f", fixparam7));
+  settex(texswap, 0.04);
   texswap->Draw();
 
   histo_copy_nofitfun->Draw("esame");
 
-  if(!isPbPb) cyield->SaveAs(Form("plotFitsYield/DMass%s_%d.pdf",collisionsystem.Data(),count));
-  else if(collisionsystem=="PbPbMB") cyield->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
-  else cyield->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
+  if(!isPbPb) c_yield->SaveAs(Form("plotFitsYield/DMass%s_%d.pdf",collisionsystem.Data(),count));
+  else if(collisionsystem=="PbPbMB") c_yield->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
+  else c_yield->SaveAs(Form("plotFitsYield/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
 
   //
+
   TGaxis::SetMaxDigits(3);
   if(h->GetMaximum()>1.e+5) TGaxis::SetMaxDigits(4);
   else if(h->GetMaximum()<1.e+3) TGaxis::SetMaxDigits(1);
-  TCanvas* cpaper = new TCanvas(Form("cpaper%d",count),"",600,600);
-  h->GetXaxis()->SetTitleOffset(0.95); //0.9, 0.85
-  h->GetYaxis()->SetTitleOffset(1.3); //1.3, 1.2
-  h->GetXaxis()->SetTitleSize(0.062); //0.07
-  h->GetYaxis()->SetTitleSize(0.062); //0.07
-  h->GetXaxis()->SetTitleFont(42);
-  h->GetYaxis()->SetTitleFont(42);
-  h->GetXaxis()->SetLabelFont(42);
-  h->GetYaxis()->SetLabelFont(42);
-  h->GetXaxis()->SetLabelSize(0.045); //0.06
-  h->GetYaxis()->SetLabelSize(0.045); //0.06
-  h->GetXaxis()->SetLabelOffset(0.013);
-  h->SetMarkerSize(1.55);
+  TCanvas* c_paper = new TCanvas(Form("c_paper%d",count), "", 600, 600);
+  c_paper->cd();
+  c_paper->SetFillColor(0);
+  c_paper->SetBorderMode(0);
+  c_paper->SetBorderSize(2);
+  c_paper->SetLeftMargin(0.185);
+  c_paper->SetRightMargin(0.025);
+  c_paper->SetTopMargin(0.080);
+  c_paper->SetBottomMargin(0.150);
+  c_paper->SetFrameBorderMode(0);
+
+  sethemptystyle(h, xtitleoffsetpFit, ytitleoffsetpFit, xtitlesizepFit, ytitlesizepFit, xlabelsizepFit, ylabelsizepFit);
+  h->GetXaxis()->SetLabelOffset(0.013); // 0.013
+  h->SetMarkerSize(msizepFit);
   h->SetMarkerStyle(20);
   h->SetLineColor(1);
-  h->SetLineWidth(5);
-  h->SetStats(0);
+  h->SetLineWidth(lwidthpFit);
   h->GetXaxis()->SetNdivisions(-50205);
   h->GetXaxis()->SetTickLength(0.04);
   h->Draw("e");
   background->SetLineStyle(7);
-  background->SetLineWidth(9);
+  background->SetLineWidth(lwidthpFit);
   background->Draw("same");
   mass->SetFillStyle(3002);
-  mass->SetLineWidth(9);
+  mass->SetLineWidth(lwidthpFit);
   mass->SetLineStyle(7);
   mass->Draw("same");
   massSwap->SetLineStyle(1);
   massSwap->SetFillStyle(3005);
-  massSwap->SetLineWidth(9);
+  massSwap->SetLineWidth(lwidthpFit);
   massSwap->Draw("same");
   f->SetNpx(5000);
   f->SetLineWidth(5);
   f->Draw("same");
   h->Draw("esame");
-  //TLegend* legpaper = new TLegend(0.20,0.56,0.55,0.88,NULL,"brNDC");
-  TLegend* legpaper = new TLegend(0.62,0.56,0.90,0.88,NULL,"brNDC");
-  legpaper->SetBorderSize(0);
-  legpaper->SetTextSize(0.047);
-  legpaper->SetTextFont(42);
-  legpaper->SetFillStyle(0);
-  legpaper->AddEntry(h,"Data","pl");
-  legpaper->AddEntry(f,"Fit","l");
-  //legpaper->AddEntry(mass,"D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}","f");
-  legpaper->AddEntry(mass,"Signal","f");
-  legpaper->AddEntry(background,"Combinatorial","l");
-  legpaper->AddEntry(massSwap,"K-#pi swapped","f");
-  legpaper->Draw("same");
-  TLatex* texcms = new TLatex(0.215,0.87,"CMS");
-  texcms->SetTextAlign(13);
-  //TLatex* texcms = new TLatex(0.93,0.87,"CMS");
-  //texcms->SetTextAlign(33);
-  texcms->SetNDC();
-  texcms->SetTextFont(62);//61
-  texcms->SetTextSize(0.08);
-  texcms->SetLineWidth(2);
-  texcms->Draw();
-  TString ttexcol = (collisionsystem=="PP"||collisionsystem=="PPMB")?Form("27.4 pb^{-1} (%s 5.02 TeV)","pp"):Form("530 #mub^{-1} (%s 5.02 TeV)","PbPb");
-  TLatex* texcol = new TLatex(0.945, 0.94, ttexcol.Data());
-  //if(collisionsystem=="PP"||collisionsystem=="PPMB") texcol= new TLatex(0.945,0.94, Form("27.4 pb^{-1} (%s 5.02 TeV)","pp"));
-  //else texcol= new TLatex(0.945,0.94, Form("530 #mub^{-1} (%s 5.02 TeV)","PbPb"));
-  texcol->SetNDC();
-  texcol->SetTextAlign(32);
-  texcol->SetTextSize(0.06);
-  texcol->SetTextFont(42);
-  texcol->Draw();
-  TLatex* texpaper = new TLatex(0.218, 0.77, "D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
-  texpaper->SetNDC();
-  //texpaper->SetTextAlign(32);
-  texpaper->SetTextAlign(12);
-  texpaper->SetTextFont(62);
-  texpaper->SetTextSize(0.057);
-  texpaper->SetLineWidth(2);
-  texpaper->Draw();
-  TString ttexpaper = Form("%.0f < p_{T} < %.0f GeV/c",ptmin,ptmax);
-  if(ptmin>12 && ptmin<13) ttexpaper = Form("%.1f < p_{T} < %.0f GeV/c",ptmin,ptmax);
-  if(ptmax>12 && ptmax<13) ttexpaper = Form("%.0f < p_{T} < %.1f GeV/c",ptmin,ptmax);
-  //TLatex* texpaper = new TLatex(0.93, 0.76, ttexpaper.Data());
-  texpaper = new TLatex(0.218, 0.69, ttexpaper.Data());
-  texpaper->SetNDC();
-  //texpaper->SetTextAlign(32);
-  texpaper->SetTextAlign(12);
-  texpaper->SetTextFont(42);
-  texpaper->SetTextSize(0.048);
-  texpaper->SetLineWidth(2);
-  texpaper->Draw();
-  //texpaper = new TLatex(0.93,0.71, "|y| < 1.0");
-  texpaper = new TLatex(0.218, 0.63, "|y| < 1.0");
-  texpaper->SetNDC();
-  //texpaper->SetTextAlign(32);
-  texpaper->SetTextAlign(12);
-  texpaper->SetTextFont(42);
-  texpaper->SetTextSize(0.048);
-  texpaper->SetLineWidth(2);
-  texpaper->Draw();
-  if(isPbPb)
-    {
-      TString texper="%";
-      //texpaper = new TLatex(0.93,0.66,Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));
-      texpaper = new TLatex(0.218,0.58,Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));
-      texpaper->SetNDC();
-      //texpaper->SetTextAlign(32);
-      texpaper->SetTextAlign(12);
-      texpaper->SetTextFont(42);
-      texpaper->SetTextSize(0.048);
-      texpaper->SetLineWidth(2);
-      texpaper->Draw();
-    }
+  TLegend* leg_paper = new TLegend(0.62, 0.58, 0.90, 0.90, NULL, "brNDC");
+  setleg(leg_paper, 0.047);
+  leg_paper->AddEntry(h,"Data","pl");
+  leg_paper->AddEntry(f,"Fit","l");
+  leg_paper->AddEntry(mass,"Signal","f");
+  leg_paper->AddEntry(background,"Combinatorial","l");
+  leg_paper->AddEntry(massSwap,"K-#pi swapped","f");
+  leg_paper->Draw("same");
+  TLatex* texcms_paper = new TLatex(CMSxposFit, CMSyposFit, "CMS");
+  settex(texcms_paper, CMSsizeFit, 13, 62);
+  texcms_paper->Draw();
+  TString ttexcol_paper = (collisionsystem=="PP"||collisionsystem=="PPMB")?"27.4 pb^{-1} (5.02 TeV pp)":"530 #mub^{-1} (5.02 TeV PbPb)";
+  TLatex* texlumi_paper = new TLatex(LumixposFit, LumiyposFit, ttexcol_paper.Data());
+  settex(texlumi_paper, LumisizeFit, 31);
+  texlumi_paper->Draw();
+  TLatex* texDzero_paper = new TLatex(DZEROxposFit, DZEROyposFit, "D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}");
+  settex(texDzero_paper, DZEROsizeRAA, 13, 62);
+  texDzero_paper->Draw();
+
+  Float_t xpostex_paper = 0.218, ypostex_paper = 0.72/*0.69*/, dypostex_paper = 0.06;
+  TString ttexPt_paper = Form("%.0f < p_{T} < %.0f GeV/c",ptmin,ptmax);
+  if(ptmin>12 && ptmin<13) ttexPt_paper = Form("%.1f < p_{T} < %.0f GeV/c",ptmin,ptmax);
+  if(ptmax>12 && ptmax<13) ttexPt_paper = Form("%.0f < p_{T} < %.1f GeV/c",ptmin,ptmax);
+  TLatex* texPt_paper = new TLatex(xpostex_paper, ypostex_paper, ttexPt_paper.Data());
+  settex(texPt_paper, 0.048, 12);
+  texPt_paper->Draw();
+  TLatex* texY_paper = new TLatex(xpostex_paper, ypostex_paper=(ypostex_paper-dypostex_paper), "|y| < 1.0");
+  settex(texY_paper, 0.048, 12);
+  texY_paper->Draw();
+  TLatex* texcent_paper = new TLatex(xpostex_paper, ypostex_paper=(ypostex_paper-dypostex_paper), Form("Cent. %.0f-%.0f%s",centMin,centMax,texper.Data()));
+  settex(texcent_paper, 0.048, 12);
+  if(isPbPb) texcent_paper->Draw();
 
   TPad* pzero = new TPad("pzero","",0.,0.,1.,1.); pzero->SetFillStyle(0); pzero->Draw(); pzero->cd();
-  TBox* bzero = new TBox(0.15,0.125,0.176,0.17);
+  TBox* bzero = new TBox(0.15,0.13,0.176,0.175);
   bzero->SetFillStyle(1001);
   bzero->SetFillColor(0);
   bzero->SetLineWidth(0);
   bzero->Draw();
-  cpaper->cd();
+  c_paper->cd();
 
-  if(!isPbPb) cpaper->SaveAs(Form("plotFitsPaper/DMass%s_%d.pdf",collisionsystem.Data(),count));
-  else if(collisionsystem=="PbPbMB") cpaper->SaveAs(Form("plotFitsPaper/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
-  else cpaper->SaveAs(Form("plotFitsPaper/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
+  if(!isPbPb) c_paper->SaveAs(Form("plotFitsPaper/DMass%s_%d.pdf",collisionsystem.Data(),count));
+  else if(collisionsystem=="PbPbMB") c_paper->SaveAs(Form("plotFitsPaper/DMass%s_%.0f_%.0f_%d.pdf",collisionsystem.Data(),centMin,centMax,count));
+  else c_paper->SaveAs(Form("plotFitsPaper/DMass%s_%.0f_%.0f_%d_%s.pdf",collisionsystem.Data(),centMin,centMax,count,tGJ.Data()));
 
   return mass;
 }

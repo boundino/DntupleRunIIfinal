@@ -8,7 +8,7 @@ Float_t dypGMBor = 3./12;
 Float_t dypLong = 12./12;
 Float_t ypadl = dypGMBor;
 Float_t ypadh = dypGMBor+dypFOBor;
-Float_t TEXsizeratio = 0.073/0.107; // dypSigma/dxp?
+Float_t TEXsizeratio = 0.073/0.107; // why?
 
 
 Float_t leftmarginp        = 0.19;						   // 0.15
@@ -73,7 +73,6 @@ Float_t LumisizeLong       = LumisizeBor*TEXsizeratio;                          
 TString texper="%";
 TString str_texY = "|y| < 1.0";
 TString str_texCMS = "CMS";
-// TString str_texDzero = "#frac{D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}}{#scale[0.9]{2}}";
 TString str_texDzero = "#frac{D#scale[0.6]{#lower[-0.7]{0}} + #bar{D}#scale[0.6]{#lower[-0.7]{0}}}{2}";
 
 void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Double_t fscale, Int_t pcolor, Int_t pstyle, Bool_t verbose=false)
@@ -99,21 +98,61 @@ void scaleNsetCrossSection(TH1D* hSigmaStat, TGraphAsymmErrors* gaeCrossSyst, Do
   hSigmaStat->Scale(fscale);
   if(verbose) std::cout<<std::endl;
 
-  Size_t msize = 1.5;
+  Size_t msize = 1.5; // 1.5
   if(pstyle==33) msize*=1.6;
 
   hSigmaStat->SetLineWidth(2);
-  hSigmaStat->SetMarkerSize(msize); // 1.5
+  hSigmaStat->SetMarkerSize(msize);
   hSigmaStat->SetMarkerStyle(pstyle);
   hSigmaStat->SetLineColor(pcolor);
   hSigmaStat->SetMarkerColor(pcolor);
 
-  gaeCrossSyst->SetMarkerSize(msize); // 1.5
+  gaeCrossSyst->SetMarkerSize(msize);
   gaeCrossSyst->SetMarkerStyle(pstyle);
   gaeCrossSyst->SetFillColor(1);
   gaeCrossSyst->SetFillStyle(0);
   gaeCrossSyst->SetLineWidth(2);
   gaeCrossSyst->SetLineColor(pcolor);
 }
+
+
+Float_t xtitleoffsetpRAA = 1.10;           // 1.10
+Float_t ytitleoffsetpRAA = 1.15;           // 1.15
+Float_t xtitlesizepRAA   = 0.06;           // 0.06
+Float_t ytitlesizepRAA   = 0.06;           // 0.06
+Float_t xlabelsizepRAA   = 0.045;          // 0.045
+Float_t ylabelsizepRAA   = 0.045;          // 0.045
+
+Float_t xtitleoffsetpFit = 1.00;           // 0.95
+Float_t ytitleoffsetpFit = 1.3;            // 1.3
+Float_t xtitlesizepFit   = xtitlesizepRAA; // 0.062
+Float_t ytitlesizepFit   = ytitlesizepRAA; // 0.062
+Float_t xlabelsizepFit   = xlabelsizepRAA; // 0.045
+Float_t ylabelsizepFit   = xlabelsizepRAA; // 0.045
+
+Size_t  msizepFit        = 1.3;            // 1.55
+Width_t lwidthpFit       = 6;              // 9
+
+Float_t CMSxposRAA       = 0.22;           // 0.22
+Float_t CMSyposRAA       = 0.89;           // 0.90
+Float_t CMSsizeRAA       = 0.062;          // 0.60
+Float_t CMSxposFit       = CMSxposRAA;     // 0.215
+Float_t CMSyposFit       = CMSyposRAA;     // 0.87
+Float_t CMSsizeFit       = CMSsizeRAA;     // 0.08
+
+Float_t DZEROxposRAA     = CMSxposRAA;     // 0.22
+Float_t DZEROyposRAA     = 0.84;           // 0.86
+Float_t DZEROsizeRAA     = CMSsizeRAA;     // 0.06
+Float_t DZEROxposFit     = DZEROxposRAA;   // 0.218
+Float_t DZEROyposFit     = DZEROyposRAA;   // 0.77
+Float_t DZEROsizeFit     = DZEROsizeRAA;   // 0.057
+
+Float_t LumixposRAA      = 0.96;           // 0.19
+Float_t LumiyposRAA      = 0.936;          // 0.936
+Float_t LumisizeRAA      = 0.038;          // 0.038
+Float_t LumixposFit      = LumixposRAA;    // 0.945
+Float_t LumiyposFit      = LumiyposRAA;    // 0.94
+Float_t LumisizeFit      = LumisizeRAA;    // 0.06
+
 
 #endif

@@ -106,7 +106,8 @@ void sethempty(TH2F* hempty)
 }
 
 
-void sethemptystyle(TH2F* hempty, Float_t xtitleoffset=-1, Float_t ytitleoffset=-1, Float_t xtitlesize=-1, Float_t ytitlesize=-1, Float_t xlabelsize=-1, Float_t ylabelsize=-1)
+template <class T>
+void sethemptystyle(T* hempty, Float_t xtitleoffset=-1, Float_t ytitleoffset=-1, Float_t xtitlesize=-1, Float_t ytitlesize=-1, Float_t xlabelsize=-1, Float_t ylabelsize=-1)
 {
   hempty->GetXaxis()->CenterTitle();
   hempty->GetYaxis()->CenterTitle();
