@@ -102,8 +102,8 @@ void CombineCrossSectionsPPnPbPb(TString filePPMB, TString filePP, TString fileP
   TLegend* legendSigmaOnlyLong = new TLegend(0.215, 0.11, 0.56, 0.23, "");
   setleg(legendSigmaOnlyLong, 0.037);
   legendSigmaOnlyLong->AddEntry(hSigmaPPStatMB, "pp", "pf");
-  legendSigmaOnlyLong->AddEntry(hSigmaPbPb0100StatMB, "PbPb Cent. 0-100 (/10)", "pf");
-  legendSigmaOnlyLong->AddEntry(hSigmaPbPb010StatMB, "PbPb Cent. 0-10 (/100)", "pf");
+  legendSigmaOnlyLong->AddEntry(hSigmaPbPb0100StatMB, Form("PbPb Cent. 0-100%s (/10)", texper.Data()), "pf");
+  legendSigmaOnlyLong->AddEntry(hSigmaPbPb010StatMB, Form("PbPb Cent. 0-10%s (/100)", texper.Data()), "pf");
   //
   Float_t xpostexGuOnlyLong = 0.73, ypostexGuOnlyLong = 0.20, dypostexGuOnlyLong = 0.0401;
   TLatex* texGuOnlyLong = new TLatex(xpostexGuOnlyLong, ypostexGuOnlyLong+dypostexGuOnlyLong, "Global uncert.");

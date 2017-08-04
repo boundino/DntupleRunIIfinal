@@ -30,7 +30,7 @@ Float_t ylabelsizepLong    = ylabelsizepSigma*dypSigma/dxp;                     
 
 Float_t xtitlesizepGMBor   = ytitlesizepGMBor;					   // 0.13
 Float_t xlabelsizepGMBor   = 0.13;						   // 0.1
-Float_t xtitlesizepLong    = xtitlesizepGMBor*dypGMBor/dxp;                        // 0.037452
+Float_t xtitlesizepLong    = ytitlesizepLong;   		                   // 0.037452
 Float_t xlabelsizepLong    = xlabelsizepGMBor*dypGMBor/dxp;                        // 0.02881
 
 Float_t ytitleoffsetpSigma = 1.17;                                                 // 1.25
@@ -68,7 +68,6 @@ Float_t LumisizeBor        = 0.054;                                             
 Float_t LumixposLong       = LumixposBor;                                          // 0.95
 Float_t LumiyposLong       = LumiyposBor*dypSigma+dypGMBor+dypFOBor;               // 0.976667
 Float_t LumisizeLong       = LumisizeBor*TEXsizeratio;                             // 0.03025
-
 
 TString texper="%";
 TString str_texY = "|y| < 1.0";

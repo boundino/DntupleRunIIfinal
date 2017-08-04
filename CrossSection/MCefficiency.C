@@ -59,15 +59,15 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
   nthi->AddFriend(ntMC);
   ntMC->AddFriend(nthi);
 
-// optimal weigths
-if(useweight==0) {
+  // optimal weigths
+  if(useweight==0) {
     weightfunctiongen="1";
     weightfunctionreco="1";
   }
   // pp weight
   if(useweight==1) {
-     weightfunctiongen="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Gpt*(0.0602697)+Gpt*Gpt*(-0.00226879)+Gpt*Gpt*Gpt*(3.91035e-05)+Gpt*Gpt*Gpt*Gpt*(-3.0699e-07)+Gpt*Gpt*Gpt*Gpt*Gpt*(8.73234e-10))";
-     weightfunctionreco="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Dgenpt*(0.0602697)+Dgenpt*Dgenpt*(-0.00226879)+Dgenpt*Dgenpt*Dgenpt*(3.91035e-05)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*(-3.0699e-07)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*Dgenpt*(8.73234e-10))";
+    weightfunctiongen="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Gpt*(0.0602697)+Gpt*Gpt*(-0.00226879)+Gpt*Gpt*Gpt*(3.91035e-05)+Gpt*Gpt*Gpt*Gpt*(-3.0699e-07)+Gpt*Gpt*Gpt*Gpt*Gpt*(8.73234e-10))";
+    weightfunctionreco="(pthatweight)*(maxDgenpt<pthat/1.2)*(0.0116437+Dgenpt*(0.0602697)+Dgenpt*Dgenpt*(-0.00226879)+Dgenpt*Dgenpt*Dgenpt*(3.91035e-05)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*(-3.0699e-07)+Dgenpt*Dgenpt*Dgenpt*Dgenpt*Dgenpt*(8.73234e-10))";
   }
   //PbPb weight
   if(useweight==2) {
@@ -85,7 +85,7 @@ if(useweight==0) {
   }
 
 
-   std::cout<<"fit function parameters="<<weightfunctiongen<<std::endl;
+  std::cout<<"fit function parameters="<<weightfunctiongen<<std::endl;
 
   TH1D* hPtMC = new TH1D("hPtMC","",nBins,ptBins);
   TH1D* hPtMCrecoonly = new TH1D("hPtMCrecoonly","",nBins,ptBins);
@@ -211,7 +211,7 @@ if(useweight==0) {
   gPad->SetLogy();
   hemptyPthatWeighted->Draw();
   hPthatweight->Draw("same");
- // canvasPthat->SaveAs(Form("plotEff/canvasPthat_%s.pdf",Form(label.Data())));
+  // canvasPthat->SaveAs(Form("plotEff/canvasPthat_%s.pdf",Form(label.Data())));
   
   TCanvas*canvasSpectra=new TCanvas("canvasSpectra","canvasSpectra",1000.,500);
   canvasSpectra->Divide(2,1);
@@ -239,16 +239,12 @@ if(useweight==0) {
 int main(int argc, char *argv[])
 {
   if((argc !=12))
-  {
-    std::cout << "Wrong number of inputs" << std::endl;
-    return 1;
-  }
+    {
+      std::cout << "Wrong number of inputs" << std::endl;
+      return 1;
+    }
   
   if(argc == 12)
     MCefficiency(atoi(argv[1]),argv[2],argv[3],argv[4],argv[5],argv[6],argv[7],argv[8],atoi(argv[9]),atof(argv[10]),atof(argv[11]));
   return 0;
 }
-
-
-
-
