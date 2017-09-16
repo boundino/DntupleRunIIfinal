@@ -3,7 +3,7 @@
 #include "drawTheory.h"
 #include "PaperDraw.h"
 
-void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.root", TString filename="ROOTfiles/CrossSectionFONLLPP.root", Int_t isPbPb=0, Float_t centmin=0., Float_t centmax=100.)
+void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.root", TString filename="ROOTfiles/CrossSectionFONLLPP.root", Int_t isPbPb=0, Float_t centmin=0., Float_t centmax=100., Bool_t verbose=true)
 {
   gStyle->SetOptTitle(0);
   gStyle->SetOptStat(0);
@@ -169,6 +169,33 @@ void CombineCrossSections(TString filenameMB="ROOTfiles/CrossSectionFONLLPPMB.ro
   l->Draw("same");  
 
   cSigmaBor->SaveAs(Form("plotCrossSection/%s_Calculation_BothRatio_%s.pdf",tprev.Data(),tend.Data()));
+
+  if(verbose)
+  {
+    for(int i=0;i<(hSigmaStatMB->GetSize()-2);i++)
+      {
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hSigmaStatMB->GetBinCenter(i+1)-hSigmaStatMB->GetBinWidth(i+1)/2.;
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hSigmaStatMB->GetBinCenter(i+1)+hSigmaStatMB->GetBinWidth(i+1)/2.;
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hSigmaStatMB->GetBinCenter(i+1);
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<hSigmaStatMB->GetBinContent(i+1);
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<hSigmaStatMB->GetBinError(i+1);
+        // std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<gaeCrossSystMB->GetErrorYhigh(i);
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<gaeCrossSystMB->GetErrorYlow(i)<<std::endl;
+      }
+    for(int i=0;i<(hSigmaStat->GetSize()-2);i++)
+      {
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hSigmaStat->GetBinCenter(i+1)-hSigmaStat->GetBinWidth(i+1)/2.;
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hSigmaStat->GetBinCenter(i+1)+hSigmaStat->GetBinWidth(i+1)/2.;
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(10)<<hSigmaStat->GetBinCenter(i+1);
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<hSigmaStat->GetBinContent(i+1);
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<hSigmaStat->GetBinError(i+1);
+        // std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<gaeCrossSyst->GetErrorYhigh(i);
+        std::cout<<std::setiosflags(std::ios::left)<<std::setw(15)<<gaeCrossSyst->GetErrorYlow(i)<<std::endl;
+      }
+  }
+
+
+
 }
 
 
